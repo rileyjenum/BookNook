@@ -34,3 +34,8 @@ struct BooksListScreen: View {
     }
 }
 
+struct BookListScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        BooksListScreen()
+    }
+}

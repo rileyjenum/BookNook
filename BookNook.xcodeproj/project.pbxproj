@@ -24,6 +24,12 @@
 		51AD11382BEEB907000D672C /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11372BEEB907000D672C /* HomeScreen.swift */; };
 		51AD113A2BEEB9BF000D672C /* TopTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11392BEEB9BF000D672C /* TopTitleView.swift */; };
 		51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD113B2BEEC27C000D672C /* BookListScreen.swift */; };
+		51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD113D2BEF62B8000D672C /* CalendarView.swift */; };
+		51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD113F2BEF63EF000D672C /* CalendarScreen.swift */; };
+		51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */; };
+		51AD11462BEF68C7000D672C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11452BEF68C7000D672C /* Enums.swift */; };
+		51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */; };
+		51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +69,12 @@
 		51AD11372BEEB907000D672C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		51AD11392BEEB9BF000D672C /* TopTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTitleView.swift; sourceTree = "<group>"; };
 		51AD113B2BEEC27C000D672C /* BookListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen.swift; sourceTree = "<group>"; };
+		51AD113D2BEF62B8000D672C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		51AD113F2BEF63EF000D672C /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
+		51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayReadingSessionsListView.swift; sourceTree = "<group>"; };
+		51AD11452BEF68C7000D672C /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionListViewRow.swift; sourceTree = "<group>"; };
+		51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionFormView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				51AD11112BEEB2BB000D672C /* Extensions.swift */,
+				51AD11452BEF68C7000D672C /* Enums.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -272,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				51AD112F2BEEB586000D672C /* BlurView.swift */,
+				51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -310,6 +324,7 @@
 		51AD11202BEEB35D000D672C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				51AD113B2BEEC27C000D672C /* BookListScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -317,7 +332,6 @@
 		51AD11212BEEB363000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				51AD113B2BEEC27C000D672C /* BookListScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -332,6 +346,7 @@
 		51AD11232BEEB36C000D672C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				51AD113F2BEF63EF000D672C /* CalendarScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -339,6 +354,9 @@
 		51AD11242BEEB371000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				51AD113D2BEF62B8000D672C /* CalendarView.swift */,
+				51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */,
+				51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -510,11 +528,17 @@
 			files = (
 				51AD11292BEEB39C000D672C /* TabbedItems.swift in Sources */,
 				51AD113A2BEEB9BF000D672C /* TopTitleView.swift in Sources */,
+				51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */,
 				51AD11362BEEB8A8000D672C /* BottomSheetView.swift in Sources */,
 				51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */,
 				51AD11122BEEB2BB000D672C /* Extensions.swift in Sources */,
+				51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */,
+				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
+				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
+				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
 				51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */,
+				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
 				51AD11382BEEB907000D672C /* HomeScreen.swift in Sources */,
 				51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */,
 				51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */,

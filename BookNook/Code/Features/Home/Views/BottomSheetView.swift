@@ -32,10 +32,10 @@ struct BottomSheetView: View {
                         Text(books[index]).tag(index)
                     }
                 }
-                .onChange(of: selectedBookIndex) { index in
-                    if index > 0 {
-                        newBookTitle = books[index]
-                        newAuthor = authors[index]
+                .onChange(of: selectedBookIndex) { newValue, _ in
+                    if newValue > 0 {
+                        newBookTitle = books[newValue]
+                        newAuthor = authors[newValue]
                     } else {
                         newBookTitle = ""
                         newAuthor = ""
@@ -54,7 +54,7 @@ struct BottomSheetView: View {
                 Slider(value: $duration, in: 300...18000, step: 300) {
                     Text("Duration: \(durationString(duration))")
                 }
-                Button("Save Session") {
+                Button("Start Session") {
                     saveSession()
                 }
             }

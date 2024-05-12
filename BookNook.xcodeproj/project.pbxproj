@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5126F62F2BF1547700DFB2E3 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 5126F62E2BF1547700DFB2E3 /* HorizonCalendar */; };
+		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DC2BEEB13E000D672C /* BookNookApp.swift */; };
 		51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DE2BEEB13E000D672C /* ContentView.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51AD10D92BEEB13E000D672C /* BookNook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookNook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AD10DC2BEEB13E000D672C /* BookNookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookApp.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 			children = (
 				51AD11282BEEB39C000D672C /* TabbedItems.swift */,
 				51AD11332BEEB654000D672C /* ReadingSession.swift */,
+				5126F6362BF1665E00DFB2E3 /* Book.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,
+				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
 				51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,

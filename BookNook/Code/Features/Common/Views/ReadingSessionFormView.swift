@@ -5,23 +5,24 @@
 //  Created by Riley Jenum on 11/05/24.
 //
 
-import Foundation
 import SwiftUI
 import SwiftData
 
 struct ReadingSessionFormView: View {
     @Environment(\.modelContext) var context
-
     @State private var startTime = Date()
     @State private var durationMinutes: Int = 0
+    @State private var selectedBook: Book?
+    @State private var isNewBook: Bool = false
     @State private var bookTitle: String = ""
     @State private var author: String = ""
     @State private var notes: String = ""
+    @Query private var existingBooks: [Book] = []
     @Environment(\.dismiss) var dismiss
     @FocusState private var focus: Bool?
 
     var isFormIncomplete: Bool {
-        bookTitle.isEmpty || author.isEmpty || durationMinutes <= 0
+        (isNewBook && (bookTitle.isEmpty || author.isEmpty)) || durationMinutes <= 0
     }
     
     var body: some View {
@@ -32,21 +33,33 @@ struct ReadingSessionFormView: View {
                     TextField("Duration (in minutes)", value: $durationMinutes, format: .number)
                         .keyboardType(.numberPad)
                         .focused($focus, equals: true)
-                    TextField("Book Title", text: $bookTitle)
-                    TextField("Author", text: $author)
+                    Picker("Select a Book", selection: $selectedBook) {
+                        Text("Add New Book").tag(nil as Book?)
+                        ForEach(existingBooks, id: \.id) { book in
+                            Text(book.title).tag(book as Book?)
+                        }
+                    }
+                    .onChange(of: selectedBook) { _ in
+                        isNewBook = selectedBook == nil
+                        bookTitle = selectedBook?.title ?? ""
+                        author = selectedBook?.author ?? ""
+                    }
+                    if isNewBook {
+                        TextField("Book Title", text: $bookTitle)
+                        TextField("Author", text: $author)
+                    }
                     TextEditor(text: $notes)
-                        .frame(height: 100)  // Set a reasonable height for text editing
+                        .frame(height: 100)
                     Section(footer:
                                 HStack {
-                        Spacer()
-                        Button("Add Session") {
-                            createSession()
-                            dismiss()
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .disabled(isFormIncomplete)
-                        Spacer()
-                    }) {
+                                    Spacer()
+                                    Button("Add Session") {
+                                        createSession()
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .disabled(isFormIncomplete)
+                                    Spacer()
+                                }) {
                         EmptyView()
                     }
                 }
@@ -58,16 +71,25 @@ struct ReadingSessionFormView: View {
         }
     }
 
+
     private func createSession() {
+        let book: Book
+        if let selectedBook = selectedBook {
+            book = selectedBook
+        } else {
+            let newBook = Book(title: bookTitle, author: author)
+            context.insert(newBook)
+            book = newBook
+        }
+
         let newSession = ReadingSession(
-            id: UUID().uuidString,
             startTime: startTime,
-            duration: TimeInterval(durationMinutes * 60),  // Convert minutes to seconds
-            bookTitle: bookTitle,
-            author: author,
+            duration: TimeInterval(durationMinutes * 60),
+            book: book,
             notes: notes
         )
         context.insert(newSession)
+        dismiss()
     }
 }
 
@@ -76,4 +98,3 @@ struct ReadingSessionFormView_Previews: PreviewProvider {
         ReadingSessionFormView()
     }
 }
-

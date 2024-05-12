@@ -13,16 +13,14 @@ class ReadingSession: Identifiable, Hashable {
     @Attribute(.unique) var id: String = UUID().uuidString
     var startTime: Date
     var duration: TimeInterval
-    var bookTitle: String
-    var author: String
+    @Relationship var book: Book
     var notes: String
     
-    init(id: String, startTime: Date, duration: TimeInterval, bookTitle: String, author: String, notes: String) {
+    init(id: String = UUID().uuidString, startTime: Date, duration: TimeInterval, book: Book, notes: String) {
         self.id = id
         self.startTime = startTime
         self.duration = duration
-        self.bookTitle = bookTitle
-        self.author = author
+        self.book = book
         self.notes = notes
     }
 }

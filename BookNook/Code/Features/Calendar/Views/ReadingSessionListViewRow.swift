@@ -5,7 +5,6 @@
 //  Created by Riley Jenum on 11/05/24.
 //
 
-import Foundation
 import SwiftUI
 
 struct ReadingSessionListViewRow: View {
@@ -15,9 +14,9 @@ struct ReadingSessionListViewRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(session.bookTitle)
+                Text(session.book.title)  // Updated to use the Book relationship
                     .font(.headline)
-                Text(session.author)
+                Text(session.book.author)  // Updated to use the Book relationship
             }
             Spacer()
             VStack(alignment: .trailing) {
@@ -39,8 +38,11 @@ func formatDuration(minutes: Double) -> String {
     return "\(hours) hour\(hours != 1 ? "s" : "") and \(remainingMinutes) minute\(remainingMinutes != 1 ? "s" : "")"
 }
 
+// Update the preview provider to reflect changes
 struct ReadingSessionListViewRow_Previews: PreviewProvider {
-    static let session = ReadingSession(id: UUID().uuidString, startTime: Date(), duration: 3600, bookTitle: "War and Peace", author: "Leo Tolstoy", notes: "Captivating narrative")
+    static let book = Book(title: "War and Peace", author: "Leo Tolstoy")
+    static let session = ReadingSession(startTime: Date(), duration: 3600, book: book, notes: "Captivating narrative")
+    
     static var previews: some View {
         ReadingSessionListViewRow(session: session)
     }

@@ -15,7 +15,7 @@ struct UpdateReadingSessionView: View {
     @Environment(\.dismiss) var dismiss
 
     var isFormIncomplete: Bool {
-        session.bookTitle.isEmpty || session.author.isEmpty || session.duration <= 0
+        session.book.title.isEmpty || session.book.author.isEmpty || session.duration <= 0
     }
     
     var body: some View {
@@ -25,8 +25,8 @@ struct UpdateReadingSessionView: View {
                     DatePicker("Start Time", selection: $session.startTime, displayedComponents: [.date, .hourAndMinute])
                     TextField("Duration (in minutes)", value: $session.duration, format: .number)
                         .keyboardType(.numberPad)
-                    TextField("Book Title", text: $session.bookTitle)
-                    TextField("Author", text: $session.author)
+                    TextField("Book Title", text: $session.book.title)
+                    TextField("Author", text: $session.book.author)
                     TextEditor(text: $session.notes)
                         .frame(height: 100)  // Set a reasonable height for text editing
                     Section(footer:

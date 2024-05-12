@@ -11,6 +11,8 @@ import SwiftData
 
 
 struct HomeScreen: View {
+    @EnvironmentObject var timerManager: TimerManager
+
     
     @State var showingBottomSheet = false
     
@@ -46,13 +48,19 @@ struct HomeScreen: View {
             .scrollTargetBehavior(.viewAligned)
             
             
+            if timerManager.isActive {
+                Text("Time Remaining: \(Int(timerManager.remainingTime)) seconds")
+                    .font(.headline)
+                    .padding()
+            }
+            
             Button("Start Reading Session") {
                 showingBottomSheet = true
             }
             .buttonStyle(.borderedProminent)
             .padding(.bottom, 30)
             .sheet(isPresented: $showingBottomSheet) {
-                BottomSheetView()
+                BottomSheetView().environmentObject(timerManager)
             }
         }
         .padding(.horizontal, 16)

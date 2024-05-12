@@ -32,9 +32,9 @@ struct CalendarView: UIViewRepresentable {
         let calendar = Calendar.current
         let dateComponentsNeeded: Set<Calendar.Component> = [.year, .month, .day]
 
-        // Reload decorations based on the sessions' start times
-        let components = sessions.map { calendar.dateComponents(dateComponentsNeeded, from: $0.startTime) }
-        uiView.reloadDecorations(forDateComponents: components, animated: true)
+        // To ensure uniqueness, convert to a set to remove any duplicates
+        let uniqueDates = Set(sessions.map { calendar.dateComponents(dateComponentsNeeded, from: $0.startTime) })
+        uiView.reloadDecorations(forDateComponents: Array(uniqueDates), animated: true)
     }
 
     class Coordinator: NSObject, UICalendarViewDelegate, UICalendarSelectionSingleDateDelegate {
@@ -51,17 +51,9 @@ struct CalendarView: UIViewRepresentable {
 
             if foundSessions.isEmpty { return nil }
 
-            if foundSessions.count > 1 {
-                return .customView {
-                    let icon = UILabel()
-                    icon.text = "📚"
-                    return icon
-                }
-            }
-
             return .customView {
                 let icon = UILabel()
-                icon.text = "📕"
+                icon.text = foundSessions.count > 1 ? "📚" : "📕"
                 return icon
             }
         }
@@ -71,9 +63,7 @@ struct CalendarView: UIViewRepresentable {
             guard let dateComponents = dateComponents else { return }
             let foundSessions = parent.sessions
                 .filter { Calendar.current.isDate($0.startTime, inSameDayAs: dateComponents.date!) }
-            if !foundSessions.isEmpty {
-                parent.displaySessions.toggle()
-            }
+            parent.displaySessions = !foundSessions.isEmpty
         }
 
         func dateSelection(_ selection: UICalendarSelectionSingleDate, canSelectDate dateComponents: DateComponents?) -> Bool {
@@ -81,4 +71,3 @@ struct CalendarView: UIViewRepresentable {
         }
     }
 }
-

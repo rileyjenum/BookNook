@@ -23,7 +23,7 @@ struct MainTabbedView: View {
                 BooksListScreen()
                     .tag(1)
 
-                BooksListScreen()
+                CalendarScreen()
                     .tag(2)
 
                 HomeScreen()

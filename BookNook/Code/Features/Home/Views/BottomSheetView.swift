@@ -4,6 +4,8 @@ import SwiftData
 struct BottomSheetView: View {
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var timerManager: TimerManager
+
 
     @State private var selectedBookIndex: Int = 0
     @State private var newBookTitle: String = ""
@@ -85,7 +87,9 @@ struct BottomSheetView: View {
         // Insert the new session into the context
         context.insert(newSession)
 
+        timerManager.startTimer(duration: duration)
 
+        
         dismiss()
     }
 

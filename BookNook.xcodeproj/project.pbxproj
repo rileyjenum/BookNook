@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5126F62F2BF1547700DFB2E3 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 5126F62E2BF1547700DFB2E3 /* HorizonCalendar */; };
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
+		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DC2BEEB13E000D672C /* BookNookApp.swift */; };
 		51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DE2BEEB13E000D672C /* ContentView.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51AD10D92BEEB13E000D672C /* BookNook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookNook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AD10DC2BEEB13E000D672C /* BookNookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookApp.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			children = (
 				51AD11112BEEB2BB000D672C /* Extensions.swift */,
 				51AD11452BEF68C7000D672C /* Enums.swift */,
+				5126F6382BF1790C00DFB2E3 /* TimerManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				51AD11292BEEB39C000D672C /* TabbedItems.swift in Sources */,
+				5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */,
 				51AD113A2BEEB9BF000D672C /* TopTitleView.swift in Sources */,
 				51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */,
 				51AD11362BEEB8A8000D672C /* BottomSheetView.swift in Sources */,

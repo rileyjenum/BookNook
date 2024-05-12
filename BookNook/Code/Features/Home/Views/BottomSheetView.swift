@@ -76,7 +76,6 @@ struct BottomSheetView: View {
     private func saveSession() {
         let newSession = ReadingSession(id: UUID().uuidString,startTime: startTime, duration: duration, bookTitle: newBookTitle, author: newAuthor, notes: notes)
         context.insert(newSession)
-        try? context.save()
         dismiss()
     }
 }

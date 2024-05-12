@@ -10,6 +10,8 @@ import SwiftUI
 import SwiftData
 
 struct ReadingSessionFormView: View {
+    @Environment(\.modelContext) var context
+
     @State private var startTime = Date()
     @State private var durationMinutes: Int = 0
     @State private var bookTitle: String = ""
@@ -65,7 +67,7 @@ struct ReadingSessionFormView: View {
             author: author,
             notes: notes
         )
-        // Save new session logic, depending on your data management
+        context.insert(newSession)
     }
 }
 

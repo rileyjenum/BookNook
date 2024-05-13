@@ -19,8 +19,8 @@ struct ReadingSessionListViewRow: View {
             }
             Spacer()
             VStack(alignment: .trailing) {
-                Text(formatDuration(minutes: session.duration))
-                Text(session.startTime.formatted(date: .abbreviated, time: .shortened))
+                Text("Start time: \(session.startTime, formatter: DateFormatter.shortTime)")
+                Text("Duration: \(formatDuration(session.duration))")
             }
             .font(.subheadline)
         }
@@ -28,10 +28,12 @@ struct ReadingSessionListViewRow: View {
     }
 }
 
-func formatDuration(minutes: Double) -> String {
-    let hours = Int(minutes / 60) // Convert minutes to whole hours
-    let remainingMinutes = Int(minutes) % 60 // Get remaining minutes as an integer
-    return "\(hours) hour\(hours != 1 ? "s" : "") and \(remainingMinutes) minute\(remainingMinutes != 1 ? "s" : "")"
+// Utility function to format duration from seconds to readable format
+func formatDuration(_ duration: TimeInterval) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.hour, .minute, .second]
+    formatter.unitsStyle = .abbreviated
+    return formatter.string(from: duration) ?? "0 sec"
 }
 
 // Update the preview provider to reflect changes

@@ -99,4 +99,14 @@ extension Date {
     }
 }
 
+// DateFormatter extension for convenience
+extension DateFormatter {
+    static let shortTime: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        return formatter
+    }()
+}
+
 

@@ -11,7 +11,8 @@ import SwiftData
 struct ReadingSessionFormView: View {
     @Environment(\.modelContext) var context
     @State private var startTime = Date()
-    @State private var durationMinutes: Int = 0
+    @State private var hours: Int = 0
+    @State private var minutes: Int = 0
     @State private var selectedBook: Book?
     @State private var isNewBook: Bool = false
     @State private var bookTitle: String = ""
@@ -24,8 +25,23 @@ struct ReadingSessionFormView: View {
         NavigationStack {
             Form {
                 DatePicker("Start Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
-                TextField("Duration (in minutes)", value: $durationMinutes, format: .number)
-                    .keyboardType(.numberPad)
+                
+                // Duration Pickers for hours and minutes
+                Picker("Hours", selection: $hours) {
+                    ForEach(0..<24, id: \.self) { hour in
+                        Text("\(hour) hr")
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(height: 80)
+
+                Picker("Minutes", selection: $minutes) {
+                    ForEach(0..<60, id: \.self) { minute in
+                        Text("\(minute) min")
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(height: 80)
                 
                 Toggle(isOn: $isNewBook) {
                     Text("Add New Book")
@@ -33,7 +49,7 @@ struct ReadingSessionFormView: View {
                 
                 if !isNewBook {
                     Picker("Select a Book", selection: $selectedBook) {
-                        ForEach(existingBooks, id: \.id) { book in
+                        ForEach(existingBooks, id: \.self) { book in
                             Text(book.title).tag(book as Book?)
                         }
                     }
@@ -53,7 +69,7 @@ struct ReadingSessionFormView: View {
                     createSession()
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled((isNewBook && (bookTitle.isEmpty || author.isEmpty)) || durationMinutes <= 0)
+                .disabled((isNewBook && (bookTitle.isEmpty || author.isEmpty)) || (hours == 0 && minutes == 0))
             }
             .navigationTitle("New Session")
         }
@@ -69,9 +85,10 @@ struct ReadingSessionFormView: View {
             book = newBook
         }
 
+        let durationInSeconds = TimeInterval(hours * 3600 + minutes * 60)
         let newSession = ReadingSession(
             startTime: startTime,
-            duration: TimeInterval(durationMinutes * 60),
+            duration: durationInSeconds,
             book: book,
             notes: notes
         )

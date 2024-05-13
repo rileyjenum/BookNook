@@ -34,6 +34,7 @@
 		51AD11462BEF68C7000D672C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11452BEF68C7000D672C /* Enums.swift */; };
 		51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */; };
 		51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */; };
+		51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ADD5742BF1F0860023DEFE /* NewBookView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		51AD11452BEF68C7000D672C /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionListViewRow.swift; sourceTree = "<group>"; };
 		51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionFormView.swift; sourceTree = "<group>"; };
+		51ADD5742BF1F0860023DEFE /* NewBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 		51AD11212BEEB363000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				51ADD5742BF1F0860023DEFE /* NewBookView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				51AD113A2BEEB9BF000D672C /* TopTitleView.swift in Sources */,
 				51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */,
 				51AD11362BEEB8A8000D672C /* BottomSheetView.swift in Sources */,
+				51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */,
 				51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */,
 				51AD11122BEEB2BB000D672C /* Extensions.swift in Sources */,
 				51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */,

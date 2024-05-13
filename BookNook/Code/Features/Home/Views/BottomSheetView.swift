@@ -6,13 +6,13 @@ struct BottomSheetView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var timerManager: TimerManager
 
-
     @State private var selectedBookIndex: Int = 0
     @State private var newBookTitle: String = ""
     @State private var newAuthor: String = ""
     @State private var notes: String = ""
     @State private var duration: TimeInterval = 300 // Default to 5 minutes
-    @State private var startTime: Date = Date() // Automatically set to current time
+    @State private var showError: Bool = false
+    @State private var errorMessage: String = ""
 
     // Query existing books
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
@@ -39,24 +39,38 @@ struct BottomSheetView: View {
                 if selectedBookIndex == 0 {
                     TextField("Book Title", text: $newBookTitle)
                     TextField("Author", text: $newAuthor)
-                } else {
-                    Text("Author: \(newAuthor)")
                 }
 
                 TextField("Notes", text: $notes)
-                Text("Start Time: \(startTime, formatter: Formatter.item)")
+
+                Text("Duration: \(durationString(duration))").padding()
                 Slider(value: $duration, in: 300...18000, step: 300) {
-                    Text("Duration: \(durationString(duration))")
+                    Text("Adjust Duration")
                 }
+
                 Button("Start Session") {
-                    saveSession()
+                    if canStartSession() {
+                        // Only check for duplicates if a new book is being added
+                        if selectedBookIndex == 0 && isDuplicateTitle() {
+                            showError = true
+                            errorMessage = "A book with this title already exists. Please use a different title."
+                        } else {
+                            saveSession()
+                        }
+                    }
                 }
+
             }
             .navigationBarTitle("New Reading Session", displayMode: .inline)
             .toolbar {
                 Button("Dismiss") {
                     dismiss()
                 }
+            }
+            .alert(isPresented: $showError) {
+                Alert(title: Text("Error"),
+                      message: Text(errorMessage),
+                      dismissButton: .default(Text("OK")))
             }
         }
     }
@@ -67,39 +81,29 @@ struct BottomSheetView: View {
         return "\(hours) hr \(minutes) min"
     }
 
+    private func canStartSession() -> Bool {
+        !(newBookTitle.isEmpty || newAuthor.isEmpty)
+    }
+
+    private func isDuplicateTitle() -> Bool {
+        books.contains { $0.title.lowercased() == newBookTitle.lowercased() }
+    }
+
     private func saveSession() {
         let book: Book
         if selectedBookIndex > 0 {
-            // Selecting an existing book
             book = books[selectedBookIndex - 1]
         } else {
-            // Creating a new book
             book = Book(title: newBookTitle, author: newAuthor)
             context.insert(book)
         }
 
-        // Create a new session linked to either the selected or new book
-        let newSession = ReadingSession(startTime: startTime, duration: duration, book: book, notes: notes)
-        
-        // It's critical here to ensure the new session is added to the book's session collection if your model supports relationships
+        let newSession = ReadingSession(startTime: Date(), duration: duration, book: book, notes: notes)
         book.sessions.append(newSession)
-
-        // Insert the new session into the context
         context.insert(newSession)
 
         timerManager.startTimer(session: newSession)
-
         
         dismiss()
     }
-
-}
-
-struct Formatter {
-    static let item: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
 }

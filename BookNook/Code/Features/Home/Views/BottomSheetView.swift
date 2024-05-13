@@ -87,7 +87,7 @@ struct BottomSheetView: View {
         // Insert the new session into the context
         context.insert(newSession)
 
-        timerManager.startTimer(duration: duration)
+        timerManager.startTimer(session: newSession)
 
         
         dismiss()

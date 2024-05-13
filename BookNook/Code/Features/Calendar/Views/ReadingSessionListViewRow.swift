@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ReadingSessionListViewRow: View {
     let session: ReadingSession
-//    @Binding var formType: ReadingSessionFormType?
 
     var body: some View {
         HStack {
@@ -26,9 +25,6 @@ struct ReadingSessionListViewRow: View {
             .font(.subheadline)
         }
         .contentShape(Rectangle()) // Ensures the tap gesture covers the entire area of the HStack
-//        .onTapGesture {
-//            formType = .update(session)
-//        }
     }
 }
 

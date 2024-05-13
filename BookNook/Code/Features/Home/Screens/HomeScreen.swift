@@ -52,18 +52,37 @@ struct HomeScreen: View {
                 Text("Time Remaining: \(Int(timerManager.remainingTime)) seconds")
                     .font(.headline)
                     .padding()
-            }
-            
-            Button("Start Reading Session") {
-                showingBottomSheet = true
-            }
-            .buttonStyle(.borderedProminent)
-            .padding(.bottom, 30)
-            .sheet(isPresented: $showingBottomSheet) {
-                BottomSheetView().environmentObject(timerManager)
+                Button("Stop Session") {
+                    timerManager.requestStopTimer()
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.bottom, 30)
+                .alert(isPresented: $timerManager.showStopAlert) {
+                    Alert(title: Text("Are you sure?"),
+                          message: Text("Do you want to stop the current reading session?"),
+                          primaryButton: .destructive(Text("Stop")) {
+                        timerManager.stopTimer()
+                    },
+                          secondaryButton: .cancel())
+                }
+            } else {
+                Button("Start Reading Session") {
+                    showingBottomSheet = true
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.bottom, 30)
+                .sheet(isPresented: $showingBottomSheet) {
+                    BottomSheetView()
+                        .environmentObject(timerManager)
+                }
             }
         }
         .padding(.horizontal, 16)
+        .onDisappear {
+            if timerManager.isActive {
+                timerManager.stopTimer()
+            }
+        }
     }
 }
 

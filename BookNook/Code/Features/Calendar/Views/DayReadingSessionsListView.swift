@@ -4,6 +4,7 @@ import SwiftData
 struct DaysReadingSessionsListView: View {
     @Binding var dateSelected: DateComponents?
     @Query private var foundSessions: [ReadingSession]
+    @State var isUpdatingSession: Bool = false
 
     init(dateSelected: Binding<DateComponents?>) {
         self._dateSelected = dateSelected
@@ -30,6 +31,12 @@ struct DaysReadingSessionsListView: View {
                 if let _ = dateSelected?.date {
                     List(foundSessions, id: \.self) { session in
                         ReadingSessionListViewRow(session: session)
+                            .onTapGesture {
+                                isUpdatingSession = true
+                            }
+                            .sheet(isPresented: $isUpdatingSession) {
+                                UpdateReadingSessionView(session: session)
+                            }
                             .swipeActions {
                                 Button(role: .destructive) {
                                     deleteSession(session)

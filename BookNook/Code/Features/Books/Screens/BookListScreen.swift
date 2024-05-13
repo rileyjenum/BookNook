@@ -11,6 +11,15 @@ import SwiftData
 struct BooksListScreen: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @State private var showingAddBook = false
+    
+    
+    init() {
+        _books = Query(
+            filter: #Predicate<Book> { book in true},
+            sort: [SortDescriptor(\Book.title)]
+        )
+    }
+    
 
     var body: some View {
         NavigationView {

@@ -19,62 +19,49 @@ struct ReadingSessionFormView: View {
     @State private var notes: String = ""
     @Query private var existingBooks: [Book] = []
     @Environment(\.dismiss) var dismiss
-    @FocusState private var focus: Bool?
 
-    var isFormIncomplete: Bool {
-        (isNewBook && (bookTitle.isEmpty || author.isEmpty)) || durationMinutes <= 0
-    }
-    
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
-                    DatePicker("Start Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
-                    TextField("Duration (in minutes)", value: $durationMinutes, format: .number)
-                        .keyboardType(.numberPad)
-                        .focused($focus, equals: true)
+            Form {
+                DatePicker("Start Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
+                TextField("Duration (in minutes)", value: $durationMinutes, format: .number)
+                    .keyboardType(.numberPad)
+                
+                Toggle(isOn: $isNewBook) {
+                    Text("Add New Book")
+                }
+                
+                if !isNewBook {
                     Picker("Select a Book", selection: $selectedBook) {
-                        Text("Add New Book").tag(nil as Book?)
                         ForEach(existingBooks, id: \.id) { book in
                             Text(book.title).tag(book as Book?)
                         }
                     }
-                    .onChange(of: selectedBook) { _ in
-                        isNewBook = selectedBook == nil
-                        bookTitle = selectedBook?.title ?? ""
-                        author = selectedBook?.author ?? ""
+                    .onChange(of: selectedBook) { newValue in
+                        bookTitle = newValue?.title ?? ""
+                        author = newValue?.author ?? ""
                     }
-                    if isNewBook {
-                        TextField("Book Title", text: $bookTitle)
-                        TextField("Author", text: $author)
-                    }
-                    TextEditor(text: $notes)
-                        .frame(height: 100)
-                    Section(footer:
-                                HStack {
-                                    Spacer()
-                                    Button("Add Session") {
-                                        createSession()
-                                    }
-                                    .buttonStyle(.borderedProminent)
-                                    .disabled(isFormIncomplete)
-                                    Spacer()
-                                }) {
-                        EmptyView()
-                    }
+                } else {
+                    TextField("Book Title", text: $bookTitle)
+                    TextField("Author", text: $author)
                 }
+                
+                TextEditor(text: $notes)
+                    .frame(height: 100)
+                
+                Button("Add Session") {
+                    createSession()
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled((isNewBook && (bookTitle.isEmpty || author.isEmpty)) || durationMinutes <= 0)
             }
             .navigationTitle("New Session")
-            .onAppear {
-                focus = true
-            }
         }
     }
 
-
     private func createSession() {
         let book: Book
-        if let selectedBook = selectedBook {
+        if !isNewBook, let selectedBook = selectedBook {
             book = selectedBook
         } else {
             let newBook = Book(title: bookTitle, author: author)
@@ -88,7 +75,9 @@ struct ReadingSessionFormView: View {
             book: book,
             notes: notes
         )
+        book.sessions.append(newSession)
         context.insert(newSession)
+        try? context.save()
         dismiss()
     }
 }

@@ -57,14 +57,18 @@ struct BottomSheetView: View {
                         } else {
                             saveSession()
                         }
+                    } else {
+                        showError = true
+                        errorMessage = "Please fill in all fields."
                     }
                 }
-
             }
             .navigationBarTitle("New Reading Session", displayMode: .inline)
             .toolbar {
-                Button("Dismiss") {
-                    dismiss()
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Dismiss") {
+                        dismiss()
+                    }
                 }
             }
             .alert(isPresented: $showError) {
@@ -90,20 +94,32 @@ struct BottomSheetView: View {
     }
 
     private func saveSession() {
-        let book: Book
-        if selectedBookIndex > 0 {
-            book = books[selectedBookIndex - 1]
-        } else {
-            book = Book(title: newBookTitle, author: newAuthor)
-            context.insert(book)
+        do {
+            let book: Book
+            if selectedBookIndex > 0 {
+                book = books[selectedBookIndex - 1]
+            } else {
+                book = Book(title: newBookTitle, author: newAuthor)
+                context.insert(book)
+            }
+
+            let newSession = ReadingSession(startTime: Date(), duration: duration, book: book, notes: notes)
+            context.insert(newSession)
+            try context.save()
+
+            timerManager.startTimer(session: newSession)
+            dismiss()
+        } catch {
+            showError = true
+            errorMessage = "Failed to save session: \(error.localizedDescription)"
         }
-
-        let newSession = ReadingSession(startTime: Date(), duration: duration, book: book, notes: notes)
-        book.sessions.append(newSession)
-        context.insert(newSession)
-
-        timerManager.startTimer(session: newSession)
-        
-        dismiss()
     }
 }
+
+struct BottomSheetView_Previews: PreviewProvider {
+    static var previews: some View {
+        BottomSheetView()
+            .environmentObject(TimerManager())
+    }
+}
+

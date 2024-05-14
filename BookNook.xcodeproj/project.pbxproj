@@ -11,6 +11,7 @@
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
+		51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B902BF36A9300F75F86 /* UpdateBookView.swift */; };
 		51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DC2BEEB13E000D672C /* BookNookApp.swift */; };
 		51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DE2BEEB13E000D672C /* ContentView.swift */; };
 		51AD10E62BEEB13F000D672C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51AD10E52BEEB13F000D672C /* Preview Assets.xcassets */; };
@@ -59,6 +60,7 @@
 		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
+		51731B902BF36A9300F75F86 /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
 		51AD10D92BEEB13E000D672C /* BookNook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookNook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AD10DC2BEEB13E000D672C /* BookNookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookApp.swift; sourceTree = "<group>"; };
 		51AD10DE2BEEB13E000D672C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				51AD112F2BEEB586000D672C /* BlurView.swift */,
 				51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */,
 				5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */,
+				51731B902BF36A9300F75F86 /* UpdateBookView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				51AD11122BEEB2BB000D672C /* Extensions.swift in Sources */,
 				51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */,
 				5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */,
+				51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */,
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,

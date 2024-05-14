@@ -14,8 +14,7 @@ class Book: Identifiable, Hashable {
     var title: String
     var author: String
 
-    // One-to-many relationship
-    @Relationship var sessions: [ReadingSession]
+    @Relationship(deleteRule: .cascade, inverse: \ReadingSession.book) var sessions: [ReadingSession]
 
     init(id: String = UUID().uuidString, title: String, author: String, sessions: [ReadingSession] = []) {
         self.id = id

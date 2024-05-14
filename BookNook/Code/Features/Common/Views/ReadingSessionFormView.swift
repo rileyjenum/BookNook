@@ -82,6 +82,7 @@ struct ReadingSessionFormView: View {
         } else {
             let newBook = Book(title: bookTitle, author: author)
             context.insert(newBook)
+            try? context.save()
             book = newBook
         }
 

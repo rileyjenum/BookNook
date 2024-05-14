@@ -10,21 +10,17 @@ import SwiftData
 
 struct BooksListScreen: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
+    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
     @State private var showingAddBook = false
-    
-    
-    init() {
-        _books = Query(
-            filter: #Predicate<Book> { book in true},
-            sort: [SortDescriptor(\Book.title)]
-        )
-    }
-    
+    @Environment(\.modelContext) var context
 
     var body: some View {
         NavigationView {
-            List(books, id: \.id) { book in
-                BookRow(book: book)
+            List {
+                ForEach(books, id: \.id) { book in
+                    BookRow(book: book, sessions: sessions.filter { $0.book.id == book.id })
+                }
+                .onDelete(perform: deleteBooks)
             }
             .navigationTitle("Books List")
             .toolbar {
@@ -41,16 +37,59 @@ struct BooksListScreen: View {
             }
         }
     }
+
+    func deleteBooks(at offsets: IndexSet) {
+        for index in offsets {
+            let book = books[index]
+            deleteBook(book: book)
+        }
+    }
+
+    func deleteBook(book: Book) {
+        // First, delete all associated sessions
+        for session in book.sessions {
+            context.delete(session)
+        }
+
+        // Now delete the book
+        context.delete(book)
+
+        // Save context
+        do {
+            try context.save()
+        } catch {
+            print("Failed to delete book and its sessions: \(error.localizedDescription)")
+        }
+    }
 }
 
 struct BookRow: View {
     var book: Book
+    var sessions: [ReadingSession]
+    @Environment(\.modelContext) var context
 
     var body: some View {
-        DisclosureGroup("\(book.title) (\(book.sessions.count) sessions)") {
-            ForEach(book.sessions, id: \.id) { session in
+        DisclosureGroup("\(book.title) (\(sessions.count) sessions)") {
+            ForEach(sessions, id: \.id) { session in
                 SessionView(session: session)
             }
+            .onDelete(perform: deleteSessions)
+        }
+    }
+
+    func deleteSessions(at offsets: IndexSet) {
+        for index in offsets {
+            let session = sessions[index]
+            deleteSession(session: session)
+        }
+    }
+
+    func deleteSession(session: ReadingSession) {
+        context.delete(session)
+        do {
+            try context.save()
+        } catch {
+            print("Failed to delete session: \(error.localizedDescription)")
         }
     }
 }
@@ -59,7 +98,12 @@ struct SessionView: View {
     var session: ReadingSession
 
     var body: some View {
-        Text("Session on \(session.startTime, formatter: Formatter.item)")
+        VStack(alignment: .leading) {
+            Text("Session on \(session.startTime, formatter: Formatter.item)")
+            Text("Duration: \(session.duration) seconds")
+            Text("Notes: \(session.notes)")
+        }
+        .padding()
     }
 }
 
@@ -67,7 +111,7 @@ struct Formatter {
     static let item: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
-        formatter.timeStyle = .none
+        formatter.timeStyle = .short
         return formatter
     }()
 }

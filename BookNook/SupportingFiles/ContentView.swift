@@ -12,29 +12,30 @@ import SplineRuntime
 import SwiftUI
 
 struct ContentView: View {
-//    @Query var foundSessions: [ReadingSession]
-//    @Query var foundBooks: [Book]
-//    @Environment(\.modelContext) var context
+    @Query var foundSessions: [ReadingSession]
+    @Query var foundBooks: [Book]
+    @Environment(\.modelContext) var context
 
     var body: some View {
         MainTabbedView()
             .environmentObject(TimerManager())
-//
-//            .onAppear {
-//                do {
-//                    for object in foundSessions {
-//                        print("deleted")
+
+            .onAppear {
+                do {
+                    for object in foundSessions {
+                        print(object)
 //                        context.delete(object)
-//                        for book in foundBooks {
-//                            context.delete(book)
-//
-//                        }
-//                    }
-//                    try context.save()
-//                } catch {
-//                    print("Failed to delete all objects: \(error)")
-//                }
-//            }
+
+                    }
+                    for book in foundBooks {
+//                        context.delete(book)
+                        print(book)
+                    }
+                    try context.save()
+                } catch {
+                    print("Failed to delete all objects: \(error)")
+                }
+            }
     }
 }
 

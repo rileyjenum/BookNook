@@ -8,17 +8,34 @@
 import SwiftUI
 import SwiftData
 
+import SwiftUI
+import SwiftData
+
 struct BooksListScreen: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
     @State private var showingAddBook = false
+    @State private var selectedBook: Book?
+    @State private var selectedSession: ReadingSession?
     @Environment(\.modelContext) var context
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(books, id: \.id) { book in
-                    BookRow(book: book, sessions: sessions.filter { $0.book.id == book.id })
+                    BookRow(book: book, sessions: sessions.filter { $0.book.id == book.id }, onEditSession: { session in
+                        selectedSession = session
+                    })
+                        .contextMenu {
+                            Button("Edit Book") {
+                                selectedBook = book
+                            }
+                            Button(role: .destructive) {
+                                deleteBook(book: book)
+                            } label: {
+                                Text("Delete Book")
+                            }
+                        }
                 }
                 .onDelete(perform: deleteBooks)
             }
@@ -34,6 +51,12 @@ struct BooksListScreen: View {
             }
             .sheet(isPresented: $showingAddBook) {
                 NewBookView()
+            }
+            .sheet(item: $selectedBook) { book in
+                UpdateBookView(book: book)
+            }
+            .sheet(item: $selectedSession) { session in
+                UpdateReadingSessionView(session: session)
             }
         }
     }
@@ -63,15 +86,30 @@ struct BooksListScreen: View {
     }
 }
 
+
+
 struct BookRow: View {
     var book: Book
     var sessions: [ReadingSession]
     @Environment(\.modelContext) var context
+    @State private var selectedSession: ReadingSession?
+    var onEditSession: (ReadingSession) -> Void
 
     var body: some View {
         DisclosureGroup("\(book.title) (\(sessions.count) sessions)") {
             ForEach(sessions, id: \.id) { session in
                 SessionView(session: session)
+                    .contextMenu {
+                        Button("Edit Session") {
+                            selectedSession = session
+                            onEditSession(session)
+                        }
+                        Button(role: .destructive) {
+                            deleteSession(session: session)
+                        } label: {
+                            Text("Delete Session")
+                        }
+                    }
             }
             .onDelete(perform: deleteSessions)
         }
@@ -94,8 +132,10 @@ struct BookRow: View {
     }
 }
 
+
+
 struct SessionView: View {
-    var session: ReadingSession
+    @Bindable var session: ReadingSession
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -115,6 +155,7 @@ struct Formatter {
         return formatter
     }()
 }
+
 
 struct BooksListScreen_Previews: PreviewProvider {
     static var previews: some View {

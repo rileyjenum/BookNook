@@ -10,7 +10,6 @@ struct BottomSheetView: View {
     @State private var newBookTitle: String = ""
     @State private var newAuthor: String = ""
     @State private var notes: String = ""
-    @State private var duration: TimeInterval = 300 // Default to 5 minutes
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
 
@@ -43,11 +42,6 @@ struct BottomSheetView: View {
 
                 TextField("Notes", text: $notes)
 
-                Text("Duration: \(durationString(duration))").padding()
-                Slider(value: $duration, in: 300...18000, step: 300) {
-                    Text("Adjust Duration")
-                }
-
                 Button("Start Session") {
                     if canStartSession() {
                         // Only check for duplicates if a new book is being added
@@ -79,12 +73,6 @@ struct BottomSheetView: View {
         }
     }
 
-    private func durationString(_ duration: TimeInterval) -> String {
-        let hours = Int(duration) / 3600
-        let minutes = Int(duration) % 3600 / 60
-        return "\(hours) hr \(minutes) min"
-    }
-
     private func canStartSession() -> Bool {
         !(newBookTitle.isEmpty || newAuthor.isEmpty)
     }
@@ -103,7 +91,7 @@ struct BottomSheetView: View {
                 context.insert(book)
             }
 
-            let newSession = ReadingSession(startTime: Date(), duration: duration, book: book, notes: notes)
+            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: notes)
             context.insert(newSession)
             try context.save()
 

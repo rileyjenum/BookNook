@@ -9,15 +9,12 @@ import SwiftUI
 import SplineRuntime
 import SwiftData
 
-
 struct HomeScreen: View {
     @EnvironmentObject var timerManager: TimerManager
-
-    
     @State var showingBottomSheet = false
-    
+
     var body: some View {
-        VStack() {
+        VStack {
             TopTitleView()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -39,17 +36,15 @@ struct HomeScreen: View {
                                 .scaleEffect(phase.isIdentity ? 1 : 0.75)
                         }
                     }
-                    
                 }
                 .frame(height: 400)
                 .scrollTargetLayout()
             }
             .contentMargins(64, for: .scrollContent)
             .scrollTargetBehavior(.viewAligned)
-            
-            
+
             if timerManager.isActive {
-                Text("Time Remaining: \(Int(timerManager.remainingTime)) seconds")
+                Text("Elapsed Time: \(Int(timerManager.elapsedTime)) seconds")
                     .font(.headline)
                     .padding()
                 Button("Stop Session") {
@@ -93,9 +88,7 @@ struct Item: Identifiable {
 
 struct itemsData {
     static var items = [
-        
         Item(url: "https://build.spline.design/UU0-Uxi0XX7oJ1jNz-b7/scene.splineswift"),
-        
         Item(url: "https://build.spline.design/VBbgq2x2SjCnmhZeL8q3/scene.splineswift")
     ]
 }

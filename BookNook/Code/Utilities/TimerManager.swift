@@ -10,7 +10,7 @@ import Combine
 
 class TimerManager: ObservableObject {
     @Published var isActive: Bool = false
-    @Published var remainingTime: TimeInterval = 0
+    @Published var elapsedTime: TimeInterval = 0
     @Published var showStopAlert: Bool = false
     var timer: Timer?
     var sessionStartTime: Date?
@@ -19,15 +19,11 @@ class TimerManager: ObservableObject {
     func startTimer(session: ReadingSession) {
         self.currentSession = session
         sessionStartTime = Date() // Store the start time when the timer starts
-        remainingTime = session.duration
+        elapsedTime = 0
         isActive = true
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-            if self.remainingTime > 0 {
-                self.remainingTime -= 1
-            } else {
-                self.stopTimer()
-            }
+            self.elapsedTime += 1
         }
     }
 

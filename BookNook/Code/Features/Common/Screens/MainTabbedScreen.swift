@@ -24,7 +24,7 @@ struct MainTabbedView: View {
                     .tag(1)
                 CalendarScreen()
                     .tag(2)
-                SettingsScreen() // Assuming this is the correct screen name
+                BookSearchScreen()
                     .tag(3)
             }
             

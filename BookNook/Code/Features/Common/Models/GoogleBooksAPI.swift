@@ -35,9 +35,9 @@ struct ImageLinks: Codable {
 struct GoogleBooksAPI {
     let apiKey = "AIzaSyAJXzZqEnc0PV685KeLWv4ndyl4pax4NUo"
     let baseURL = "https://www.googleapis.com/books/v1/volumes"
-    
-    func searchBooks(query: String, completion: @escaping (Result<[BookResponse], Error>) -> Void) {
-        let urlString = "\(baseURL)?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&key=\(apiKey)"
+
+    func searchBooks(query: String,language: String,sort: String, completion: @escaping (Result<[BookResponse], Error>) -> Void) {
+        let urlString = "\(baseURL)?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&langRestrict=\(language)&orderBy=\(sort)&key=\(apiKey)"
         print(urlString)
         
         guard let url = URL(string: urlString) else {

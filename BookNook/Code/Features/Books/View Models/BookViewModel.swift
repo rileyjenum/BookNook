@@ -12,13 +12,15 @@ class BookViewModel: ObservableObject {
     @Published var books: [Book] = []
     private let googleBooksAPI = GoogleBooksAPI()
 
-    func searchBooks(query: String) {
-        googleBooksAPI.searchBooks(query: query) { [weak self] result in
+    func searchBooks(query: String, language: String, sort: String) {
+        googleBooksAPI.searchBooks(query: query, language: language, sort: sort) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let bookResponses):
                     self?.books = bookResponses.map { response in
-                        Book(
+                        // Ensure HTTPS URL
+                        let coverImageUrl = response.volumeInfo.imageLinks?.thumbnail?.replacingOccurrences(of: "http://", with: "https://")
+                        return Book(
                             id: response.id,
                             title: response.volumeInfo.title,
                             author: response.volumeInfo.authors?.joined(separator: ", ") ?? "Unknown",
@@ -27,7 +29,7 @@ class BookViewModel: ObservableObject {
                             publishedDate: response.volumeInfo.publishedDate,
                             pageCount: response.volumeInfo.pageCount,
                             categories: response.volumeInfo.categories,
-                            coverImageUrl: response.volumeInfo.imageLinks?.thumbnail
+                            coverImageUrl: coverImageUrl
                         )
                     }
                 case .failure(let error):
@@ -37,5 +39,6 @@ class BookViewModel: ObservableObject {
         }
     }
 }
+
 
 

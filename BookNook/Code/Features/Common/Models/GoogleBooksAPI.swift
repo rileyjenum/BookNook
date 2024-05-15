@@ -33,11 +33,12 @@ struct ImageLinks: Codable {
 }
 
 struct GoogleBooksAPI {
-    let apiKey = "YOUR_API_KEY"
+    let apiKey = "AIzaSyAJXzZqEnc0PV685KeLWv4ndyl4pax4NUo"
     let baseURL = "https://www.googleapis.com/books/v1/volumes"
     
     func searchBooks(query: String, completion: @escaping (Result<[BookResponse], Error>) -> Void) {
         let urlString = "\(baseURL)?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&key=\(apiKey)"
+        print(urlString)
         
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
@@ -58,6 +59,7 @@ struct GoogleBooksAPI {
             do {
                 let response = try JSONDecoder().decode(VolumeResponse.self, from: data)
                 completion(.success(response.items ?? []))
+                print(response.items?.count)
             } catch {
                 completion(.failure(error))
             }

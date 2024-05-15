@@ -14,7 +14,7 @@ import SwiftData
 struct BooksListScreen: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
-    @State private var showingAddBook = false
+    @State private var showingSearchBook = false
     @State private var selectedBook: Book?
     @State private var selectedSession: ReadingSession?
     @Environment(\.modelContext) var context
@@ -43,14 +43,14 @@ struct BooksListScreen: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        showingAddBook = true
+                        showingSearchBook = true
                     }) {
-                        Label("Add Book", systemImage: "plus")
+                        Label("Add Book", systemImage: "magnifyingglass")
                     }
                 }
             }
-            .sheet(isPresented: $showingAddBook) {
-                NewBookView()
+            .sheet(isPresented: $showingSearchBook) {
+                BookSearchScreen()
             }
             .sheet(item: $selectedBook) { book in
                 UpdateBookView(book: book)

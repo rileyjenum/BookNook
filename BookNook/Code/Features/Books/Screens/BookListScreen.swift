@@ -5,8 +5,12 @@
 //  Created by Riley Jenum on 10/05/24.
 //
 
-import SwiftUI
-import SwiftData
+//
+//  BookListScreen.swift
+//  BookNook
+//
+//  Created by Riley Jenum on 10/05/24.
+//
 
 import SwiftUI
 import SwiftData
@@ -14,49 +18,55 @@ import SwiftData
 struct BooksListScreen: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
-    @State private var showingAddBook = false
+    @State private var showingSearchBook = false
     @State private var selectedBook: Book?
-    @State private var selectedSession: ReadingSession?
     @Environment(\.modelContext) var context
+
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(books, id: \.id) { book in
-                    BookRow(book: book, sessions: sessions.filter { $0.book.id == book.id }, onEditSession: { session in
-                        selectedSession = session
-                    })
-                        .contextMenu {
-                            Button("Edit Book") {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(books, id: \.id) { book in
+                        BookCoverView(book: book)
+                            .aspectRatio(1, contentMode: .fill)
+                            .clipped()
+                            .onTapGesture {
                                 selectedBook = book
                             }
-                            Button(role: .destructive) {
-                                deleteBook(book: book)
-                            } label: {
-                                Text("Delete Book")
+                            .contextMenu {
+                                Button("Edit Book") {
+                                    selectedBook = book
+                                }
+                                Button(role: .destructive) {
+                                    deleteBook(book: book)
+                                } label: {
+                                    Text("Delete Book")
+                                }
                             }
-                        }
+                    }
                 }
-                .onDelete(perform: deleteBooks)
+                .padding()
             }
-            .navigationTitle("Books List")
+            .navigationTitle("Your bookshelf")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        showingAddBook = true
+                        showingSearchBook = true
                     }) {
-                        Label("Add Book", systemImage: "plus")
+                        Label("Add Book", systemImage: "magnifyingglass")
                     }
                 }
             }
-            .sheet(isPresented: $showingAddBook) {
-                NewBookView()
+            .sheet(isPresented: $showingSearchBook) {
+                BookSearchScreen(showingSearchBook: $showingSearchBook)
             }
             .sheet(item: $selectedBook) { book in
-                UpdateBookView(book: book)
-            }
-            .sheet(item: $selectedSession) { session in
-                UpdateReadingSessionView(session: session)
+                BookDetailView(book: book, sessions: sessions.filter { $0.book.id == book.id })
             }
         }
     }
@@ -86,32 +96,68 @@ struct BooksListScreen: View {
     }
 }
 
+struct BookCoverView: View {
+    var book: Book
 
+    var body: some View {
+        ZStack {
+            if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    ProgressView()
+                }
+            } else {
+                Color.gray.opacity(0.3)
+                Text(book.title)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.black)
+                    .padding()
+            }
+        }
+        .frame(width: 150, height: 225)
+        .cornerRadius(3)
+        .shadow(radius: 4)
+    }
+}
 
-struct BookRow: View {
+struct BookDetailView: View {
     var book: Book
     var sessions: [ReadingSession]
     @Environment(\.modelContext) var context
-    @State private var selectedSession: ReadingSession?
-    var onEditSession: (ReadingSession) -> Void
 
     var body: some View {
-        DisclosureGroup("\(book.title) (\(sessions.count) sessions)") {
-            ForEach(sessions, id: \.id) { session in
-                SessionView(session: session)
-                    .contextMenu {
-                        Button("Edit Session") {
-                            selectedSession = session
-                            onEditSession(session)
+        VStack {
+            Text(book.title)
+                .font(.largeTitle)
+                .padding()
+
+            List {
+                ForEach(sessions, id: \.id) { session in
+                    SessionView(session: session)
+                        .contextMenu {
+                            Button("Edit Session") {
+                                // Handle edit session
+                            }
+                            Button(role: .destructive) {
+                                deleteSession(session: session)
+                            } label: {
+                                Text("Delete Session")
+                            }
                         }
-                        Button(role: .destructive) {
-                            deleteSession(session: session)
-                        } label: {
-                            Text("Delete Session")
-                        }
-                    }
+                }
+                .onDelete(perform: deleteSessions)
             }
-            .onDelete(perform: deleteSessions)
+        }
+        .navigationTitle("Sessions")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Back") {
+                    // Handle back action
+                }
+            }
         }
     }
 
@@ -131,8 +177,6 @@ struct BookRow: View {
         }
     }
 }
-
-
 
 struct SessionView: View {
     @Bindable var session: ReadingSession

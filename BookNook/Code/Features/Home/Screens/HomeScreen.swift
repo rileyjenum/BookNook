@@ -67,7 +67,7 @@ struct HomeScreen: View {
                 .buttonStyle(.borderedProminent)
                 .padding(.bottom, 30)
                 .sheet(isPresented: $showingBottomSheet) {
-                    BottomSheetView()
+                    CreateSessionView()
                         .environmentObject(timerManager)
                 }
             }
@@ -96,5 +96,7 @@ struct itemsData {
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
         HomeScreen()
+            .environmentObject(TimerManager())
+
     }
 }

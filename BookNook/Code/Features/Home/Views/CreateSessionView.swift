@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftData
 
-struct BottomSheetView: View {
+struct CreateSessionView: View {
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var timerManager: TimerManager
@@ -106,7 +106,7 @@ struct BottomSheetView: View {
 
 struct BottomSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        BottomSheetView()
+        CreateSessionView()
             .environmentObject(TimerManager())
     }
 }

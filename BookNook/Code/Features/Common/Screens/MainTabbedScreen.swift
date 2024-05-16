@@ -17,7 +17,7 @@ struct MainTabbedView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: $selectedTab) {
-                HomeScreen()
+                HomeScreen2()
                     .tag(0)
                     .environmentObject(timerManager)
                 BooksListScreen()

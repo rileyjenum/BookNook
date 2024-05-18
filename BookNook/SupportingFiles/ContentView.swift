@@ -22,9 +22,9 @@ struct ContentView: View {
 
             .onAppear {
                 do {
-                    for object in foundSessions {
-                        print(object)
-//                        context.delete(object)
+                    for session in foundSessions {
+                        print(session)
+//                        context.delete(session)
 
                     }
                     for book in foundBooks {

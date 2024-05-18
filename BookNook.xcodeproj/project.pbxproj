@@ -43,6 +43,7 @@
 		51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */; };
 		51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */; };
 		51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */; };
+		51D2E43E2BF90053008798FA /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E43D2BF90053008798FA /* DiscoverScreen.swift */; };
 		51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1632BF6300D0049144A /* HomeScreen2.swift */; };
 		51ECD1662BF630E20049144A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1652BF630E20049144A /* HomeView.swift */; };
 /* End PBXBuildFile section */
@@ -103,6 +104,7 @@
 		51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Sonder(chosic.com).mp3"; sourceTree = "<group>"; };
 		51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Colorful-Flowers(chosic.com).mp3"; sourceTree = "<group>"; };
+		51D2E43D2BF90053008798FA /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		51ECD1632BF6300D0049144A /* HomeScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen2.swift; sourceTree = "<group>"; };
 		51ECD1652BF630E20049144A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				51AD11132BEEB2EC000D672C /* Common */,
+				51D2E43A2BF8FF4E008798FA /* Discover */,
 				51AD11172BEEB312000D672C /* Home */,
 				51AD11162BEEB307000D672C /* Books */,
 				51AD11152BEEB301000D672C /* Calendar */,
@@ -451,6 +454,30 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		51D2E43A2BF8FF4E008798FA /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				51D2E43C2BF8FF5E008798FA /* Screens */,
+				51D2E43B2BF8FF56008798FA /* Views */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
+		51D2E43B2BF8FF56008798FA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		51D2E43C2BF8FF5E008798FA /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				51D2E43D2BF90053008798FA /* DiscoverScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -603,6 +630,7 @@
 				5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */,
 				51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */,
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
+				51D2E43E2BF90053008798FA /* DiscoverScreen.swift in Sources */,
 				51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,

@@ -39,6 +39,8 @@ struct HomeView: View {
                     .transition(.opacity)
             }
             Spacer()
+            AudioPlayerView()
+
         }
 //        .preferredColorScheme(.dark)
         .padding()

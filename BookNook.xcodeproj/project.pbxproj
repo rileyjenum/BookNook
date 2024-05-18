@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5126F62F2BF1547700DFB2E3 /* HorizonCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 5126F62E2BF1547700DFB2E3 /* HorizonCalendar */; };
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
@@ -40,6 +39,10 @@
 		51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */; };
 		51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ADD5742BF1F0860023DEFE /* NewBookView.swift */; };
 		51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ADD5762BF206520023DEFE /* SettingsScreen.swift */; };
+		51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */; };
+		51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */; };
+		51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */; };
+		51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */; };
 		51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1632BF6300D0049144A /* HomeScreen2.swift */; };
 		51ECD1662BF630E20049144A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1652BF630E20049144A /* HomeView.swift */; };
 /* End PBXBuildFile section */
@@ -96,6 +99,10 @@
 		51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionFormView.swift; sourceTree = "<group>"; };
 		51ADD5742BF1F0860023DEFE /* NewBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookView.swift; sourceTree = "<group>"; };
 		51ADD5762BF206520023DEFE /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Sonder(chosic.com).mp3"; sourceTree = "<group>"; };
+		51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Colorful-Flowers(chosic.com).mp3"; sourceTree = "<group>"; };
 		51ECD1632BF6300D0049144A /* HomeScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen2.swift; sourceTree = "<group>"; };
 		51ECD1652BF630E20049144A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,7 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5126F62F2BF1547700DFB2E3 /* HorizonCalendar in Frameworks */,
 				51AD110A2BEEB1A6000D672C /* SplineRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +222,7 @@
 		51AD110D2BEEB1E6000D672C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				51D2E4332BF8CF84008798FA /* Audio */,
 				51AD112C2BEEB45A000D672C /* Images */,
 			);
 			path = Resources;
@@ -236,6 +243,7 @@
 				51AD11112BEEB2BB000D672C /* Extensions.swift */,
 				51AD11452BEF68C7000D672C /* Enums.swift */,
 				5126F6382BF1790C00DFB2E3 /* TimerManager.swift */,
+				51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -349,6 +357,7 @@
 				51AD11352BEEB8A8000D672C /* CreateSessionView.swift */,
 				51AD11392BEEB9BF000D672C /* TopTitleView.swift */,
 				51ECD1652BF630E20049144A /* HomeView.swift */,
+				51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -433,6 +442,15 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		51D2E4332BF8CF84008798FA /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */,
+				51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -451,7 +469,6 @@
 			name = BookNook;
 			packageProductDependencies = (
 				51AD11092BEEB1A6000D672C /* SplineRuntime */,
-				5126F62E2BF1547700DFB2E3 /* HorizonCalendar */,
 			);
 			productName = BookNook;
 			productReference = 51AD10D92BEEB13E000D672C /* BookNook.app */;
@@ -527,7 +544,6 @@
 			mainGroup = 51AD10D02BEEB13E000D672C;
 			packageReferences = (
 				51AD11082BEEB1A6000D672C /* XCRemoteSwiftPackageReference "spline-ios" */,
-				5126F62D2BF1547700DFB2E3 /* XCRemoteSwiftPackageReference "HorizonCalendar" */,
 			);
 			productRefGroup = 51AD10DA2BEEB13E000D672C /* Products */;
 			projectDirPath = "";
@@ -545,6 +561,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */,
+				51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */,
 				51AD112E2BEEB46D000D672C /* AppIcon.xcassets in Resources */,
 				51AD10E62BEEB13F000D672C /* Preview Assets.xcassets in Resources */,
 			);
@@ -585,6 +603,7 @@
 				5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */,
 				51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */,
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
+				51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,
 				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
@@ -594,6 +613,7 @@
 				51731B982BF39D9F00F75F86 /* BookSearchScreen.swift in Sources */,
 				51AD11382BEEB907000D672C /* HomeScreen.swift in Sources */,
 				51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */,
+				51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */,
 				51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */,
 				51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */,
 				51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */,
@@ -930,14 +950,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5126F62D2BF1547700DFB2E3 /* XCRemoteSwiftPackageReference "HorizonCalendar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/HorizonCalendar.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		51AD11082BEEB1A6000D672C /* XCRemoteSwiftPackageReference "spline-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/splinetool/spline-ios";
@@ -949,11 +961,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5126F62E2BF1547700DFB2E3 /* HorizonCalendar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5126F62D2BF1547700DFB2E3 /* XCRemoteSwiftPackageReference "HorizonCalendar" */;
-			productName = HorizonCalendar;
-		};
 		51AD11092BEEB1A6000D672C /* SplineRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 51AD11082BEEB1A6000D672C /* XCRemoteSwiftPackageReference "spline-ios" */;

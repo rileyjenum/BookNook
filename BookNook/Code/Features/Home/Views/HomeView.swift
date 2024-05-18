@@ -16,6 +16,9 @@ struct HomeView: View {
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var timerManager: TimerManager
+    
+    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var allSessions: [ReadingSession]
+
 
     @State private var selectedBookIndex: Int = 0
     @State private var newBookTitle: String = ""
@@ -72,6 +75,8 @@ struct HomeView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                     .padding()
+                Text("Today's Reading Time: \(formattedTime(totalReadingTimeToday()))")
+
             }
             Spacer()
             Button(action: {
@@ -185,6 +190,17 @@ struct HomeView: View {
             showError = true
             errorMessage = "Failed to save session: \(error.localizedDescription)"
         }
+    }
+    
+    private func totalReadingTimeToday() -> TimeInterval {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: Date())
+
+        let todaySessions = allSessions.filter { session in
+            calendar.isDate(session.startTime, inSameDayAs: startOfDay)
+        }
+
+        return todaySessions.reduce(0) { $0 + $1.duration }
     }
 
     private func formattedTime(_ time: TimeInterval) -> String {

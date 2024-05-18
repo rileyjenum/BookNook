@@ -89,3 +89,14 @@ struct MainTabbedView: View {
         }
     }
 }
+
+struct MyView: View {
+    var body: some View {
+        MainTabbedView()
+            .environmentObject(TimerManager())
+    }
+}
+
+#Preview {
+    MyView()
+}

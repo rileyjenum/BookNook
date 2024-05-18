@@ -45,6 +45,8 @@ struct DaysReadingSessionsListView: View {
                                 }
                             }
                     }
+                    Text("Day's Reading Time: \(formattedTime(totalReadingTimeToday()))")
+
                 } else {
                     Text("No sessions found for the selected date.")
                         .foregroundColor(.gray)
@@ -55,10 +57,25 @@ struct DaysReadingSessionsListView: View {
     }
 
     private func deleteSession(_ session: ReadingSession) {
-        // Assuming each ReadingSession has a context property for deletion
         if let context = session.modelContext {
             context.delete(session)
         }
+    }
+    
+    private func totalReadingTimeToday() -> TimeInterval {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: Date())
+
+        let todaySessions = foundSessions.filter { session in
+            calendar.isDate(session.startTime, inSameDayAs: startOfDay)
+        }
+
+        return todaySessions.reduce(0) { $0 + $1.duration }
+    }
+    private func formattedTime(_ time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 

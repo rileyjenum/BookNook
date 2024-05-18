@@ -150,6 +150,8 @@ struct BookDetailView: View {
                 }
                 .onDelete(perform: deleteSessions)
             }
+            Text("Book Reading Time: \(formattedTime(totalBookReadingTime()))")
+
         }
         .navigationTitle("Sessions")
         .toolbar {
@@ -175,6 +177,16 @@ struct BookDetailView: View {
         } catch {
             print("Failed to delete session: \(error.localizedDescription)")
         }
+    }
+    private func totalBookReadingTime() -> TimeInterval {
+        let bookSessions =  sessions.filter { $0.book.id == book.id }
+        
+        return bookSessions.reduce(0) { $0 + $1.duration }
+    }
+    private func formattedTime(_ time: TimeInterval) -> String {
+        let minutes = Int(time) / 60
+        let seconds = Int(time) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
     }
 }
 

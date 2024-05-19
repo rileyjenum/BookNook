@@ -18,7 +18,7 @@ import SwiftData
 struct BooksListScreen: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
-    @State private var showingSearchBook = false
+//    @State private var showingSearchBook = false
     @State private var selectedBook: Book?
     @Environment(\.modelContext) var context
 
@@ -53,18 +53,18 @@ struct BooksListScreen: View {
                 .padding()
             }
             .navigationTitle("Your bookshelf")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showingSearchBook = true
-                    }) {
-                        Label("Add Book", systemImage: "magnifyingglass")
-                    }
-                }
-            }
-            .sheet(isPresented: $showingSearchBook) {
-                BookSearchScreen(showingSearchBook: $showingSearchBook)
-            }
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    Button(action: {
+//                        showingSearchBook = true
+//                    }) {
+//                        Label("Add Book", systemImage: "magnifyingglass")
+//                    }
+//                }
+//            }
+//            .sheet(isPresented: $showingSearchBook) {
+//                BookSearchScreen(showingSearchBook: $showingSearchBook)
+//            }
             .sheet(item: $selectedBook) { book in
                 BookDetailView(book: book, sessions: sessions.filter { $0.book.id == book.id })
             }

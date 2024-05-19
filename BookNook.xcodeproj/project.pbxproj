@@ -12,7 +12,7 @@
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B902BF36A9300F75F86 /* UpdateBookView.swift */; };
 		51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* BookViewModel.swift */; };
-		51731B982BF39D9F00F75F86 /* BookSearchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B972BF39D9F00F75F86 /* BookSearchScreen.swift */; };
+		51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */; };
 		51731B9A2BF39DEC00F75F86 /* GoogleBooksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B992BF39DEC00F75F86 /* GoogleBooksAPI.swift */; };
 		51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DC2BEEB13E000D672C /* BookNookApp.swift */; };
 		51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DE2BEEB13E000D672C /* ContentView.swift */; };
@@ -43,7 +43,6 @@
 		51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */; };
 		51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */; };
 		51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */; };
-		51D2E43E2BF90053008798FA /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E43D2BF90053008798FA /* DiscoverScreen.swift */; };
 		51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1632BF6300D0049144A /* HomeScreen2.swift */; };
 		51ECD1662BF630E20049144A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1652BF630E20049144A /* HomeView.swift */; };
 /* End PBXBuildFile section */
@@ -71,7 +70,7 @@
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51731B902BF36A9300F75F86 /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
 		51731B952BF39D7F00F75F86 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
-		51731B972BF39D9F00F75F86 /* BookSearchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchScreen.swift; sourceTree = "<group>"; };
+		51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		51731B992BF39DEC00F75F86 /* GoogleBooksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleBooksAPI.swift; sourceTree = "<group>"; };
 		51AD10D92BEEB13E000D672C /* BookNook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookNook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AD10DC2BEEB13E000D672C /* BookNookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookApp.swift; sourceTree = "<group>"; };
@@ -104,7 +103,6 @@
 		51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Sonder(chosic.com).mp3"; sourceTree = "<group>"; };
 		51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Colorful-Flowers(chosic.com).mp3"; sourceTree = "<group>"; };
-		51D2E43D2BF90053008798FA /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		51ECD1632BF6300D0049144A /* HomeScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen2.swift; sourceTree = "<group>"; };
 		51ECD1652BF630E20049144A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -375,7 +373,6 @@
 		51AD11202BEEB35D000D672C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				51731B972BF39D9F00F75F86 /* BookSearchScreen.swift */,
 				51AD113B2BEEC27C000D672C /* BookListScreen.swift */,
 			);
 			path = Screens;
@@ -473,7 +470,7 @@
 		51D2E43C2BF8FF5E008798FA /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				51D2E43D2BF90053008798FA /* DiscoverScreen.swift */,
+				51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -630,7 +627,6 @@
 				5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */,
 				51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */,
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
-				51D2E43E2BF90053008798FA /* DiscoverScreen.swift in Sources */,
 				51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,
@@ -638,7 +634,7 @@
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
 				51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
-				51731B982BF39D9F00F75F86 /* BookSearchScreen.swift in Sources */,
+				51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */,
 				51AD11382BEEB907000D672C /* HomeScreen.swift in Sources */,
 				51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */,
 				51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */,

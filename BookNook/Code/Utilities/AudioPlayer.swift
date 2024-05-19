@@ -9,8 +9,8 @@ import AVFoundation
 
 class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     var player: AVAudioPlayer?
-    private var audioFiles: [String] = []
-    private var shuffledFiles: [String] = []
+    private var audioFiles: [Song] = []
+    private var shuffledFiles: [Song] = []
     private var currentIndex: Int = 0
     var isShuffled: Bool = false
     
@@ -23,6 +23,7 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
         }
     }
     @Published var currentSongName: String = ""
+    @Published var currentArtistName: String = ""
     @Published var scrubbing = false
 
     override init() {
@@ -31,20 +32,25 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
     }
 
     private func loadAudioFiles() {
-        // Replace with the actual names of your audio files
-        audioFiles = ["Sonder(chosic.com)", "Colorful-Flowers(chosic.com)"]
+        // Replace with the actual names of your audio files and their artists
+        audioFiles = [
+            Song(title: "Sonder(chosic.com)", artist: "Artist 1"),
+            Song(title: "Colorful-Flowers(chosic.com)", artist: "Artist 2")
+        ]
+        
         shuffledFiles = audioFiles.shuffled()
     }
 
-    private var currentPlaylist: [String] {
+    private var currentPlaylist: [Song] {
         return isShuffled ? shuffledFiles : audioFiles
     }
 
     func play() {
         guard !currentPlaylist.isEmpty else { return }
-        let soundName = currentPlaylist[currentIndex]
-        currentSongName = soundName
-        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
+        let currentSong = currentPlaylist[currentIndex]
+        currentSongName = currentSong.title
+        currentArtistName = currentSong.artist
+        if let url = Bundle.main.url(forResource: currentSong.title, withExtension: "mp3") {
             do {
                 player = try AVAudioPlayer(contentsOf: url)
                 player?.volume = volume
@@ -129,4 +135,9 @@ class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
             skipForward()
         }
     }
+    struct Song {
+        let title: String
+        let artist: String
+    }
 }
+

@@ -18,8 +18,7 @@ struct AudioPlayerView: View {
                 ZStack(alignment: .bottomTrailing) {
                     if isExpanded {
                         expandedView
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                            .background(Color.white)
+                            .background(Color.clear)
                             .cornerRadius(20)
                             .shadow(radius: 10)
                             .transition(.move(edge: .bottom))
@@ -56,17 +55,22 @@ struct AudioPlayerView: View {
     
     private var expandedView: some View {
         VStack {
-            VStack(spacing: 20) {
-                Text(audioPlayer.currentSongName)
-                    .font(.title)
-                    .padding()
-                
-                HStack {
-                    Text(timeString(time: audioPlayer.currentTime))
-                    Spacer()
-                    Text(timeString(time: audioPlayer.duration))
+            HStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .frame(width: 50, height: 50)
+                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(audioPlayer.currentSongName)
+                        .font(.headline.bold())
+                    Text(audioPlayer.currentArtistName) // Display the artist name
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
-                
+                Spacer()
+            }
+            .padding(.bottom, 8)
+            
+            VStack {
                 Slider(
                     value: Binding(
                         get: { audioPlayer.currentTime },
@@ -83,14 +87,31 @@ struct AudioPlayerView: View {
                         }
                     }
                 )
-                
+                .accentColor(.gray) // Change the played portion color to gray
+                .foregroundColor(.secondary) // Change the remaining portion color to lighter gray
+                .frame(height: 10) // Adjust the slider height if needed
+                .padding(.horizontal) // Add padding to avoid clipping
+
                 HStack {
+                    Text(timeString(time: audioPlayer.currentTime))
+                    Spacer()
+                    Text(timeString(time: audioPlayer.duration))
+                }
+            }
+            .padding(.bottom, 20)
+            
+            HStack {
+                HStack(spacing: 28) {
+                    Button(action: {
+                        audioPlayer.toggleShuffle()
+                    }) {
+                        Image(systemName: "shuffle")
+                    }
+                    
                     Button(action: {
                         audioPlayer.skipBackward()
                     }) {
                         Image(systemName: "backward.fill")
-                            .font(.largeTitle)
-                            .padding()
                     }
                     
                     Button(action: {
@@ -102,42 +123,27 @@ struct AudioPlayerView: View {
                             audioPlayer.play()
                         }
                     }) {
-                        Image(systemName: audioPlayer.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                            .font(.largeTitle)
-                            .padding()
+                        Image(systemName: audioPlayer.isPlaying ? "pause.fill" : "play.fill")
                     }
+                }
+                .foregroundStyle(.secondary)
+                .font(.title)
+                                
+                HStack {
+                    Spacer()
                     
                     Button(action: {
                         audioPlayer.skipForward()
                     }) {
                         Image(systemName: "forward.fill")
-                            .font(.largeTitle)
-                            .padding()
                     }
+                    
+                    Spacer()
                 }
-                
-                Button(action: {
-                    audioPlayer.toggleShuffle()
-                }) {
-                    HStack {
-                        Image(systemName: "shuffle")
-                            .font(.title)
-                        Text(audioPlayer.isShuffled ? "Unshuffle" : "Shuffle")
-                            .font(.title2)
-                    }
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                }
-                .padding(.top)
+                .padding(.trailing, 50)
+                .foregroundStyle(.secondary)
+                .font(.title)
             }
-            .padding()
-            .background(Color(UIColor.systemGray6))
-            .cornerRadius(15)
-            .shadow(radius: 10)
-            .padding()
             
             Button(action: {
                 withAnimation {
@@ -146,10 +152,15 @@ struct AudioPlayerView: View {
             }) {
                 Image(systemName: "chevron.down.circle.fill")
                     .font(.largeTitle)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.gray)
                     .padding()
             }
         }
+        .padding()
+        .background(Color(UIColor.systemGray6))
+        .cornerRadius(15)
+        .shadow(radius: 10)
+        .padding()
     }
     
     private func timeString(time: TimeInterval) -> String {

@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 
-
 struct HomeView: View {
     @Namespace private var namespace
     @State private var show = false
@@ -18,12 +17,8 @@ struct HomeView: View {
     @EnvironmentObject var timerManager: TimerManager
     
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var allSessions: [ReadingSession]
-
-
+    
     @State private var selectedBookIndex: Int = 0
-    @State private var newBookTitle: String = ""
-    @State private var newAuthor: String = ""
-    @State private var notes: String = ""
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
 
@@ -40,9 +35,7 @@ struct HomeView: View {
             }
             Spacer()
             AudioPlayerView()
-
         }
-//        .preferredColorScheme(.dark)
         .padding()
         .mask(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -78,7 +71,6 @@ struct HomeView: View {
                     .foregroundColor(.black)
                     .padding()
                 Text("Today's Reading Time: \(formattedTime(totalReadingTimeToday()))")
-
             }
             Spacer()
             Button(action: {
@@ -110,43 +102,22 @@ struct HomeView: View {
     private func expandedView() -> some View {
         VStack(spacing: 16) {
             Picker("Select Book", selection: $selectedBookIndex) {
-                Text("Add New Book").tag(0)
                 ForEach(books.indices, id: \.self) { index in
-                    Text(books[index].title).tag(index + 1)
+                    Text(books[index].title).tag(index)
                 }
             }
             .onChange(of: selectedBookIndex) { newValue in
-                if newValue > 0 {
-                    newBookTitle = books[newValue - 1].title
-                    newAuthor = books[newValue - 1].author
-                } else {
-                    newBookTitle = ""
-                    newAuthor = ""
-                }
+                // No need to handle newBookTitle and newAuthor since we're not adding new books
             }
             .pickerStyle(MenuPickerStyle())
 
-            if selectedBookIndex == 0 {
-                TextField("Book Title", text: $newBookTitle)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Author", text: $newAuthor)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-            }
-
-            TextField("Notes", text: $notes)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
 
             Button("Start Session") {
                 if canStartSession() {
-                    if selectedBookIndex == 0 && isDuplicateTitle() {
-                        showError = true
-                        errorMessage = "A book with this title already exists. Please use a different title."
-                    } else {
-                        saveSession()
-                    }
+                    saveSession()
                 } else {
                     showError = true
-                    errorMessage = "Please fill in all fields."
+                    errorMessage = "Please select a book."
                 }
             }
             .buttonStyle(DefaultButtonStyle())
@@ -163,24 +134,13 @@ struct HomeView: View {
     }
     
     private func canStartSession() -> Bool {
-        !(newBookTitle.isEmpty || newAuthor.isEmpty)
-    }
-
-    private func isDuplicateTitle() -> Bool {
-        books.contains { $0.title.lowercased() == newBookTitle.lowercased() }
+        selectedBookIndex < books.count
     }
 
     private func saveSession() {
         do {
-            let book: Book
-            if selectedBookIndex > 0 {
-                book = books[selectedBookIndex - 1]
-            } else {
-                book = Book(title: newBookTitle, author: newAuthor)
-                context.insert(book)
-            }
-
-            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: notes)
+            let book = books[selectedBookIndex]
+            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: "")
             context.insert(newSession)
             try context.save()
 
@@ -218,4 +178,3 @@ struct HomeView_Previews: PreviewProvider {
             .environmentObject(TimerManager())
     }
 }
-

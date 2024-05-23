@@ -7,6 +7,23 @@
 
 import Foundation
 
+// MARK: - NYT Bestseller structs
+
+struct NYTBestsellerResponse: Codable {
+    let results: NYTResults
+}
+
+struct NYTResults: Codable {
+    let books: [NYTBook]
+}
+
+struct NYTBook: Codable {
+    let title: String
+    let author: String
+}
+
+// MARK: - Open Library structs
+
 struct OpenLibraryResponse: Codable {
     let docs: [OpenLibraryBookResponse]
 }
@@ -16,6 +33,7 @@ struct OpenLibraryBookResponse: Codable {
     let title: String
     let author_name: [String]?
 }
+// MARK: - Google Books structs
 
 struct VolumeResponse: Codable {
     let items: [GoogleBooksBookResponse]?
@@ -44,6 +62,8 @@ struct ImageLinks: Codable {
     let thumbnail: String?
 }
 
+// MARK: - Open Library API
+
 struct OpenLibraryAPI {
     let baseURL = "https://openlibrary.org/search.json"
 
@@ -70,7 +90,7 @@ struct OpenLibraryAPI {
             do {
                 let response = try JSONDecoder().decode(OpenLibraryResponse.self, from: data)
                 completion(.success(response.docs))
-                print(response.docs.count)
+                print(response.docs)
             } catch {
                 completion(.failure(error))
             }
@@ -79,14 +99,19 @@ struct OpenLibraryAPI {
     }
 }
 
+// MARK: - Google Books API
+
 struct GoogleBooksAPI {
     let apiKey = "AIzaSyAJXzZqEnc0PV685KeLWv4ndyl4pax4NUo"
     let baseURL = "https://www.googleapis.com/books/v1/volumes"
 
-    func searchBooks(query: String, sort: String = "relevance", completion: @escaping (Result<[GoogleBooksBookResponse], Error>) -> Void) {
-        let urlString = "\(baseURL)?q=\(query)&orderBy=\(sort)&key=\(apiKey)&maxResults=1&fields=items(id,volumeInfo(title,authors,description,publisher,publishedDate,pageCount,categories,imageLinks,averageRating,ratingsCount))"
+    func searchBookByTitleAndAuthor(title: String, author: String?, completion: @escaping (Result<GoogleBooksBookResponse?, Error>) -> Void) {
+        var query = "intitle:\(title)"
+        if let author = author {
+            query += "+inauthor:\(author)"
+        }
+        let urlString = "\(baseURL)?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&key=\(apiKey)&maxResults=1"
         print(urlString)
-        
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
@@ -105,8 +130,43 @@ struct GoogleBooksAPI {
             
             do {
                 let response = try JSONDecoder().decode(VolumeResponse.self, from: data)
-                completion(.success(response.items ?? []))
-                print(response.items?.count)
+                completion(.success(response.items?.first))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+}
+
+// MARK: - NYT Bestsellers API
+
+struct NewYorkTimesAPI {
+    let apiKey = "w4GYGiEF6tt8KtImLMGd52DzoFJ0k1SG"
+    let baseURL = "https://api.nytimes.com/svc/books/v3/lists/current/"
+
+    func fetchBestsellers(for category: String, completion: @escaping (Result<[NYTBook], Error>) -> Void) {
+        let urlString = "\(baseURL)\(category).json?api-key=\(apiKey)"
+        print(urlString)
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(NYTBestsellerResponse.self, from: data)
+                completion(.success(response.results.books))
             } catch {
                 completion(.failure(error))
             }

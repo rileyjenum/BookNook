@@ -5,72 +5,71 @@
 //  Created by Riley Jenum on 10/05/24.
 //
 
-//
-//  BookListScreen.swift
-//  BookNook
-//
-//  Created by Riley Jenum on 10/05/24.
-//
-
 import SwiftUI
 import SwiftData
+import SDWebImageSwiftUI
 
 struct BooksListScreen: View {
+    @StateObject private var viewModel = BookViewModel()
+    @State private var addNewBookShowing: Bool = false
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
-//    @State private var showingSearchBook = false
     @State private var selectedBook: Book?
+    @State private var isEditingBook = false
     @Environment(\.modelContext) var context
 
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(books, id: \.id) { book in
-                        BookCoverView(book: book)
-                            .aspectRatio(1, contentMode: .fill)
-                            .clipped()
-                            .onTapGesture {
-                                selectedBook = book
-                            }
-                            .contextMenu {
-                                Button("Edit Book") {
-                                    selectedBook = book
+                        NavigationLink(destination: BookDetailView(book: book, sessions: sessions.filter { $0.book.id == book.id })) {
+                            BookCoverView(book: book)
+                                .aspectRatio(1, contentMode: .fill)
+                                .clipped()
+                                .contextMenu {
+                                    Button("Edit Book") {
+                                        selectedBook = book
+                                        isEditingBook = true
+                                    }
+                                    Button(role: .destructive) {
+                                        deleteBook(book: book)
+                                    } label: {
+                                        Text("Delete Book")
+                                    }
                                 }
-                                Button(role: .destructive) {
-                                    deleteBook(book: book)
-                                } label: {
-                                    Text("Delete Book")
-                                }
-                            }
+                        }
                     }
                 }
                 .padding()
             }
             .navigationTitle("Your bookshelf")
-//            .toolbar {
-//                ToolbarItem(placement: .navigationBarTrailing) {
-//                    Button(action: {
-//                        showingSearchBook = true
-//                    }) {
-//                        Label("Add Book", systemImage: "magnifyingglass")
-//                    }
-//                }
-//            }
-//            .sheet(isPresented: $showingSearchBook) {
-//                BookSearchScreen(showingSearchBook: $showingSearchBook)
-//            }
-            .sheet(item: $selectedBook) { book in
-                BookDetailView(book: book, sessions: sessions.filter { $0.book.id == book.id })
+            .sheet(isPresented: $isEditingBook) {
+                if let book = selectedBook {
+                    UpdateBookView(book: book)
+                }
+            }
+            .sheet(isPresented: $addNewBookShowing) {
+                NewBookView(viewModel: viewModel)
+            }
+            .toolbar {
+                Button {
+                    addNewBookShowing = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+                
+                
+                
             }
         }
     }
-
+    
     func deleteBooks(at offsets: IndexSet) {
         for index in offsets {
             let book = books[index]
@@ -102,13 +101,23 @@ struct BookCoverView: View {
     var body: some View {
         ZStack {
             if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
-                AsyncImage(url: url) { image in
+                WebImage(url: url) { image in
                     image
                         .resizable()
                         .scaledToFill()
+
                 } placeholder: {
-                    ProgressView()
+                    RoundedRectangle(cornerRadius: 5)
+                        .frame(width: 150, height: 225)
+                        .foregroundColor(.gray)
                 }
+                .onSuccess { image, data, cacheType in
+                    // Success
+                }
+                .indicator(.activity) // Activity Indicator
+                .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                .scaledToFit()
+                .frame(width: 150, height: 225)
             } else {
                 Color.gray.opacity(0.3)
                 Text(book.title)
@@ -130,19 +139,25 @@ struct BookDetailView: View {
 
     var body: some View {
         VStack {
-            // Display the book cover at the top
             if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
-                AsyncImage(url: url) { image in
+                
+                WebImage(url: url) { image in
                     image
                         .resizable()
-                        .scaledToFit()
+                        .scaledToFill()
+
                 } placeholder: {
-                    ProgressView()
+                    RoundedRectangle(cornerRadius: 5)
+                        .frame(width: 150, height: 225)
+                        .foregroundColor(.gray)
                 }
+                .onSuccess { image, data, cacheType in
+                    // Success
+                }
+                .indicator(.activity) // Activity Indicator
+                .transition(.fade(duration: 0.5)) // Fade Transition with duration
+                .scaledToFit()
                 .frame(width: 150, height: 225)
-                .cornerRadius(3)
-                .shadow(radius: 4)
-                .padding()
             } else {
                 Color.gray.opacity(0.3)
                     .frame(width: 150, height: 225)
@@ -183,14 +198,6 @@ struct BookDetailView: View {
             }
             Text("Book Reading Time: \(formattedTime(totalBookReadingTime()))")
                 .padding()
-        }
-        .navigationTitle("Sessions")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Back") {
-                    // Handle back action
-                }
-            }
         }
     }
 
@@ -238,7 +245,6 @@ struct BookDetailView: View {
     }
 }
 
-
 struct SessionView: View {
     @Bindable var session: ReadingSession
 
@@ -260,7 +266,6 @@ struct Formatter {
         return formatter
     }()
 }
-
 
 struct BooksListScreen_Previews: PreviewProvider {
     static var previews: some View {

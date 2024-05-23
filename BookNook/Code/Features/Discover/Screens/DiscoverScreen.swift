@@ -6,107 +6,131 @@
 //
 
 import SwiftUI
-import Combine
-import SwiftData
+import SDWebImageSwiftUI
 
 struct DiscoverScreen: View {
     @StateObject private var viewModel = BookViewModel()
     @Environment(\.modelContext) var context
     
     @State private var searchQuery: String = ""
-    @State private var showAddManualBookForm: Bool = false
     @State private var showAddBookAlert: Bool = false
     @State private var selectedBook: Book?
-    @State private var selectedLanguage = "en"
-    @State private var sortOption = "relevance"
-    //    @Binding var showingSearchBook: Bool
+    @State private var showSearchResults = false
     
-    let sortOptions = ["relevance", "newest"]
-    
+    let categories = ["young-adult-hardcover", "hardcover-fiction", "hardcover-nonfiction"]
     
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Search for books", text: $searchQuery, onCommit: {
-                    viewModel.searchBooks(query: searchQuery)
-                })
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                
-                LanguageSelectionView(selectedLanguage: $selectedLanguage)
-                Picker("Sort By", selection: $sortOption) {
-                    ForEach(sortOptions, id: \.self) { option in
-                        Text(option.capitalized).tag(option)
-                    }
-                }
-                .presentationCornerRadius(1)
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                
-                
-                List(viewModel.books, id: \.id) { book in
-                    HStack {
-                        if let urlString = book.coverImageUrl, let url = URL(string: urlString) {
-                            AsyncImage(url: url) { phase in
-                                switch phase {
-                                case .empty:
-                                    ProgressView()
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 50, height: 75)
-                                case .failure:
-                                    Image(systemName: "photo")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 50, height: 75)
-                                        .foregroundColor(.gray)
-                                @unknown default:
-                                    EmptyView()
-                                }
-                            }
-                        } else {
-                            Image(systemName: "photo")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 75)
-                                .foregroundColor(.gray)
-                        }
+        ZStack {
+            NavigationView {
+                VStack {
+                    TextField("Search for books", text: $searchQuery, onCommit: {
+                        viewModel.searchBooks(query: searchQuery)
+                        showSearchResults = true
+                    })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                    
+                    ScrollView {
                         VStack(alignment: .leading) {
-                            Text(book.title).font(.headline)
-                            Text(book.author).font(.subheadline)
-                            if let bookDescription = book.bookDescription {
-                                Text(bookDescription).font(.body).lineLimit(3)
+                            ForEach(categories, id: \.self) { category in
+                                Text(category.replacingOccurrences(of: "-", with: " ").capitalized)
+                                    .font(.headline)
+                                    .padding(.leading)
+                                    .padding([.top, .bottom], 20)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 20) {
+                                        ForEach(viewModel.nytBestsellers[category] ?? []) { book in
+                                            BookCoverView(book: book)
+                                                .onTapGesture {
+                                                    selectedBook = book
+                                                    showAddBookAlert = true
+                                                }
+                                        }
+                                    }
+                                    .padding(.horizontal)
+                                }
+                                .frame(height: 200)
                             }
                         }
                     }
-                    .onTapGesture {
-                        selectedBook = book
-                        showAddBookAlert = true
+                }
+                .navigationBarTitle("Discover Books")
+                .alert(isPresented: $showAddBookAlert) {
+                    Alert(
+                        title: Text("Add Book"),
+                        message: Text("Do you want to add this book to your library?"),
+                        primaryButton: .default(Text("Add")) {
+                            if let book = selectedBook {
+                                addBookToContext(book)
+                            }
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
+                .onAppear {
+                    for category in categories {
+                        viewModel.fetchBestsellers(for: category)
                     }
-                }
-                
-                Button("Add Book Manually") {
-                    showAddManualBookForm.toggle()
-                }
-                .padding()
-                .sheet(isPresented: $showAddManualBookForm) {
-                    AddManualBookView(viewModel: viewModel)
                 }
             }
-            .navigationBarTitle("Search Books")
-            .alert(isPresented: $showAddBookAlert) {
-                Alert(
-                    title: Text("Add Book"),
-                    message: Text("Do you want to add this book to your library?"),
-                    primaryButton: .default(Text("Add")) {
-                        if let book = selectedBook {
-                            addBookToContext(book)
+            
+            if showSearchResults {
+                VStack {
+                    TextField("Search for books", text: $searchQuery, onCommit: {
+                        viewModel.searchBooks(query: searchQuery)
+                        showSearchResults = true
+                    })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                    
+                    List(viewModel.books, id: \.id) { book in
+                        HStack {
+                            if let urlString = book.coverImageUrl, let url = URL(string: urlString) {
+                                WebImage(url: url) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .frame(width: 100, height: 150)
+                                        .foregroundColor(.gray)
+                                }
+                                .indicator(.activity)
+                                .transition(.fade(duration: 0.5))
+                                .scaledToFit()
+                                .frame(width: 100, height: 150)
+                            } else {
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 150)
+                                    .foregroundColor(.gray)
+                            }
+                            VStack(alignment: .leading) {
+                                Text(book.title).font(.headline)
+                                Text(book.author).font(.subheadline)
+                                if let bookDescription = book.bookDescription {
+                                    Text(bookDescription).font(.body).lineLimit(3)
+                                }
+                            }
                         }
-                    },
-                    secondaryButton: .cancel()
+                        .onTapGesture {
+                            selectedBook = book
+                            showAddBookAlert = true
+                        }
+                    }
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .padding()
+                    .shadow(radius: 10)
+                }
+                .background(
+                    Color.black.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            showSearchResults = false
+                        }
                 )
+                .transition(.move(edge: .top))
             }
         }
     }
@@ -115,102 +139,13 @@ struct DiscoverScreen: View {
         context.insert(book)
         do {
             try context.save()
-            //            showingSearchBook = false // Dismiss the sheet view after adding the book
         } catch {
             print("Failed to save book: \(error.localizedDescription)")
         }
     }
 }
 
-struct AddManualBookView: View {
-    @Environment(\.modelContext) var context
-    @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: BookViewModel
-    
-    @State private var title: String = ""
-    @State private var author: String = ""
-    @State private var bookDescription: String = ""
-    @State private var publisher: String = ""
-    @State private var publishedDate: String = ""
-    @State private var pageCount: String = ""
-    @State private var categories: String = ""
-    @State private var showError: Bool = false
-    @State private var errorMessage: String = ""
-    
-    var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text("Book Details")) {
-                    TextField("Title", text: $title)
-                    TextField("Author", text: $author)
-                    TextField("Description", text: $bookDescription)
-                    TextField("Publisher", text: $publisher)
-                    TextField("Published Date", text: $publishedDate)
-                    TextField("Page Count", text: $pageCount)
-                    TextField("Categories", text: $categories)
-                }
-                
-                Button("Add Book") {
-                    if title.isEmpty || author.isEmpty {
-                        showError = true
-                        errorMessage = "Title and Author are required fields."
-                    } else {
-                        saveBook()
-                    }
-                }
-                .alert(isPresented: $showError) {
-                    Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
-                }
-            }
-            .navigationBarTitle("Add Book Manually", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-    
-    private func saveBook() {
-        let book = Book(
-            title: title,
-            author: author,
-            bookDescription: bookDescription,
-            publisher: publisher,
-            publishedDate: publishedDate,
-            pageCount: Int(pageCount),
-            categories: categories.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
-        )
-        
-        context.insert(book)
-        
-        do {
-            try context.save()
-            dismiss()
-        } catch {
-            showError = true
-            errorMessage = "Failed to save book: \(error.localizedDescription)"
-        }
-    }
-}
 
-struct LanguageSelectionView: View {
-    @Binding var selectedLanguage: String
-    
-    let languages = ["en", "it", "es", "fr", "de"]
-    
-    var body: some View {
-        Picker("Select Language", selection: $selectedLanguage) {
-            ForEach(languages, id: \.self) { language in
-                Text(language).tag(language)
-            }
-        }
-        .pickerStyle(SegmentedPickerStyle())
-        .padding()
-    }
-}
 
 //struct BookSearchView_Previews: PreviewProvider {
 //    static var previews: some View {

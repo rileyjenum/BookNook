@@ -18,7 +18,7 @@ struct DaysReadingSessionsListView: View {
                 filter: #Predicate<ReadingSession> { session in
                     session.startTime >= startOfDay && session.startTime < endOfDay
                 },
-                sort: [SortDescriptor(\ReadingSession.startTime)]
+                sort: [SortDescriptor(\ReadingSession.startTime, order: .reverse)]
             )
         } else {
             _foundSessions = Query(filter: #Predicate<ReadingSession> { _ in false })

@@ -4,7 +4,6 @@
 //
 //  Created by Riley Jenum on 12/05/24.
 //
-
 import Foundation
 import SwiftData
 
@@ -43,6 +42,3 @@ class Book: Identifiable, Hashable {
         hasher.combine(id)
     }
 }
-
-
-

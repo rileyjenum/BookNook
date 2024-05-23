@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510470F52BFA31E2000BA602 /* NewYorkTimesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510470F42BFA31E2000BA602 /* NewYorkTimesAPI.swift */; };
+		510470F72BFA4A70000BA602 /* OpenLibraryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510470F62BFA4A70000BA602 /* OpenLibraryAPI.swift */; };
+		510470FA2BFA5559000BA602 /* character_with_temperate_room.splineswift in Resources */ = {isa = PBXBuildFile; fileRef = 510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */; };
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
+		512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B902BF36A9300F75F86 /* UpdateBookView.swift */; };
 		51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* BookViewModel.swift */; };
@@ -65,8 +69,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		510470F42BFA31E2000BA602 /* NewYorkTimesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewYorkTimesAPI.swift; sourceTree = "<group>"; };
+		510470F62BFA4A70000BA602 /* OpenLibraryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenLibraryAPI.swift; sourceTree = "<group>"; };
+		510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */ = {isa = PBXFileReference; lastKnownFileType = file; path = character_with_temperate_room.splineswift; sourceTree = "<group>"; };
 		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksAPI.swift; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51731B902BF36A9300F75F86 /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
 		51731B952BF39D7F00F75F86 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
@@ -133,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		510470F82BFA554C000BA602 /* SplineFiles */ = {
+			isa = PBXGroup;
+			children = (
+				510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */,
+			);
+			path = SplineFiles;
+			sourceTree = "<group>";
+		};
 		51731B942BF39D6A00F75F86 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +239,7 @@
 		51AD110D2BEEB1E6000D672C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				510470F82BFA554C000BA602 /* SplineFiles */,
 				51D2E4332BF8CF84008798FA /* Audio */,
 				51AD112C2BEEB45A000D672C /* Images */,
 			);
@@ -314,6 +331,9 @@
 				51AD11332BEEB654000D672C /* ReadingSession.swift */,
 				5126F6362BF1665E00DFB2E3 /* Book.swift */,
 				51731B992BF39DEC00F75F86 /* GoogleBooksAPI.swift */,
+				510470F42BFA31E2000BA602 /* NewYorkTimesAPI.swift */,
+				510470F62BFA4A70000BA602 /* OpenLibraryAPI.swift */,
+				512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -588,6 +608,7 @@
 				51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */,
 				51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */,
 				51AD112E2BEEB46D000D672C /* AppIcon.xcassets in Resources */,
+				510470FA2BFA5559000BA602 /* character_with_temperate_room.splineswift in Resources */,
 				51AD10E62BEEB13F000D672C /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -629,18 +650,21 @@
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
 				51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
+				510470F72BFA4A70000BA602 /* OpenLibraryAPI.swift in Sources */,
 				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,
 				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
 				51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
 				51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */,
+				510470F52BFA31E2000BA602 /* NewYorkTimesAPI.swift in Sources */,
 				51AD11382BEEB907000D672C /* HomeScreen.swift in Sources */,
 				51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */,
 				51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */,
 				51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */,
 				51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */,
 				51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */,
+				512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */,
 				51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */,
 				51AD11302BEEB586000D672C /* BlurView.swift in Sources */,
 			);

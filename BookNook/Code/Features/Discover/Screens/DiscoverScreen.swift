@@ -19,7 +19,7 @@ struct DiscoverScreen: View {
     @State private var selectedBook: Book?
     @State private var selectedLanguage = "en"
     @State private var sortOption = "relevance"
-//    @Binding var showingSearchBook: Bool
+    //    @Binding var showingSearchBook: Bool
     
     let sortOptions = ["relevance", "newest"]
     
@@ -28,7 +28,7 @@ struct DiscoverScreen: View {
         NavigationView {
             VStack {
                 TextField("Search for books", text: $searchQuery, onCommit: {
-                    viewModel.searchBooks(query: searchQuery, language: selectedLanguage, sort: sortOption)
+                    viewModel.searchBooks(query: searchQuery)
                 })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
@@ -115,7 +115,7 @@ struct DiscoverScreen: View {
         context.insert(book)
         do {
             try context.save()
-//            showingSearchBook = false // Dismiss the sheet view after adding the book
+            //            showingSearchBook = false // Dismiss the sheet view after adding the book
         } catch {
             print("Failed to save book: \(error.localizedDescription)")
         }

@@ -12,7 +12,7 @@ import SwiftUI
 struct HomeScreen2: View {
     var body: some View {
         // fetching from cloud
-        let url = URL(string: "https://build.spline.design/wrNB2TUTzYekKN-X4hQH/scene.splineswift")!
+        let url = URL(string: "https://build.spline.design/CnBGOQjeeH3RlgmJyC1Q/scene.splineswift")!
 
         try? SplineView(sceneFileURL: url).ignoresSafeArea(.all)
             .overlay(HomeView())

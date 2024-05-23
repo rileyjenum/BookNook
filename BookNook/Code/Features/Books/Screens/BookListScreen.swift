@@ -17,7 +17,7 @@ struct BooksListScreen: View {
     @State private var selectedBook: Book?
     @State private var isEditingBook = false
     @Environment(\.modelContext) var context
-
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -76,16 +76,16 @@ struct BooksListScreen: View {
             deleteBook(book: book)
         }
     }
-
+    
     func deleteBook(book: Book) {
         // First, delete all associated sessions
         for session in book.sessions {
             context.delete(session)
         }
-
+        
         // Now delete the book
         context.delete(book)
-
+        
         // Save context
         do {
             try context.save()
@@ -97,7 +97,7 @@ struct BooksListScreen: View {
 
 struct BookCoverView: View {
     var book: Book
-
+    
     var body: some View {
         ZStack {
             if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
@@ -105,7 +105,7 @@ struct BookCoverView: View {
                     image
                         .resizable()
                         .scaledToFill()
-
+                    
                 } placeholder: {
                     RoundedRectangle(cornerRadius: 5)
                         .frame(width: 150, height: 225)
@@ -135,8 +135,11 @@ struct BookCoverView: View {
 struct BookDetailView: View {
     var book: Book
     var sessions: [ReadingSession]
+    @State var isEditingSession: Bool = false
+    @State var selectedSession: ReadingSession?
+    
     @Environment(\.modelContext) var context
-
+    
     var body: some View {
         VStack {
             if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
@@ -145,7 +148,7 @@ struct BookDetailView: View {
                     image
                         .resizable()
                         .scaledToFill()
-
+                    
                 } placeholder: {
                     RoundedRectangle(cornerRadius: 5)
                         .frame(width: 150, height: 225)
@@ -169,11 +172,11 @@ struct BookDetailView: View {
                     .foregroundColor(.black)
                     .padding()
             }
-
+            
             Text(book.title)
                 .font(.largeTitle)
                 .padding()
-
+            
             List {
                 ForEach(groupSessionsByDay(), id: \.0) { (day, sessions) in
                     Section(header: Text(day)) {
@@ -181,7 +184,8 @@ struct BookDetailView: View {
                             SessionView(session: session)
                                 .contextMenu {
                                     Button("Edit Session") {
-                                        // Handle edit session
+                                        selectedSession = session
+                                        isEditingSession = true
                                     }
                                     Button(role: .destructive) {
                                         deleteSession(session: session)
@@ -196,34 +200,39 @@ struct BookDetailView: View {
                     }
                 }
             }
+            
+            .sheet(item: $selectedSession) { session in
+                UpdateSessionView(session: session)
+            }
+            
             Text("Book Reading Time: \(formattedTime(totalBookReadingTime()))")
                 .padding()
         }
     }
-
+    
     func groupSessionsByDay() -> [(String, [ReadingSession])] {
         let calendar = Calendar.current
         let groupedSessions = Dictionary(grouping: sessions.sorted(by: { $0.startTime > $1.startTime })) { session in
             let date = session.startTime
             return calendar.startOfDay(for: date)
         }
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-
+        
         return groupedSessions.map { (date, sessions) in
             (dateFormatter.string(from: date), sessions)
         }
         .sorted(by: { $0.0 > $1.0 }) // Sort by day string in descending order
     }
-
+    
     func deleteSessions(sessions: [ReadingSession], at offsets: IndexSet) {
         for index in offsets {
             let session = sessions[index]
             deleteSession(session: session)
         }
     }
-
+    
     func deleteSession(session: ReadingSession) {
         context.delete(session)
         do {
@@ -232,12 +241,12 @@ struct BookDetailView: View {
             print("Failed to delete session: \(error.localizedDescription)")
         }
     }
-
+    
     private func totalBookReadingTime() -> TimeInterval {
         let bookSessions = sessions.filter { $0.book.id == book.id }
         return bookSessions.reduce(0) { $0 + $1.duration }
     }
-
+    
     private func formattedTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
@@ -247,7 +256,7 @@ struct BookDetailView: View {
 
 struct SessionView: View {
     @Bindable var session: ReadingSession
-
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Session on \(session.startTime, formatter: Formatter.item)")

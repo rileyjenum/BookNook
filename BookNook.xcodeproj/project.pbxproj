@@ -11,6 +11,7 @@
 		510B2D2A2BFF651100E40B49 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 510B2D292BFF651100E40B49 /* SDWebImageSwiftUI */; };
 		510B2D2C2BFF75BB00E40B49 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */; };
 		510B2D2F2BFFC0F600E40B49 /* UpdateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510B2D2E2BFFC0F600E40B49 /* UpdateSessionView.swift */; };
+		5115B5522C0378DB00056C34 /* BookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5115B5512C0378DB00056C34 /* BookshelfView.swift */; };
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
 		512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */; };
@@ -72,6 +73,7 @@
 		510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */ = {isa = PBXFileReference; lastKnownFileType = file; path = character_with_temperate_room.splineswift; sourceTree = "<group>"; };
 		510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		510B2D2E2BFFC0F600E40B49 /* UpdateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSessionView.swift; sourceTree = "<group>"; };
+		5115B5512C0378DB00056C34 /* BookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView.swift; sourceTree = "<group>"; };
 		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksAPI.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				51ADD5742BF1F0860023DEFE /* NewBookView.swift */,
 				51731B902BF36A9300F75F86 /* UpdateBookView.swift */,
 				510B2D2E2BFFC0F600E40B49 /* UpdateSessionView.swift */,
+				5115B5512C0378DB00056C34 /* BookshelfView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
 				51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */,
+				5115B5522C0378DB00056C34 /* BookshelfView.swift in Sources */,
 				510B2D2F2BFFC0F600E40B49 /* UpdateSessionView.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
 				51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */,

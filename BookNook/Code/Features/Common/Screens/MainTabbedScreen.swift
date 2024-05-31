@@ -19,7 +19,7 @@ struct MainTabbedView: View {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
-            BooksListScreen()
+            BookListScreen_v2()
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }
@@ -84,3 +84,14 @@ struct MyView: View {
 #Preview {
     MyView()
 }
+
+//struct MyView: View {
+//    var body: some View {
+//        MainTabbedView()
+//            .environmentObject(TimerManager())
+//    }
+//}
+
+//#Preview {
+//    MyView()
+//}

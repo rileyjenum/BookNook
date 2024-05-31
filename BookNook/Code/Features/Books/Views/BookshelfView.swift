@@ -7,6 +7,9 @@
 
 import SwiftUI
 import SwiftData
+import Foundation
+import UniformTypeIdentifiers
+
 
 struct BookshelfView: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
@@ -21,6 +24,8 @@ struct BookshelfView: View {
     @State private var selectedBook: Book?
     @State private var isEditingBook = false
     @State private var rotationAngle: Double = 0
+    @State private var draggingBookIndex: Int? = nil
+    @State private var booksOrder: [Book] = []
     
     var body: some View {
         GeometryReader { geometry in
@@ -28,7 +33,7 @@ struct BookshelfView: View {
                 ScrollViewReader { scrollViewProxy in
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(books.indices, id: \.self) { index in
+                            ForEach(booksOrder.indices, id: \.self) { index in
                                 bookSpineView(geometry: geometry, scrollViewProxy: scrollViewProxy, index: index)
                                     .frame(width: selectedBookIndex == index ? 150 : 40, height: 200)
                                     .rotation3DEffect(
@@ -47,6 +52,14 @@ struct BookshelfView: View {
                                             }
                                         }
                                     }
+                                    .onLongPressGesture {
+                                        draggingBookIndex = index
+                                    }
+                                    .onDrag {
+                                        draggingBookIndex = index
+                                        return NSItemProvider(object: String(index) as NSString)
+                                    }
+                                    .onDrop(of: [UTType.text], delegate: BookDropDelegate(item: booksOrder[index], booksOrder: $booksOrder, draggingBookIndex: $draggingBookIndex))
                             }
                         }
                         .frame(height: 500) // Ensures the HStack height is sufficient
@@ -67,6 +80,9 @@ struct BookshelfView: View {
                         }
                     }
             )
+            .onAppear {
+                booksOrder = books
+            }
         }
     }
     
@@ -80,7 +96,7 @@ struct BookshelfView: View {
             let opacity = max(0.2, 1 - distance / maxDistance)
             
             ZStack {
-                if selectedBookIndex == index, let selectedBook = books[safe: index] {
+                if selectedBookIndex == index, let selectedBook = booksOrder[safe: index] {
                     BookCoverView(book: selectedBook)
                         .opacity(rotationAngle == 180 ? 1 : 0) // Show cover when rotated
                         .rotation3DEffect(.degrees(rotationAngle), axis: (x: 0, y: 1, z: 0))
@@ -96,7 +112,7 @@ struct BookshelfView: View {
                         coverColor: .beige.opacity(0.8),
                         isSelected: selectedBookIndex == index,
                         opacity: opacity,
-                        title: books[index].title
+                        title: booksOrder[index].title
                     )
                     .opacity(rotationAngle == 0 ? 1 : 0) // Show spine when not rotated
                     .rotation3DEffect(.degrees(rotationAngle), axis: (x: 0, y: 1, z: 0))
@@ -134,6 +150,31 @@ struct BookSpine: View {
                 .animation(.easeInOut(duration: 0.5), value: isSelected)
                 .lineLimit(nil) // Allow unlimited lines
                 .allowsTightening(true) // Allows text to tighten to fit the frame
+        }
+    }
+}
+
+struct BookDropDelegate: DropDelegate {
+    let item: Book
+    @Binding var booksOrder: [Book]
+    @Binding var draggingBookIndex: Int?
+    
+    func performDrop(info: DropInfo) -> Bool {
+        draggingBookIndex = nil
+        return true
+    }
+    
+    func dropEntered(info: DropInfo) {
+        guard let fromIndex = draggingBookIndex else { return }
+        guard let toIndex = booksOrder.firstIndex(of: item) else { return }
+        
+        if fromIndex != toIndex {
+            withAnimation {
+                let draggedItem = booksOrder[fromIndex]
+                booksOrder.remove(at: fromIndex)
+                booksOrder.insert(draggedItem, at: toIndex)
+                draggingBookIndex = toIndex
+            }
         }
     }
 }

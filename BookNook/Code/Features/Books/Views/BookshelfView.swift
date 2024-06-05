@@ -26,62 +26,74 @@ struct BookshelfView: View {
     @State private var rotationAngle: Double = 0
     @State private var draggingBookIndex: Int? = nil
     @State private var booksOrder: [Book] = []
+    @State private var showBookDetail: Bool = false
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                ScrollViewReader { scrollViewProxy in
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ForEach(booksOrder.indices, id: \.self) { index in
-                                bookSpineView(geometry: geometry, scrollViewProxy: scrollViewProxy, index: index)
-                                    .frame(width: selectedBookIndex == index ? 150 : 40, height: 200)
-                                    .rotation3DEffect(
-                                        .degrees(selectedBookIndex == index ? rotationAngle : 0),
-                                        axis: (x: 0, y: 1, z: 0)
-                                    )
-                                    .onTapGesture {
-                                        withAnimation(.easeInOut(duration: 0.5)) {
-                                            if selectedBookIndex == index {
-                                                selectedBookIndex = nil
-                                                rotationAngle = 0
-                                            } else {
-                                                selectedBookIndex = index
-                                                scrollViewProxy.scrollTo(index, anchor: .center)
-                                                rotationAngle = 180
+        NavigationView {
+            GeometryReader { geometry in
+                VStack {
+                    ScrollViewReader { scrollViewProxy in
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10) {
+                                ForEach(booksOrder.indices, id: \.self) { index in
+                                    bookSpineView(geometry: geometry, scrollViewProxy: scrollViewProxy, index: index)
+                                        .frame(width: selectedBookIndex == index ? 150 : 40, height: 200)
+                                        .rotation3DEffect(
+                                            .degrees(selectedBookIndex == index ? rotationAngle : 0),
+                                            axis: (x: 0, y: 1, z: 0)
+                                        )
+                                        .onTapGesture {
+                                            withAnimation(.easeInOut(duration: 0.5)) {
+                                                if selectedBookIndex == index {
+                                                    selectedBookIndex = nil
+                                                    rotationAngle = 0
+                                                } else {
+                                                    selectedBookIndex = index
+                                                    scrollViewProxy.scrollTo(index, anchor: .center)
+                                                    rotationAngle = 180
+                                                }
                                             }
                                         }
-                                    }
-                                    .onLongPressGesture {
-                                        draggingBookIndex = index
-                                    }
-                                    .onDrag {
-                                        draggingBookIndex = index
-                                        return NSItemProvider(object: String(index) as NSString)
-                                    }
-                                    .onDrop(of: [UTType.text], delegate: BookDropDelegate(item: booksOrder[index], booksOrder: $booksOrder, draggingBookIndex: $draggingBookIndex))
+                                        .onLongPressGesture {
+                                            draggingBookIndex = index
+                                        }
+                                        .onDrag {
+                                            draggingBookIndex = index
+                                            return NSItemProvider(object: String(index) as NSString)
+                                        }
+                                        .onDrop(of: [UTType.text], delegate: BookDropDelegate(item: booksOrder[index], booksOrder: $booksOrder, draggingBookIndex: $draggingBookIndex))
+                                        .background(
+                                            NavigationLink(destination: BookDetailView(book: booksOrder[index], sessions: sessions.filter { $0.book.id == booksOrder[index].id }), isActive: Binding<Bool>(
+                                                get: { selectedBookIndex == index && showBookDetail },
+                                                set: { if !$0 { selectedBookIndex = nil; showBookDetail = false } }
+                                            )) {
+                                                EmptyView()
+                                            }
+                                            .hidden()
+                                        )
+                                }
                             }
+                            .frame(height: 500) // Ensures the HStack height is sufficient
+                            .padding(.horizontal, (geometry.size.width - (selectedBookIndex == nil ? 40 : 150)) / 2)
                         }
-                        .frame(height: 500) // Ensures the HStack height is sufficient
-                        .padding(.horizontal, (geometry.size.width - (selectedBookIndex == nil ? 40 : 150)) / 2)
                     }
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .contentShape(Rectangle())
-            .simultaneousGesture(
-                DragGesture()
-                    .onChanged { _ in
-                        if selectedBookIndex != nil {
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                selectedBookIndex = nil
-                                rotationAngle = 0
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .contentShape(Rectangle())
+                .simultaneousGesture(
+                    DragGesture()
+                        .onChanged { _ in
+                            if selectedBookIndex != nil {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    selectedBookIndex = nil
+                                    rotationAngle = 0
+                                }
                             }
                         }
-                    }
-            )
-            .onAppear {
-                booksOrder = books
+                )
+                .onAppear {
+                    booksOrder = books
+                }
             }
         }
     }
@@ -92,7 +104,6 @@ struct BookshelfView: View {
             let itemMidX = itemGeometry.frame(in: .global).midX
             let distance = abs(midX - itemMidX)
             let maxDistance = midX
-            let curveFactor = max(0, 100 * cos((distance / maxDistance) * .pi / 2))
             let opacity = max(0.2, 1 - distance / maxDistance)
             
             ZStack {
@@ -101,9 +112,8 @@ struct BookshelfView: View {
                         .opacity(rotationAngle == 180 ? 1 : 0) // Show cover when rotated
                         .rotation3DEffect(.degrees(rotationAngle), axis: (x: 0, y: 1, z: 0))
                         .onTapGesture {
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                selectedBookIndex = nil
-                                rotationAngle = 0
+                            withAnimation {
+                                showBookDetail = true
                             }
                         }
                 } else {
@@ -121,6 +131,12 @@ struct BookshelfView: View {
             .frame(height: 200) // Adjust the frame height as needed
         }
     }
+    
+    private func reorderBooks(from source: Int, to destination: Int) {
+        guard source != destination else { return }
+        let movedBook = booksOrder.remove(at: source)
+        booksOrder.insert(movedBook, at: destination)
+    }
 }
 
 struct BookSpine: View {
@@ -135,7 +151,6 @@ struct BookSpine: View {
             RoundedRectangle(cornerRadius: 5)
                 .fill(spineColor)
                 .frame(width: 40, height: 180)
-//                .opacity(opacity)
                 .zIndex(isSelected ? 1 : 0)
                 .animation(.easeInOut(duration: 0.5), value: isSelected)
             
@@ -188,7 +203,6 @@ extension Collection {
         return indices.contains(index) ? self[index] : nil
     }
 }
-
 struct BookshelfView_Previews: PreviewProvider {
     static var previews: some View {
         BookshelfView()

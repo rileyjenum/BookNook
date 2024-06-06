@@ -10,7 +10,6 @@ import SwiftData
 import Foundation
 import UniformTypeIdentifiers
 
-
 struct BookshelfView: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
@@ -65,7 +64,7 @@ struct BookshelfView: View {
                                         .background(
                                             NavigationLink(destination: BookDetailView(book: booksOrder[index], sessions: sessions.filter { $0.book.id == booksOrder[index].id }), isActive: Binding<Bool>(
                                                 get: { selectedBookIndex == index && showBookDetail },
-                                                set: { if !$0 { selectedBookIndex = nil; showBookDetail = false } }
+                                                set: { if !$0 { selectedBookIndex = nil; showBookDetail = false; resetViewState() } }
                                             )) {
                                                 EmptyView()
                                             }
@@ -137,6 +136,14 @@ struct BookshelfView: View {
         let movedBook = booksOrder.remove(at: source)
         booksOrder.insert(movedBook, at: destination)
     }
+    
+    private func resetViewState() {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            selectedBookIndex = nil
+            rotationAngle = 0
+            booksOrder = books
+        }
+    }
 }
 
 struct BookSpine: View {
@@ -203,6 +210,7 @@ extension Collection {
         return indices.contains(index) ? self[index] : nil
     }
 }
+
 struct BookshelfView_Previews: PreviewProvider {
     static var previews: some View {
         BookshelfView()

@@ -3,33 +3,21 @@ import SwiftData
 
 struct DaysReadingSessionsListView: View {
     @Binding var dateSelected: DateComponents?
-    @Query private var foundSessions: [ReadingSession]
+    @Query(sort: [SortDescriptor(\ReadingSession.startTime, order: .reverse)]) private var sessions: [ReadingSession]
     @State var isUpdatingSession: Bool = false
 
-    init(dateSelected: Binding<DateComponents?>) {
-        self._dateSelected = dateSelected
-        
-        // Setup _foundSessions with dynamic query
-        if let date = dateSelected.wrappedValue?.date {
-            let startOfDay = Calendar.current.startOfDay(for: date)
-            let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
-
-            _foundSessions = Query(
-                filter: #Predicate<ReadingSession> { session in
-                    session.startTime >= startOfDay && session.startTime < endOfDay
-                },
-                sort: [SortDescriptor(\ReadingSession.startTime, order: .reverse)]
-            )
-        } else {
-            _foundSessions = Query(filter: #Predicate<ReadingSession> { _ in false })
-        }
+    var filteredSessions: [ReadingSession] {
+        guard let date = dateSelected?.date else { return [] }
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay)!
+        return sessions.filter { $0.startTime >= startOfDay && $0.startTime < endOfDay }
     }
 
     var body: some View {
         NavigationStack {
             Group {
                 if let _ = dateSelected?.date {
-                    List(foundSessions, id: \.self) { session in
+                    List(filteredSessions, id: \.self) { session in
                         ReadingSessionListViewRow(session: session)
                             .onTapGesture {
                                 isUpdatingSession = true
@@ -61,17 +49,19 @@ struct DaysReadingSessionsListView: View {
             context.delete(session)
         }
     }
-    
+
     private func totalReadingTimeToday() -> TimeInterval {
         let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: Date())
-
-        let todaySessions = foundSessions.filter { session in
+        guard let date = dateSelected?.date else { return 0 }
+        let startOfDay = calendar.startOfDay(for: date)
+        
+        let todaySessions = filteredSessions.filter { session in
             calendar.isDate(session.startTime, inSameDayAs: startOfDay)
         }
 
         return todaySessions.reduce(0) { $0 + $1.duration }
     }
+
     private func formattedTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60

@@ -43,11 +43,7 @@ struct ReadingSessionFormView: View {
                 .pickerStyle(.wheel)
                 .frame(height: 80)
                 
-                Toggle(isOn: $isNewBook) {
-                    Text("Add New Book")
-                }
                 
-                if !isNewBook {
                     Picker("Select a Book", selection: $selectedBook) {
                         ForEach(existingBooks, id: \.self) { book in
                             Text(book.title).tag(book as Book?)
@@ -57,10 +53,7 @@ struct ReadingSessionFormView: View {
                         bookTitle = newValue?.title ?? ""
                         author = newValue?.author ?? ""
                     }
-                } else {
-                    TextField("Book Title", text: $bookTitle)
-                    TextField("Author", text: $author)
-                }
+
                 
                 TextEditor(text: $notes)
                     .frame(height: 100)
@@ -69,21 +62,25 @@ struct ReadingSessionFormView: View {
                     createSession()
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled((isNewBook && (bookTitle.isEmpty || author.isEmpty)) || (hours == 0 && minutes == 0))
+                .disabled((hours == 0 && minutes == 0) || existingBooks.isEmpty)
             }
             .navigationTitle("New Session")
+            .onAppear {
+                if selectedBook == nil, !existingBooks.isEmpty {
+                    selectedBook = existingBooks.first
+                    bookTitle = existingBooks.first?.title ?? ""
+                    author = existingBooks.first?.author ?? ""
+                }
+            }
         }
     }
 
     private func createSession() {
         let book: Book
-        if !isNewBook, let selectedBook = selectedBook {
+        if let selectedBook = selectedBook {
             book = selectedBook
         } else {
-            let newBook = Book(title: bookTitle, author: author)
-            context.insert(newBook)
-            try? context.save()
-            book = newBook
+            book = Book(title: "", author: "")
         }
 
         let durationInSeconds = TimeInterval(hours * 3600 + minutes * 60)
@@ -93,7 +90,6 @@ struct ReadingSessionFormView: View {
             book: book,
             notes: notes
         )
-        book.sessions.append(newSession)
         context.insert(newSession)
         try? context.save()
         dismiss()

@@ -6,16 +6,24 @@
 //
 
 import SwiftUI
+import SwiftData
 import SDWebImageSwiftUI
 
 struct DiscoverScreen: View {
-    @StateObject private var viewModel = BookViewModel()
+    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Environment(\.modelContext) var context
-    
+    @StateObject private var viewModel = BookViewModel()
     @State private var searchQuery: String = ""
-    @State private var showAddBookAlert: Bool = false
+    @State private var showAlert: Bool = false
     @State private var selectedBook: Book?
     @State private var showSearchResults = false
+    @State private var activeAlert: ActiveAlert = .addBook
+    var bookTitles: [String] {
+        books.map { $0.title }
+    }
+    enum ActiveAlert {
+        case addBook, error, success
+    }
     
     let categories = ["young-adult-hardcover", "hardcover-fiction", "hardcover-nonfiction"]
     
@@ -44,7 +52,8 @@ struct DiscoverScreen: View {
                                             BookCoverView(book: book)
                                                 .onTapGesture {
                                                     selectedBook = book
-                                                    showAddBookAlert = true
+                                                    activeAlert = .addBook
+                                                    showAlert = true
                                                 }
                                         }
                                     }
@@ -56,17 +65,46 @@ struct DiscoverScreen: View {
                     }
                 }
                 .navigationBarTitle("Discover Books")
-                .alert(isPresented: $showAddBookAlert) {
-                    Alert(
-                        title: Text("Add Book"),
-                        message: Text("Do you want to add this book to your library?"),
-                        primaryButton: .default(Text("Add")) {
-                            if let book = selectedBook {
-                                addBookToContext(book)
-                            }
-                        },
-                        secondaryButton: .cancel()
-                    )
+                .alert(isPresented: $showAlert) {
+                    switch activeAlert {
+                    case .addBook:
+                        return Alert(
+                            title: Text("Add Book"),
+                            message: Text("Do you want to add this book to your library?"),
+                            primaryButton: .default(Text("Add")) {
+                                if let book = selectedBook {
+                                    if bookTitles.contains(book.title) {
+                                        showAlert = false
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                            activeAlert = .error
+                                            showAlert = true
+                                        }
+                                    } else {
+                                        addBookToContext(book)
+                                        showAlert = false
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                            activeAlert = .success
+                                            showAlert = true
+                                        }
+                                    }
+                                }
+                            },
+                            secondaryButton: .cancel()
+                        )
+                        
+                    case .error:
+                        return Alert(
+                            title: Text("Error"),
+                            message: Text("This book is already in your library"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    case .success:
+                        return Alert(
+                            title: Text("Success"),
+                            message: Text("This book was successfully added to your library"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
                 }
                 .onAppear {
                     for category in categories {
@@ -115,7 +153,8 @@ struct DiscoverScreen: View {
                         }
                         .onTapGesture {
                             selectedBook = book
-                            showAddBookAlert = true
+                            activeAlert = .addBook
+                            showAlert = true
                         }
                     }
                     .background(Color.white)
@@ -144,12 +183,3 @@ struct DiscoverScreen: View {
         }
     }
 }
-
-
-
-//struct BookSearchView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        BookSearchScreen(showingSearchBook: $showingSearchBook)
-//            .environmentObject(TimerManager())
-//    }
-//}

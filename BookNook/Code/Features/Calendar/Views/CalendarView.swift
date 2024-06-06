@@ -31,8 +31,6 @@ struct CalendarView: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
         let calendar = Calendar.current
         let dateComponentsNeeded: Set<Calendar.Component> = [.year, .month, .day]
-
-        // To ensure uniqueness, convert to a set to remove any duplicates
         let uniqueDates = Set(sessions.map { calendar.dateComponents(dateComponentsNeeded, from: $0.startTime) })
         uiView.reloadDecorations(forDateComponents: Array(uniqueDates), animated: true)
     }
@@ -53,7 +51,14 @@ struct CalendarView: UIViewRepresentable {
 
             return .customView {
                 let icon = UILabel()
-                icon.text = foundSessions.count > 1 ? "📚" : "📕"
+                switch foundSessions.count {
+                case 0:
+                    icon.text = ""
+                case 1:
+                    icon.text = "📘"
+                default:
+                    icon.text = "📚"
+                }
                 return icon
             }
         }

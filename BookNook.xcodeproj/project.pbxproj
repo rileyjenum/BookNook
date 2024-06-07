@@ -10,7 +10,6 @@
 		510470FA2BFA5559000BA602 /* character_with_temperate_room.splineswift in Resources */ = {isa = PBXBuildFile; fileRef = 510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */; };
 		510B2D2A2BFF651100E40B49 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 510B2D292BFF651100E40B49 /* SDWebImageSwiftUI */; };
 		510B2D2C2BFF75BB00E40B49 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */; };
-		510B2D2F2BFFC0F600E40B49 /* UpdateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510B2D2E2BFFC0F600E40B49 /* UpdateSessionView.swift */; };
 		5115B5522C0378DB00056C34 /* BookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5115B5512C0378DB00056C34 /* BookshelfView.swift */; };
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
@@ -40,7 +39,6 @@
 		51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD113D2BEF62B8000D672C /* CalendarView.swift */; };
 		51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD113F2BEF63EF000D672C /* CalendarScreen.swift */; };
 		51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */; };
-		51AD11462BEF68C7000D672C /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11452BEF68C7000D672C /* Enums.swift */; };
 		51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */; };
 		51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */; };
 		51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ADD5742BF1F0860023DEFE /* NewBookView.swift */; };
@@ -73,7 +71,6 @@
 /* Begin PBXFileReference section */
 		510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */ = {isa = PBXFileReference; lastKnownFileType = file; path = character_with_temperate_room.splineswift; sourceTree = "<group>"; };
 		510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
-		510B2D2E2BFFC0F600E40B49 /* UpdateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateSessionView.swift; sourceTree = "<group>"; };
 		5115B5512C0378DB00056C34 /* BookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView.swift; sourceTree = "<group>"; };
 		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
@@ -105,7 +102,6 @@
 		51AD113D2BEF62B8000D672C /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		51AD113F2BEF63EF000D672C /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
 		51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayReadingSessionsListView.swift; sourceTree = "<group>"; };
-		51AD11452BEF68C7000D672C /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionListViewRow.swift; sourceTree = "<group>"; };
 		51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionFormView.swift; sourceTree = "<group>"; };
 		51ADD5742BF1F0860023DEFE /* NewBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookView.swift; sourceTree = "<group>"; };
@@ -264,7 +260,6 @@
 			children = (
 				512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */,
 				51AD11112BEEB2BB000D672C /* Extensions.swift */,
-				51AD11452BEF68C7000D672C /* Enums.swift */,
 				5126F6382BF1790C00DFB2E3 /* TimerManager.swift */,
 				51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */,
 				510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */,
@@ -351,7 +346,6 @@
 			isa = PBXGroup;
 			children = (
 				51AD112F2BEEB586000D672C /* BlurView.swift */,
-				51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */,
 				5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */,
 			);
 			path = Views;
@@ -405,7 +399,6 @@
 			children = (
 				51ADD5742BF1F0860023DEFE /* NewBookView.swift */,
 				51731B902BF36A9300F75F86 /* UpdateBookView.swift */,
-				510B2D2E2BFFC0F600E40B49 /* UpdateSessionView.swift */,
 				5115B5512C0378DB00056C34 /* BookshelfView.swift */,
 				51A67CB32C12258F00B1F0DA /* BookDetailView.swift */,
 			);
@@ -430,6 +423,7 @@
 		51AD11242BEEB371000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */,
 				51AD113D2BEF62B8000D672C /* CalendarView.swift */,
 				51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */,
 				51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */,
@@ -657,12 +651,10 @@
 				51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */,
 				51A67CB42C12258F00B1F0DA /* BookDetailView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
-				51AD11462BEF68C7000D672C /* Enums.swift in Sources */,
 				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
 				51AD113C2BEEC27C000D672C /* BookListScreen.swift in Sources */,
 				5115B5522C0378DB00056C34 /* BookshelfView.swift in Sources */,
-				510B2D2F2BFFC0F600E40B49 /* UpdateSessionView.swift in Sources */,
 				51745CA22C0922050012386E /* BookListScreen2.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
 				51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */,
@@ -763,7 +755,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -820,7 +812,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -846,6 +838,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -875,6 +868,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -109,4 +109,13 @@ extension DateFormatter {
     }()
 }
 
+extension Color {
+    static let beige = Color(red: 200 / 255, green: 200 / 255, blue: 180 / 255)
+}
+
+extension Collection {
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
 

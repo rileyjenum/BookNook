@@ -13,11 +13,8 @@ import UniformTypeIdentifiers
 struct BookshelfView: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
-    
     @Environment(\.modelContext) var context
-    
     @StateObject private var viewModel = BookViewModel()
-    
     @State private var selectedBookIndex: Int? = nil
     @State private var addNewBookShowing: Bool = false
     @State private var selectedBook: Book?
@@ -72,8 +69,18 @@ struct BookshelfView: View {
                                         )
                                 }
                             }
-                            .frame(height: 500) // Ensures the HStack height is sufficient
+                            .frame(height: 500)
                             .padding(.horizontal, (geometry.size.width - (selectedBookIndex == nil ? 40 : 150)) / 2)
+                        }
+                        .toolbar {
+                            Button {
+                                addNewBookShowing = true
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        }
+                        .sheet(isPresented: $addNewBookShowing) {
+                            NewBookView(viewModel: viewModel)
                         }
                     }
                 }
@@ -170,8 +177,8 @@ struct BookSpine: View {
                 .scaleEffect(isSelected ? 1 : 1)
                 .zIndex(isSelected ? 1 : 0)
                 .animation(.easeInOut(duration: 0.5), value: isSelected)
-                .lineLimit(nil) // Allow unlimited lines
-                .allowsTightening(true) // Allows text to tighten to fit the frame
+                .lineLimit(nil)
+                .allowsTightening(true)
         }
     }
 }
@@ -198,16 +205,6 @@ struct BookDropDelegate: DropDelegate {
                 draggingBookIndex = toIndex
             }
         }
-    }
-}
-
-extension Color {
-    static let beige = Color(red: 200 / 255, green: 200 / 255, blue: 180 / 255)
-}
-
-extension Collection {
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
     }
 }
 

@@ -80,7 +80,7 @@ struct BookDetailView: View {
             }
             
             .sheet(item: $selectedSession) { session in
-                UpdateSessionView(session: session)
+                UpdateReadingSessionView(session: session)
             }
             
             Text("Book Reading Time: \(formattedTime(totalBookReadingTime()))")

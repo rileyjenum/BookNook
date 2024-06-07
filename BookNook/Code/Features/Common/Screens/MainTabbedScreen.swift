@@ -19,7 +19,7 @@ struct MainTabbedView: View {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
-            BookListScreen_v2()
+            BookListScreen2()
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }

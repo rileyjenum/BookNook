@@ -5,6 +5,7 @@ struct DaysReadingSessionsListView: View {
     @Binding var dateSelected: DateComponents?
     @Query(sort: [SortDescriptor(\ReadingSession.startTime, order: .reverse)]) private var sessions: [ReadingSession]
     @State var isUpdatingSession: Bool = false
+    @State var selectedSession: ReadingSession?
 
     var filteredSessions: [ReadingSession] {
         guard let date = dateSelected?.date else { return [] }
@@ -17,20 +18,23 @@ struct DaysReadingSessionsListView: View {
         NavigationStack {
             Group {
                 if let _ = dateSelected?.date {
-                    List(filteredSessions, id: \.self) { session in
+                    ForEach(filteredSessions, id: \.id) { session in
                         ReadingSessionListViewRow(session: session)
-                            .onTapGesture {
-                                isUpdatingSession = true
-                            }
-                            .sheet(isPresented: $isUpdatingSession) {
-                                UpdateReadingSessionView(session: session)
-                            }
-                            .swipeActions {
+                        
+                            .contextMenu {
+                                Button("Edit Session") {
+                                    selectedSession = session
+                                    isUpdatingSession = true
+                                }
                                 Button(role: .destructive) {
                                     deleteSession(session)
                                 } label: {
-                                    Image(systemName: "trash")
+                                    Text("Delete Session")
                                 }
+                            }
+
+                            .sheet(isPresented: $isUpdatingSession) {
+                                UpdateReadingSessionView(session: session)
                             }
                     }
                     Text("Day's Reading Time: \(formattedTime(totalReadingTimeToday()))")

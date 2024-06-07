@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BookListScreen_v2: View {
+struct BookListScreen2: View {
     
     var body: some View {
         VStack {

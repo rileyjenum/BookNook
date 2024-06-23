@@ -4,7 +4,6 @@
 //
 //  Created by Riley Jenum on 11/05/24.
 //
-
 import Foundation
 import SwiftUI
 
@@ -29,6 +28,12 @@ struct CalendarScreen: View {
                             .imageScale(.medium)
                     }
                 }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    NavigationLink(destination: StatisticsScreen()) {
+                        Image(systemName: "chart.bar.fill")
+                            .imageScale(.medium)
+                    }
+                }
             }
             .sheet(isPresented: $isPresentingNewSessionForm) { // Present the form as a sheet
                 ReadingSessionFormView() // Assuming this form view can handle creating new sessions
@@ -47,4 +52,3 @@ struct CalendarScreen_Previews: PreviewProvider {
         CalendarScreen()
     }
 }
-

@@ -18,9 +18,8 @@ struct DaysReadingSessionsListView: View {
         NavigationStack {
             Group {
                 if let _ = dateSelected?.date {
-                    ForEach(filteredSessions, id: \.id) { session in
+                    List(filteredSessions, id: \.id) { session in
                         ReadingSessionListViewRow(session: session)
-                        
                             .contextMenu {
                                 Button("Edit Session") {
                                     selectedSession = session
@@ -37,6 +36,7 @@ struct DaysReadingSessionsListView: View {
                                 UpdateReadingSessionView(session: session)
                             }
                     }
+                    Spacer()
                     Text("Day's Reading Time: \(formattedTime(totalReadingTimeToday()))")
 
                 } else {

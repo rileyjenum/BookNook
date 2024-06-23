@@ -31,8 +31,23 @@ struct CalendarView: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
         let calendar = Calendar.current
         let dateComponentsNeeded: Set<Calendar.Component> = [.year, .month, .day]
+        
+        // Get the currently visible month
+        let visibleMonth = uiView.visibleMonth
+        let range = calendar.range(of: .day, in: .month, for: visibleMonth)!
+        
+        var datesInMonth = [DateComponents]()
+        for day in range {
+            var dateComponents = calendar.dateComponents([.year, .month], from: visibleMonth)
+            dateComponents.day = day
+            datesInMonth.append(dateComponents)
+        }
+        
         let uniqueDates = Set(sessions.map { calendar.dateComponents(dateComponentsNeeded, from: $0.startTime) })
-        uiView.reloadDecorations(forDateComponents: Array(uniqueDates), animated: true)
+        
+        let allDatesToReload = Set(datesInMonth).union(uniqueDates)
+        
+        uiView.reloadDecorations(forDateComponents: Array(allDatesToReload), animated: true)
     }
 
     class Coordinator: NSObject, UICalendarViewDelegate, UICalendarSelectionSingleDateDelegate {
@@ -47,7 +62,7 @@ struct CalendarView: UIViewRepresentable {
             let foundSessions = parent.sessions
                 .filter { Calendar.current.isDate($0.startTime, inSameDayAs: dateComponents.date!) }
 
-            if foundSessions.isEmpty { return nil }
+            if (foundSessions.isEmpty) { return nil }
 
             return .customView {
                 let icon = UILabel()
@@ -76,3 +91,10 @@ struct CalendarView: UIViewRepresentable {
         }
     }
 }
+
+extension UICalendarView {
+    var visibleMonth: Date {
+        return calendar.date(from: visibleDateComponents)!
+    }
+}
+

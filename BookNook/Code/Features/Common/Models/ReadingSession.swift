@@ -15,12 +15,14 @@ class ReadingSession: Identifiable, Hashable {
     var duration: TimeInterval
     var book: Book
     var notes: String
-    
-    init(id: String = UUID().uuidString, startTime: Date, duration: TimeInterval, book: Book, notes: String) {
+    var pagesRead: Int  // New property to track the pages read
+
+    init(id: String = UUID().uuidString, startTime: Date, duration: TimeInterval, book: Book, notes: String, pagesRead: Int) {
         self.id = id
         self.startTime = startTime
         self.duration = duration
         self.book = book
         self.notes = notes
+        self.pagesRead = pagesRead  // Initialize the new property
     }
 }

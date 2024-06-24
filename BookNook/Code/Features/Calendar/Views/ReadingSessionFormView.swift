@@ -82,13 +82,15 @@ struct ReadingSessionFormView: View {
         } else {
             book = Book(title: "", author: "")
         }
+        //TODO: fix pagesRead issue
 
         let durationInSeconds = TimeInterval(hours * 3600 + minutes * 60)
         let newSession = ReadingSession(
             startTime: startTime,
             duration: durationInSeconds,
             book: book,
-            notes: notes
+            notes: notes, 
+            pagesRead: 0
         )
         context.insert(newSession)
         try? context.save()

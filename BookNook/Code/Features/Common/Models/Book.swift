@@ -18,10 +18,11 @@ class Book: Identifiable, Hashable {
     var pageCount: Int?
     var categories: [String]?
     var coverImageUrl: String?
+    var pagesRead: Int?  // New variable to track pages read
 
     @Relationship(deleteRule: .cascade, inverse: \ReadingSession.book) var sessions: [ReadingSession]
 
-    init(id: String = UUID().uuidString, title: String, author: String, bookDescription: String? = nil, publisher: String? = nil, publishedDate: String? = nil, pageCount: Int? = nil, categories: [String]? = nil, coverImageUrl: String? = nil, sessions: [ReadingSession] = []) {
+    init(id: String = UUID().uuidString, title: String, author: String, bookDescription: String? = nil, publisher: String? = nil, publishedDate: String? = nil, pageCount: Int? = nil, categories: [String]? = nil, coverImageUrl: String? = nil, pagesRead: Int? = 0, sessions: [ReadingSession] = []) {
         self.id = id
         self.title = title
         self.author = author
@@ -31,6 +32,7 @@ class Book: Identifiable, Hashable {
         self.pageCount = pageCount
         self.categories = categories
         self.coverImageUrl = coverImageUrl
+        self.pagesRead = pagesRead
         self.sessions = sessions
     }
     
@@ -42,3 +44,4 @@ class Book: Identifiable, Hashable {
         hasher.combine(id)
     }
 }
+

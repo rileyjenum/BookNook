@@ -54,6 +54,7 @@ struct BookDetailView: View {
             Text(book.title)
                 .font(.largeTitle)
                 .padding()
+            Text("\(String(describing: book.pagesRead))")
             
             List {
                 ForEach(groupSessionsByDay(), id: \.0) { (day, sessions) in

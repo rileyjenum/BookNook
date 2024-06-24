@@ -11,6 +11,9 @@ import SwiftData
 struct HomeView: View {
     @Namespace private var namespace
     @State private var show = false
+    @State private var showPageEntry = false
+    @State private var currentPage = 0
+    @State private var selectedPage = 0
     
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
@@ -21,10 +24,10 @@ struct HomeView: View {
     @State private var selectedBookIndex: Int = 0
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
-
+    
     // Query existing books
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
-
+    
     var body: some View {
         VStack {
             headerView()
@@ -50,10 +53,23 @@ struct HomeView: View {
             Alert(title: Text("Stop Session"),
                   message: Text("Are you sure you want to stop the session?"),
                   primaryButton: .destructive(Text("Stop")) {
-                    timerManager.stopTimer()
+                    stopSession()
                   },
                   secondaryButton: .cancel())
         }
+        .sheet(isPresented: $showPageEntry) {
+            PageEntryView(book: books[selectedBookIndex], showPageEntry: $showPageEntry, currentPage: $currentPage, selectedPage: $selectedPage, saveSession: saveSession)
+        }
+        .onChange(of: timerManager.isActive) { isActive in
+            if !isActive {
+                showPageEntry = true
+            }
+        }
+    }
+    
+    private func stopSession() {
+        timerManager.stopTimer()
+        // showPageEntry is now handled in .onChange modifier
     }
     
     @ViewBuilder
@@ -110,11 +126,11 @@ struct HomeView: View {
                 // No need to handle newBookTitle and newAuthor since we're not adding new books
             }
             .pickerStyle(MenuPickerStyle())
-
-
+            
+            
             Button("Start Session") {
                 if canStartSession() {
-                    saveSession()
+                    startNewSession()
                 } else {
                     showError = true
                     errorMessage = "Please select a book."
@@ -136,14 +152,14 @@ struct HomeView: View {
     private func canStartSession() -> Bool {
         selectedBookIndex < books.count
     }
-
-    private func saveSession() {
+    
+    private func startNewSession() {
         do {
             let book = books[selectedBookIndex]
-            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: "")
+            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: "", pagesRead: 0)
             context.insert(newSession)
             try context.save()
-
+            
             timerManager.startTimer(session: newSession)
             withAnimation {
                 show.toggle()
@@ -154,21 +170,73 @@ struct HomeView: View {
         }
     }
     
+    private func saveSession() {
+        do {
+            let book = books[selectedBookIndex]
+            let pagesRead = selectedPage - currentPage
+            book.pagesRead! += pagesRead
+            if let currentSession = timerManager.currentSession {
+                currentSession.pagesRead = pagesRead
+                try context.save()
+                timerManager.completeSession() // Move completion after saving
+            }
+        } catch {
+            showError = true
+            errorMessage = "Failed to save session: \(error.localizedDescription)"
+        }
+    }
+    
     private func totalReadingTimeToday() -> TimeInterval {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: Date())
-
+        
         let todaySessions = allSessions.filter { session in
             calendar.isDate(session.startTime, inSameDayAs: startOfDay)
         }
-
+        
         return todaySessions.reduce(0) { $0 + $1.duration }
     }
-
+    
     private func formattedTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+}
+
+struct PageEntryView: View {
+    var book: Book
+    @Binding var showPageEntry: Bool
+    @Binding var currentPage: Int
+    @Binding var selectedPage: Int
+    var saveSession: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Enter pages read")
+                .font(.headline)
+            
+            Text("Current Page: \(currentPage)")
+                .padding()
+            
+            Picker("Select Page", selection: $selectedPage) {
+                ForEach(0..<(book.pageCount ?? 0), id: \.self) { page in
+                    Text("\(page)").tag(page)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+            
+            Button("Save") {
+                saveSession()
+                showPageEntry = false
+            }
+            .buttonStyle(DefaultButtonStyle())
+        }
+        .padding()
+        .onAppear {
+            currentPage = book.pagesRead!
+            selectedPage = book.pagesRead!
+        }
     }
 }
 

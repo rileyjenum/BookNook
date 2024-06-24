@@ -90,8 +90,8 @@ struct CreateSessionView: View {
                 book = Book(title: newBookTitle, author: newAuthor)
                 context.insert(book)
             }
-
-            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: notes)
+//TODO: fix pagesRead issue
+            let newSession = ReadingSession(startTime: Date(), duration: 0, book: book, notes: notes, pagesRead: 0)
             context.insert(newSession)
             try context.save()
 

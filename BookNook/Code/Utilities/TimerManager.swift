@@ -28,19 +28,26 @@ class TimerManager: ObservableObject {
     }
 
     func requestStopTimer() {
-        showStopAlert = true
+        DispatchQueue.main.async {
+            self.showStopAlert = true
+        }
     }
 
     func stopTimer() {
-        isActive = false
-        timer?.invalidate()
-        timer = nil
-        if let startTime = sessionStartTime, let session = currentSession {
-            let actualDuration = Date().timeIntervalSince(startTime)
-            session.duration = actualDuration
+        DispatchQueue.main.async {
+            self.isActive = false
+            self.timer?.invalidate()
+            self.timer = nil
+            if let startTime = self.sessionStartTime, let session = self.currentSession {
+                let actualDuration = Date().timeIntervalSince(startTime)
+                session.duration = actualDuration
+            }
+            // Do not set currentSession to nil here
+            self.sessionStartTime = nil
         }
-        currentSession = nil
-        sessionStartTime = nil
+    }
+
+    func completeSession() {
+        self.currentSession = nil
     }
 }
-

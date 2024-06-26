@@ -57,9 +57,33 @@ struct HomeView: View {
                   },
                   secondaryButton: .cancel())
         }
-        .sheet(isPresented: $showPageEntry) {
-            PageEntryView(book: books[selectedBookIndex], showPageEntry: $showPageEntry, currentPage: $currentPage, selectedPage: $selectedPage, saveSession: saveSession)
-        }
+        .overlay(
+            ZStack {
+                if showPageEntry {
+                    // Background overlay to capture all interactions
+                    Color.black.opacity(0.6)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            // Prevent interactions with underlying views
+                        }
+
+                    // Page entry modal view
+                    PageEntryModalView(
+                        book: books[selectedBookIndex],
+                        showPageEntry: $showPageEntry,
+                        currentPage: $currentPage,
+                        selectedPage: $selectedPage,
+                        saveSession: saveSession,
+                        cancelSession: cancelSession
+                    )
+                    .frame(maxWidth: 300)
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .shadow(radius: 20)
+                    .padding()
+                }
+            }
+        )
         .onChange(of: timerManager.isActive) { isActive in
             if !isActive {
                 showPageEntry = true
@@ -185,6 +209,19 @@ struct HomeView: View {
             errorMessage = "Failed to save session: \(error.localizedDescription)"
         }
     }
+
+    private func cancelSession() {
+        if let currentSession = timerManager.currentSession {
+            context.delete(currentSession)
+            timerManager.completeSession()
+        }
+        do {
+            try context.save()
+        } catch {
+            showError = true
+            errorMessage = "Failed to delete session: \(error.localizedDescription)"
+        }
+    }
     
     private func totalReadingTimeToday() -> TimeInterval {
         let calendar = Calendar.current
@@ -201,42 +238,6 @@ struct HomeView: View {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
-    }
-}
-
-struct PageEntryView: View {
-    var book: Book
-    @Binding var showPageEntry: Bool
-    @Binding var currentPage: Int
-    @Binding var selectedPage: Int
-    var saveSession: () -> Void
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            Text("Enter pages read")
-                .font(.headline)
-            
-            Text("Current Page: \(currentPage)")
-                .padding()
-            
-            Picker("Select Page", selection: $selectedPage) {
-                ForEach(0..<(book.pageCount ?? 0), id: \.self) { page in
-                    Text("\(page)").tag(page)
-                }
-            }
-            .pickerStyle(WheelPickerStyle())
-            
-            Button("Save") {
-                saveSession()
-                showPageEntry = false
-            }
-            .buttonStyle(DefaultButtonStyle())
-        }
-        .padding()
-        .onAppear {
-            currentPage = book.pagesRead!
-            selectedPage = book.pagesRead!
-        }
     }
 }
 

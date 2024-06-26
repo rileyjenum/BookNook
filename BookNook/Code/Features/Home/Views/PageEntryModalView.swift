@@ -1,0 +1,57 @@
+//
+//  PageEntryModalView.swift
+//  BookNook
+//
+//  Created by Riley Jenum on 25/06/24.
+//
+
+import Foundation
+import SwiftUI
+
+struct PageEntryModalView: View {
+    var book: Book
+    @Binding var showPageEntry: Bool
+    @Binding var currentPage: Int
+    @Binding var selectedPage: Int
+    var saveSession: () -> Void
+    var cancelSession: () -> Void
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Enter pages read")
+                .font(.headline)
+
+            Text("Current Page: \(currentPage)")
+                .padding()
+
+            Picker("Select Page", selection: $selectedPage) {
+                ForEach(0..<(book.pageCount ?? 0), id: \.self) { page in
+                    Text("\(page)").tag(page)
+                }
+            }
+            .pickerStyle(WheelPickerStyle())
+
+            HStack {
+                Button("Save") {
+                    saveSession()
+                    showPageEntry = false
+                }
+                .buttonStyle(DefaultButtonStyle())
+
+                Button("Cancel") {
+                    cancelSession()
+                    showPageEntry = false
+                }
+                .buttonStyle(DefaultButtonStyle())
+            }
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(12)
+        .shadow(radius: 20)
+        .onAppear {
+            currentPage = book.pagesRead ?? 0
+            selectedPage = book.pagesRead ?? 0
+        }
+    }
+}

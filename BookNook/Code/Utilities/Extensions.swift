@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIKit
+import CoreImage
 
 extension Color {
     init(hex: Int, alpha: Double = 1.0) {
@@ -116,6 +118,45 @@ extension Color {
 extension Collection {
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+
+
+extension UIImage {
+    func getColors() -> [UIColor] {
+        guard let inputImage = CIImage(image: self) else { return [] }
+        
+        // Create a Core Image context
+        let context = CIContext(options: [.workingColorSpace: kCFNull!])
+        
+        // Create a bitmap representation
+        let width = Int(inputImage.extent.width)
+        let height = Int(inputImage.extent.height)
+        var bitmap = [UInt8](repeating: 0, count: width * height * 4)
+        
+        context.render(inputImage, toBitmap: &bitmap, rowBytes: width * 4, bounds: inputImage.extent, format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB())
+        
+        // Create a dictionary to count occurrences of each color
+        var colorCounts: [UIColor: Int] = [:]
+        
+        for y in 0..<height {
+            for x in 0..<width {
+                let offset = (y * width + x) * 4
+                let r = bitmap[offset]
+                let g = bitmap[offset + 1]
+                let b = bitmap[offset + 2]
+                let a = bitmap[offset + 3]
+                
+                let color = UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(a) / 255.0)
+                
+                colorCounts[color, default: 0] += 1
+            }
+        }
+        
+        // Sort colors by frequency
+        let sortedColors = colorCounts.sorted { $0.value > $1.value }
+        
+        return sortedColors.map { $0.key }
     }
 }
 

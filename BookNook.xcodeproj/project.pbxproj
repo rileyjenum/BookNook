@@ -15,11 +15,24 @@
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
 		512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */; };
 		51380D252C2AA57700FDF65D /* PageEntryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51380D242C2AA57700FDF65D /* PageEntryModalView.swift */; };
+		515B0E9F2C31FBBA00806BB3 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B902BF36A9300F75F86 /* UpdateBookView.swift */; };
 		51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* BookViewModel.swift */; };
 		51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */; };
 		51745CA22C0922050012386E /* BookListScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51745CA12C0922050012386E /* BookListScreen2.swift */; };
+		518C9C1A2C36C0A6002E3627 /* Baskerville Bold font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */; };
+		518C9C1B2C36C0A6002E3627 /* BASKE9.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C0F2C36C0A6002E3627 /* BASKE9.ttf */; };
+		518C9C1C2C36C0A6002E3627 /* BaskervilleItalicBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C102C36C0A6002E3627 /* BaskervilleItalicBT.ttf */; };
+		518C9C1D2C36C0A6002E3627 /* BASKRV_L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C112C36C0A6002E3627 /* BASKRV_L.ttf */; };
+		518C9C1E2C36C0A6002E3627 /* baskvl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C122C36C0A6002E3627 /* baskvl.ttf */; };
+		518C9C1F2C36C0A6002E3627 /* baskervi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C132C36C0A6002E3627 /* baskervi.ttf */; };
+		518C9C202C36C0A6002E3627 /* BASKE10.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C142C36C0A6002E3627 /* BASKE10.ttf */; };
+		518C9C212C36C0A6002E3627 /* baskerville bold bt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C152C36C0A6002E3627 /* baskerville bold bt.ttf */; };
+		518C9C222C36C0A6002E3627 /* BaskervilleBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C162C36C0A6002E3627 /* BaskervilleBT.ttf */; };
+		518C9C232C36C0A6002E3627 /* BASKE1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C172C36C0A6002E3627 /* BASKE1.ttf */; };
+		518C9C242C36C0A6002E3627 /* BaskervilleBoldBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C182C36C0A6002E3627 /* BaskervilleBoldBT.ttf */; };
+		518C9C252C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C192C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf */; };
 		51A67CB42C12258F00B1F0DA /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A67CB32C12258F00B1F0DA /* BookDetailView.swift */; };
 		51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DC2BEEB13E000D672C /* BookNookApp.swift */; };
 		51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DE2BEEB13E000D672C /* ContentView.swift */; };
@@ -49,6 +62,8 @@
 		51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */; };
 		51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */; };
 		51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */; };
+		51E7F9FF2C3426CF0084B94D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E7F9FE2C3426CF0084B94D /* Images.xcassets */; };
+		51E7FA012C342AAF0084B94D /* TabIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E7FA002C342AAF0084B94D /* TabIconView.swift */; };
 		51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1632BF6300D0049144A /* HomeScreen2.swift */; };
 		51ECD1662BF630E20049144A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1652BF630E20049144A /* HomeView.swift */; };
 /* End PBXBuildFile section */
@@ -78,11 +93,25 @@
 		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksAPI.swift; sourceTree = "<group>"; };
 		51380D242C2AA57700FDF65D /* PageEntryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEntryModalView.swift; sourceTree = "<group>"; };
+		515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51731B902BF36A9300F75F86 /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
 		51731B952BF39D7F00F75F86 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
 		51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		51745CA12C0922050012386E /* BookListScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen2.swift; sourceTree = "<group>"; };
+		518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baskerville Bold font.ttf"; sourceTree = "<group>"; };
+		518C9C0F2C36C0A6002E3627 /* BASKE9.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BASKE9.ttf; sourceTree = "<group>"; };
+		518C9C102C36C0A6002E3627 /* BaskervilleItalicBT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BaskervilleItalicBT.ttf; sourceTree = "<group>"; };
+		518C9C112C36C0A6002E3627 /* BASKRV_L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BASKRV_L.ttf; sourceTree = "<group>"; };
+		518C9C122C36C0A6002E3627 /* baskvl.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = baskvl.ttf; sourceTree = "<group>"; };
+		518C9C132C36C0A6002E3627 /* baskervi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = baskervi.ttf; sourceTree = "<group>"; };
+		518C9C142C36C0A6002E3627 /* BASKE10.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BASKE10.ttf; sourceTree = "<group>"; };
+		518C9C152C36C0A6002E3627 /* baskerville bold bt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "baskerville bold bt.ttf"; sourceTree = "<group>"; };
+		518C9C162C36C0A6002E3627 /* BaskervilleBT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BaskervilleBT.ttf; sourceTree = "<group>"; };
+		518C9C172C36C0A6002E3627 /* BASKE1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BASKE1.ttf; sourceTree = "<group>"; };
+		518C9C182C36C0A6002E3627 /* BaskervilleBoldBT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BaskervilleBoldBT.ttf; sourceTree = "<group>"; };
+		518C9C192C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BaskervilleBoldItalicBT.ttf; sourceTree = "<group>"; };
+		518C9C262C36C2A1002E3627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51A67CB32C12258F00B1F0DA /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
 		51AD10D92BEEB13E000D672C /* BookNook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookNook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AD10DC2BEEB13E000D672C /* BookNookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookApp.swift; sourceTree = "<group>"; };
@@ -114,6 +143,8 @@
 		51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Sonder(chosic.com).mp3"; sourceTree = "<group>"; };
 		51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Colorful-Flowers(chosic.com).mp3"; sourceTree = "<group>"; };
+		51E7F9FE2C3426CF0084B94D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		51E7FA002C342AAF0084B94D /* TabIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIconView.swift; sourceTree = "<group>"; };
 		51ECD1632BF6300D0049144A /* HomeScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen2.swift; sourceTree = "<group>"; };
 		51ECD1652BF630E20049144A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,12 +184,39 @@
 			path = SplineFiles;
 			sourceTree = "<group>";
 		};
+		515B0E9D2C31FBA400806BB3 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
 		51731B942BF39D6A00F75F86 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
 				51731B952BF39D7F00F75F86 /* BookViewModel.swift */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		518C9C0D2C36C089002E3627 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				518C9C172C36C0A6002E3627 /* BASKE1.ttf */,
+				518C9C0F2C36C0A6002E3627 /* BASKE9.ttf */,
+				518C9C142C36C0A6002E3627 /* BASKE10.ttf */,
+				518C9C132C36C0A6002E3627 /* baskervi.ttf */,
+				518C9C152C36C0A6002E3627 /* baskerville bold bt.ttf */,
+				518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */,
+				518C9C182C36C0A6002E3627 /* BaskervilleBoldBT.ttf */,
+				518C9C192C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf */,
+				518C9C162C36C0A6002E3627 /* BaskervilleBT.ttf */,
+				518C9C102C36C0A6002E3627 /* BaskervilleItalicBT.ttf */,
+				518C9C112C36C0A6002E3627 /* BASKRV_L.ttf */,
+				518C9C122C36C0A6002E3627 /* baskvl.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		51AD10D02BEEB13E000D672C = {
@@ -184,6 +242,7 @@
 		51AD10DB2BEEB13E000D672C /* BookNook */ = {
 			isa = PBXGroup;
 			children = (
+				518C9C262C36C2A1002E3627 /* Info.plist */,
 				51AD11102BEEB29E000D672C /* Config */,
 				51AD110B2BEEB1DB000D672C /* Code */,
 				51AD110D2BEEB1E6000D672C /* Resources */,
@@ -243,6 +302,8 @@
 		51AD110D2BEEB1E6000D672C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				518C9C0D2C36C089002E3627 /* Fonts */,
+				515B0E9D2C31FBA400806BB3 /* Colors */,
 				510470F82BFA554C000BA602 /* SplineFiles */,
 				51D2E4332BF8CF84008798FA /* Audio */,
 				51AD112C2BEEB45A000D672C /* Images */,
@@ -351,6 +412,7 @@
 			children = (
 				51AD112F2BEEB586000D672C /* BlurView.swift */,
 				5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */,
+				51E7FA002C342AAF0084B94D /* TabIconView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -463,6 +525,7 @@
 			isa = PBXGroup;
 			children = (
 				51AD112D2BEEB46D000D672C /* AppIcon.xcassets */,
+				51E7F9FE2C3426CF0084B94D /* Images.xcassets */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -612,9 +675,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				518C9C202C36C0A6002E3627 /* BASKE10.ttf in Resources */,
 				51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */,
+				518C9C1E2C36C0A6002E3627 /* baskvl.ttf in Resources */,
+				518C9C1A2C36C0A6002E3627 /* Baskerville Bold font.ttf in Resources */,
 				51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */,
+				518C9C252C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf in Resources */,
+				51E7F9FF2C3426CF0084B94D /* Images.xcassets in Resources */,
+				518C9C242C36C0A6002E3627 /* BaskervilleBoldBT.ttf in Resources */,
+				518C9C1F2C36C0A6002E3627 /* baskervi.ttf in Resources */,
+				518C9C222C36C0A6002E3627 /* BaskervilleBT.ttf in Resources */,
 				51AD112E2BEEB46D000D672C /* AppIcon.xcassets in Resources */,
+				518C9C232C36C0A6002E3627 /* BASKE1.ttf in Resources */,
+				518C9C212C36C0A6002E3627 /* baskerville bold bt.ttf in Resources */,
+				518C9C1D2C36C0A6002E3627 /* BASKRV_L.ttf in Resources */,
+				518C9C1C2C36C0A6002E3627 /* BaskervilleItalicBT.ttf in Resources */,
+				518C9C1B2C36C0A6002E3627 /* BASKE9.ttf in Resources */,
+				515B0E9F2C31FBBA00806BB3 /* Colors.xcassets in Resources */,
 				510470FA2BFA5559000BA602 /* character_with_temperate_room.splineswift in Resources */,
 				51AD10E62BEEB13F000D672C /* Preview Assets.xcassets in Resources */,
 			);
@@ -643,6 +720,7 @@
 			files = (
 				51ECD1662BF630E20049144A /* HomeView.swift in Sources */,
 				5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */,
+				51E7FA012C342AAF0084B94D /* TabIconView.swift in Sources */,
 				51AD113A2BEEB9BF000D672C /* TopTitleView.swift in Sources */,
 				51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */,
 				51AD11362BEEB8A8000D672C /* CreateSessionView.swift in Sources */,
@@ -841,6 +919,7 @@
 				DEVELOPMENT_TEAM = 73FL849LGT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BookNook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -871,6 +950,7 @@
 				DEVELOPMENT_TEAM = 73FL849LGT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BookNook/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

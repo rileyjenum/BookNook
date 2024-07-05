@@ -42,7 +42,7 @@ struct DiscoverScreen: View {
                         VStack(alignment: .leading) {
                             ForEach(categories, id: \.self) { category in
                                 Text(category.replacingOccurrences(of: "-", with: " ").capitalized)
-                                    .font(.headline)
+                                    .font(.custom("Baskerville Light-Italic", size: 25))
                                     .padding(.leading)
                                     .padding([.top, .bottom], 20)
                                 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>BASKE1.ttf</string>
+		<string>BASKE9.ttf</string>
+		<string>BASKE10.ttf</string>
+		<string>baskervi.ttf</string>
+		<string>baskerville bold bt.ttf</string>
+		<string>Baskerville Bold font.ttf</string>
+		<string>BaskervilleBoldBT.ttf</string>
+		<string>BaskervilleBoldItalicsBT.ttf</string>
+		<string>BaskervilleBT.ttf</string>
+		<string>BaskervilleItalicBT.ttf</string>
+		<string>BASKRV_L.ttf</string>
+		<string>baskvl.ttf</string>
+	</array>
+</dict>
+</plist>

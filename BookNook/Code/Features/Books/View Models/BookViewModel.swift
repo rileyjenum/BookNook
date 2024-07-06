@@ -14,6 +14,9 @@ class BookViewModel: ObservableObject {
     private let googleBooksAPI = GoogleBooksAPI()
     private let nytAPI = NewYorkTimesAPI()
     @Published var nytBestsellers: [String: [Book]] = [:]
+    
+    @Published var colorCache: [String: (Color, Color)] = [:]
+
 
     
     func searchBooks(query: String) {

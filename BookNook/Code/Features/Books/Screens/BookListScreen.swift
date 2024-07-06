@@ -95,43 +95,6 @@ struct BooksListScreen: View {
     }
 }
 
-struct BookCoverView: View {
-    var book: Book
-    
-    var body: some View {
-        ZStack {
-            if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
-                WebImage(url: url) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                    
-                } placeholder: {
-                    RoundedRectangle(cornerRadius: 5)
-                        .frame(width: 150, height: 225)
-                        .foregroundColor(.gray)
-                }
-                .onSuccess { image, data, cacheType in
-                    // Success
-                }
-                .indicator(.activity) // Activity Indicator
-                .transition(.fade(duration: 0.5)) // Fade Transition with duration
-                .scaledToFit()
-                .frame(width: 150, height: 225)
-            } else {
-                Color.gray.opacity(0.3)
-                Text(book.title)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.black)
-                    .padding()
-            }
-        }
-        .frame(width: 150, height: 225)
-        .cornerRadius(3)
-        .shadow(radius: 4)
-    }
-}
-
 struct SessionView: View {
     @Bindable var session: ReadingSession
     

@@ -36,7 +36,7 @@ struct CalendarScreen: View {
                 }
             }
             .sheet(isPresented: $isPresentingNewSessionForm) { // Present the form as a sheet
-                ReadingSessionFormView() // Assuming this form view can handle creating new sessions
+                NewReadingSessionView() // Assuming this form view can handle creating new sessions
             }
             .sheet(isPresented: $displaySessions) {
                 DaysReadingSessionsListView(dateSelected: $dateSelected)

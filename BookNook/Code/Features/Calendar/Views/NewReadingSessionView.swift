@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ReadingSessionFormView: View {
+struct NewReadingSessionView: View {
     @Environment(\.modelContext) var context
     @State private var startTime = Date()
     @State private var hours: Int = 0
@@ -100,6 +100,6 @@ struct ReadingSessionFormView: View {
 
 struct ReadingSessionFormView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingSessionFormView()
+        NewReadingSessionView()
     }
 }

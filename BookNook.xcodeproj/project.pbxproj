@@ -43,7 +43,6 @@
 		51AD110A2BEEB1A6000D672C /* SplineRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 51AD11092BEEB1A6000D672C /* SplineRuntime */; };
 		51AD11122BEEB2BB000D672C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11112BEEB2BB000D672C /* Extensions.swift */; };
 		51AD112E2BEEB46D000D672C /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51AD112D2BEEB46D000D672C /* AppIcon.xcassets */; };
-		51AD11302BEEB586000D672C /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD112F2BEEB586000D672C /* BlurView.swift */; };
 		51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11312BEEB5B5000D672C /* MainTabbedScreen.swift */; };
 		51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11332BEEB654000D672C /* ReadingSession.swift */; };
 		51AD11362BEEB8A8000D672C /* CreateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11352BEEB8A8000D672C /* CreateSessionView.swift */; };
@@ -54,7 +53,7 @@
 		51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD113F2BEF63EF000D672C /* CalendarScreen.swift */; };
 		51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */; };
 		51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */; };
-		51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */; };
+		51AD114A2BEF6AA5000D672C /* NewReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* NewReadingSessionView.swift */; };
 		51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ADD5742BF1F0860023DEFE /* NewBookView.swift */; };
 		51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ADD5762BF206520023DEFE /* SettingsScreen.swift */; };
 		51B815BF2C2870A600CDB29D /* StatisticsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B815BE2C2870A600CDB29D /* StatisticsScreen.swift */; };
@@ -66,6 +65,10 @@
 		51E7FA012C342AAF0084B94D /* TabIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E7FA002C342AAF0084B94D /* TabIconView.swift */; };
 		51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1632BF6300D0049144A /* HomeScreen2.swift */; };
 		51ECD1662BF630E20049144A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1652BF630E20049144A /* HomeView.swift */; };
+		51F235152C394A8000FA09C3 /* BookSpineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F235142C394A8000FA09C3 /* BookSpineView.swift */; };
+		51F235172C394AF400FA09C3 /* ColorExtractingBookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F235162C394AF400FA09C3 /* ColorExtractingBookCoverView.swift */; };
+		51F235192C3958E200FA09C3 /* BookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F235182C3958E200FA09C3 /* BookCoverView.swift */; };
+		51F2351B2C39666B00FA09C3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2351A2C39666B00FA09C3 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +127,6 @@
 		51AD10FB2BEEB13F000D672C /* BookNookUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		51AD11112BEEB2BB000D672C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		51AD112D2BEEB46D000D672C /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
-		51AD112F2BEEB586000D672C /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		51AD11312BEEB5B5000D672C /* MainTabbedScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbedScreen.swift; sourceTree = "<group>"; };
 		51AD11332BEEB654000D672C /* ReadingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSession.swift; sourceTree = "<group>"; };
 		51AD11352BEEB8A8000D672C /* CreateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSessionView.swift; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 		51AD113F2BEF63EF000D672C /* CalendarScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarScreen.swift; sourceTree = "<group>"; };
 		51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayReadingSessionsListView.swift; sourceTree = "<group>"; };
 		51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionListViewRow.swift; sourceTree = "<group>"; };
-		51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionFormView.swift; sourceTree = "<group>"; };
+		51AD11492BEF6AA5000D672C /* NewReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReadingSessionView.swift; sourceTree = "<group>"; };
 		51ADD5742BF1F0860023DEFE /* NewBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBookView.swift; sourceTree = "<group>"; };
 		51ADD5762BF206520023DEFE /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		51B815BE2C2870A600CDB29D /* StatisticsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScreen.swift; sourceTree = "<group>"; };
@@ -147,6 +149,10 @@
 		51E7FA002C342AAF0084B94D /* TabIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIconView.swift; sourceTree = "<group>"; };
 		51ECD1632BF6300D0049144A /* HomeScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen2.swift; sourceTree = "<group>"; };
 		51ECD1652BF630E20049144A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		51F235142C394A8000FA09C3 /* BookSpineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSpineView.swift; sourceTree = "<group>"; };
+		51F235162C394AF400FA09C3 /* ColorExtractingBookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtractingBookCoverView.swift; sourceTree = "<group>"; };
+		51F235182C3958E200FA09C3 /* BookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverView.swift; sourceTree = "<group>"; };
+		51F2351A2C39666B00FA09C3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +334,7 @@
 				5126F6382BF1790C00DFB2E3 /* TimerManager.swift */,
 				51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */,
 				510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */,
+				51F2351A2C39666B00FA09C3 /* Utils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -410,7 +417,6 @@
 		51AD111B2BEEB347000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				51AD112F2BEEB586000D672C /* BlurView.swift */,
 				5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */,
 				51E7FA002C342AAF0084B94D /* TabIconView.swift */,
 			);
@@ -468,6 +474,9 @@
 				51731B902BF36A9300F75F86 /* UpdateBookView.swift */,
 				5115B5512C0378DB00056C34 /* BookshelfView.swift */,
 				51A67CB32C12258F00B1F0DA /* BookDetailView.swift */,
+				51F235142C394A8000FA09C3 /* BookSpineView.swift */,
+				51F235162C394AF400FA09C3 /* ColorExtractingBookCoverView.swift */,
+				51F235182C3958E200FA09C3 /* BookCoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -491,7 +500,7 @@
 		51AD11242BEEB371000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				51AD11492BEF6AA5000D672C /* ReadingSessionFormView.swift */,
+				51AD11492BEF6AA5000D672C /* NewReadingSessionView.swift */,
 				51AD113D2BEF62B8000D672C /* CalendarView.swift */,
 				51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */,
 				51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */,
@@ -721,18 +730,21 @@
 				51ECD1662BF630E20049144A /* HomeView.swift in Sources */,
 				5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */,
 				51E7FA012C342AAF0084B94D /* TabIconView.swift in Sources */,
+				51F235172C394AF400FA09C3 /* ColorExtractingBookCoverView.swift in Sources */,
 				51AD113A2BEEB9BF000D672C /* TopTitleView.swift in Sources */,
 				51AD113E2BEF62B8000D672C /* CalendarView.swift in Sources */,
 				51AD11362BEEB8A8000D672C /* CreateSessionView.swift in Sources */,
 				51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */,
+				51F235152C394A8000FA09C3 /* BookSpineView.swift in Sources */,
 				51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */,
 				51AD11122BEEB2BB000D672C /* Extensions.swift in Sources */,
-				51AD114A2BEF6AA5000D672C /* ReadingSessionFormView.swift in Sources */,
+				51AD114A2BEF6AA5000D672C /* NewReadingSessionView.swift in Sources */,
 				5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */,
 				510B2D2C2BFF75BB00E40B49 /* PhotoPicker.swift in Sources */,
 				51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */,
 				51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */,
 				51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */,
+				51F2351B2C39666B00FA09C3 /* Utils.swift in Sources */,
 				51380D252C2AA57700FDF65D /* PageEntryModalView.swift in Sources */,
 				51A67CB42C12258F00B1F0DA /* BookDetailView.swift in Sources */,
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
@@ -750,8 +762,8 @@
 				51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */,
 				51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */,
 				512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */,
+				51F235192C3958E200FA09C3 /* BookCoverView.swift in Sources */,
 				51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */,
-				51AD11302BEEB586000D672C /* BlurView.swift in Sources */,
 				51B815BF2C2870A600CDB29D /* StatisticsScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

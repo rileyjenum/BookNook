@@ -23,7 +23,9 @@ struct BookshelfView: View {
     @State private var draggingBookIndex: Int? = nil
     @State private var booksOrder: [Book] = []
     @State private var showBookDetail: Bool = false
-    
+    @State private var spineColors: [Color] = []
+    @State private var textColors: [Color] = []
+
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -99,11 +101,28 @@ struct BookshelfView: View {
                 )
                 .onAppear {
                     booksOrder = books
+                    spineColors = Array(repeating: .beige, count: books.count)
+                    textColors = Array(repeating: .black, count: books.count)
+                    
+                    // Initialize colors for all books
+                    for (index, book) in books.enumerated() {
+                        if let cachedColors = viewModel.colorCache[book.id] {
+                            spineColors[index] = cachedColors.0
+                            textColors[index] = cachedColors.1
+                        } else {
+                            Utils().extractColors(for: book, index: index, viewModel: viewModel) { spineColor, textColor in
+                                DispatchQueue.main.async {
+                                    spineColors[index] = spineColor
+                                    textColors[index] = textColor
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-    
+
     private func bookSpineView(geometry: GeometryProxy, scrollViewProxy: ScrollViewProxy, index: Int) -> some View {
         GeometryReader { itemGeometry in
             let midX = geometry.frame(in: .global).midX
@@ -111,10 +130,10 @@ struct BookshelfView: View {
             let distance = abs(midX - itemMidX)
             let maxDistance = midX
             let opacity = max(0.2, 1 - distance / maxDistance)
-            
+
             ZStack {
                 if selectedBookIndex == index, let selectedBook = booksOrder[safe: index] {
-                    BookCoverView(book: selectedBook)
+                    ColorExtractingBookCoverView(book: selectedBook, spineColor: $spineColors[index], textColor: $textColors[index], viewModel: viewModel)
                         .opacity(rotationAngle == 180 ? 1 : 0) // Show cover when rotated
                         .rotation3DEffect(.degrees(rotationAngle), axis: (x: 0, y: 1, z: 0))
                         .onTapGesture {
@@ -123,9 +142,9 @@ struct BookshelfView: View {
                             }
                         }
                 } else {
-                    BookSpine(
-                        spineColor: .beige,
-                        coverColor: .beige.opacity(0.8),
+                    BookSpineView(
+                        spineColor: spineColors[index],
+                        textColor: textColors[index],
                         isSelected: selectedBookIndex == index,
                         opacity: opacity,
                         title: booksOrder[index].title
@@ -137,51 +156,29 @@ struct BookshelfView: View {
             .frame(height: 200) // Adjust the frame height as needed
         }
     }
-    
+
     private func reorderBooks(from source: Int, to destination: Int) {
         guard source != destination else { return }
         let movedBook = booksOrder.remove(at: source)
         booksOrder.insert(movedBook, at: destination)
     }
-    
+
     private func resetViewState() {
         withAnimation(.easeInOut(duration: 0.5)) {
             selectedBookIndex = nil
             rotationAngle = 0
             booksOrder = books
+            spineColors = books.map { book in
+                viewModel.colorCache[book.id]?.0 ?? .beige
+            }
+            textColors = books.map { book in
+                viewModel.colorCache[book.id]?.1 ?? .black
+            }
         }
     }
 }
 
-struct BookSpine: View {
-    let spineColor: Color
-    let coverColor: Color
-    let isSelected: Bool
-    let opacity: Double
-    let title: String
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 5)
-                .fill(spineColor)
-                .frame(width: 40, height: 180)
-                .zIndex(isSelected ? 1 : 0)
-                .animation(.easeInOut(duration: 0.5), value: isSelected)
-            
-            Text(title)
-                .font(.caption)
-                .foregroundColor(.white)
-                .frame(width: 180, height: 40)
-                .rotationEffect(.degrees(90))
-                .multilineTextAlignment(.center)
-                .scaleEffect(isSelected ? 1 : 1)
-                .zIndex(isSelected ? 1 : 0)
-                .animation(.easeInOut(duration: 0.5), value: isSelected)
-                .lineLimit(nil)
-                .allowsTightening(true)
-        }
-    }
-}
+
 
 struct BookDropDelegate: DropDelegate {
     let item: Book

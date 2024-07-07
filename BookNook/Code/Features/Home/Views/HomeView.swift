@@ -25,6 +25,10 @@ struct HomeView: View {
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
+    @Binding var selectedTab: Int
+    @Binding var pendingTab: Int?
+    
+
     // Query existing books
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     
@@ -55,9 +59,6 @@ struct HomeView: View {
                     // Background overlay to capture all interactions
                     Color.black.opacity(0.6)
                         .edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            // Prevent interactions with underlying views
-                        }
 
                     // Page entry modal view
                     PageEntryModalView(
@@ -66,7 +67,9 @@ struct HomeView: View {
                         currentPage: $currentPage,
                         selectedPage: $selectedPage,
                         saveSession: saveSession,
-                        cancelSession: cancelSession
+                        cancelSession: cancelSession,
+                        selectedTab: $selectedTab,
+                        pendingTab: $pendingTab
                     )
                     .frame(maxWidth: 300)
                     .background(Color.white)
@@ -226,12 +229,5 @@ struct HomeView: View {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
-    }
-}
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-            .environmentObject(TimerManager())
     }
 }

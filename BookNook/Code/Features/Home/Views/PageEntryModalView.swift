@@ -14,6 +14,8 @@ struct PageEntryModalView: View {
     @Binding var selectedPage: Int
     var saveSession: () -> Void
     var cancelSession: () -> Void
+    @Binding var selectedTab: Int
+    @Binding var pendingTab: Int?
 
     var body: some View {
         VStack(spacing: 16) {
@@ -34,18 +36,25 @@ struct PageEntryModalView: View {
                 Button("Save") {
                     saveSession()
                     showPageEntry = false
+                    if let tab = pendingTab {
+                        selectedTab = tab
+                        pendingTab = nil
+                    }
                 }
                 .buttonStyle(DefaultButtonStyle())
 
                 Button("Cancel") {
                     cancelSession()
                     showPageEntry = false
+                    if let tab = pendingTab {
+                        selectedTab = tab
+                        pendingTab = nil
+                    }
                 }
                 .buttonStyle(DefaultButtonStyle())
             }
         }
         .padding()
-        .background(Color.white)
         .cornerRadius(12)
         .shadow(radius: 20)
         .onAppear {

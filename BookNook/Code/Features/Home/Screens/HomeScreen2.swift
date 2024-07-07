@@ -10,17 +10,13 @@ import SplineRuntime
 import SwiftUI
 
 struct HomeScreen2: View {
+    @Binding var selectedTab: Int
+    @Binding var pendingTab: Int?
     var body: some View {
         let url = URL(string: "https://build.spline.design/CnBGOQjeeH3RlgmJyC1Q/scene.splineswift")!
 
         try? SplineView(sceneFileURL: url).ignoresSafeArea(.all)
-            .overlay(HomeView())
+            .overlay(HomeView(selectedTab: $selectedTab, pendingTab: $pendingTab))
     }
 }
 
-struct TestScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeScreen2()
-            .environmentObject(TimerManager())
-    }
-}

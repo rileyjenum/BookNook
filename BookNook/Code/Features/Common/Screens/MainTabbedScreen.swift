@@ -24,7 +24,7 @@ struct MainTabbedView: View {
                     Label("Books", systemImage: "book.closed")
                 }
                 .tag(1)
-            HomeScreen2()
+            HomeScreen2(selectedTab: $selectedTab, pendingTab: $pendingTab)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
@@ -50,10 +50,6 @@ struct MainTabbedView: View {
                 message: Text("Do you really want to stop your current session?"),
                 primaryButton: .destructive(Text("Stop")) {
                     timerManager.stopTimer()
-                    if let tab = pendingTab {
-                        selectedTab = tab
-                        pendingTab = nil
-                    }
                 },
                 secondaryButton: .cancel {
                     pendingTab = nil

@@ -13,7 +13,7 @@ struct BookNookApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreen()
         }
         .modelContainer(for: [ReadingSession.self, Book.self])
     }

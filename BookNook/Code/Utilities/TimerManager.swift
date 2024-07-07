@@ -28,13 +28,12 @@ class TimerManager: ObservableObject {
     }
 
     func requestStopTimer() {
-        DispatchQueue.main.async {
-            self.showStopAlert = true
-        }
+        self.showStopAlert = true
     }
 
     func stopTimer() {
         DispatchQueue.main.async {
+            self.showStopAlert = false
             self.isActive = false
             self.timer?.invalidate()
             self.timer = nil

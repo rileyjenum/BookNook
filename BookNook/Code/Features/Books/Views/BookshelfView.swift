@@ -13,8 +13,11 @@ import UniformTypeIdentifiers
 struct BookshelfView: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
+    
     @Environment(\.modelContext) var context
+    
     @StateObject private var viewModel = BookViewModel()
+    
     @State private var selectedBookIndex: Int? = nil
     @State private var addNewBookShowing: Bool = false
     @State private var selectedBook: Book?
@@ -82,7 +85,7 @@ struct BookshelfView: View {
                             }
                         }
                         .sheet(isPresented: $addNewBookShowing) {
-                            NewBookView(viewModel: viewModel)
+                            NewBookView()
                         }
                     }
                 }

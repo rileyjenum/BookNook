@@ -15,7 +15,3 @@ struct BookListScreen2: View {
         }
     }
 }
-
-//#Preview {
-//    BookListScreen_v2()
-//}

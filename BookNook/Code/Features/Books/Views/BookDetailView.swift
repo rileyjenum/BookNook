@@ -11,8 +11,10 @@ import SDWebImageSwiftUI
 
 
 struct BookDetailView: View {
+    
     var book: Book
     var sessions: [ReadingSession]
+    
     @State var isEditingSession: Bool = false
     @State var selectedSession: ReadingSession?
     

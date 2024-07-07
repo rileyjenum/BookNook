@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TopTitleView: View {
+    
     var body: some View {
         VStack(alignment: .center, spacing:0) {
             Text("Reading Nook")

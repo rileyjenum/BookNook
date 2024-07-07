@@ -7,7 +7,9 @@
 import SwiftUI
 
 struct AudioPlayerView: View {
+    
     @State private var isExpanded = false
+    
     @StateObject private var audioPlayer = AudioPlayer()
     
     var body: some View {

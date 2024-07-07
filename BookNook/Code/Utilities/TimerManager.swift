@@ -9,9 +9,11 @@ import Foundation
 import Combine
 
 class TimerManager: ObservableObject {
+    
     @Published var isActive: Bool = false
     @Published var elapsedTime: TimeInterval = 0
     @Published var showStopAlert: Bool = false
+    
     var timer: Timer?
     var sessionStartTime: Date?
     var currentSession: ReadingSession?

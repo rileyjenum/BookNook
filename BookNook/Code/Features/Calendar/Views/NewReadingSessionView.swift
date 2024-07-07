@@ -9,7 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct NewReadingSessionView: View {
+    
+    @Query private var existingBooks: [Book] = []
+    
     @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    
     @State private var startTime = Date()
     @State private var hours: Int = 0
     @State private var minutes: Int = 0
@@ -18,9 +23,7 @@ struct NewReadingSessionView: View {
     @State private var bookTitle: String = ""
     @State private var author: String = ""
     @State private var notes: String = ""
-    @Query private var existingBooks: [Book] = []
-    @Environment(\.dismiss) var dismiss
-
+    
     var body: some View {
         NavigationStack {
             Form {

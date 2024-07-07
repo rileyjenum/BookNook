@@ -9,8 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: UIViewRepresentable {
+    
     let interval: DateInterval
+    
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
+    
     @Binding var dateSelected: DateComponents?
     @Binding var displaySessions: Bool
 

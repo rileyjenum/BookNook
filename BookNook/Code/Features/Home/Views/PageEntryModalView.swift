@@ -9,11 +9,12 @@ import SwiftUI
 
 struct PageEntryModalView: View {
     var book: Book
+    var saveSession: () -> Void
+    var cancelSession: () -> Void
+    
     @Binding var showPageEntry: Bool
     @Binding var currentPage: Int
     @Binding var selectedPage: Int
-    var saveSession: () -> Void
-    var cancelSession: () -> Void
     @Binding var selectedTab: Int
     @Binding var pendingTab: Int?
 

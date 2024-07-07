@@ -11,6 +11,7 @@ import Charts
 import SwiftData
 
 struct StatisticsScreen: View {
+    
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
 
     var body: some View {

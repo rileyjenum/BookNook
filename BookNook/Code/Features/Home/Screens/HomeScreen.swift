@@ -10,7 +10,9 @@ import SplineRuntime
 import SwiftData
 
 struct HomeScreen: View {
+    
     @EnvironmentObject var timerManager: TimerManager
+    
     @State var showingBottomSheet = false
 
     var body: some View {

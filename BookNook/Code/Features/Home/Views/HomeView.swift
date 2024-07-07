@@ -9,24 +9,26 @@ import SwiftUI
 import SwiftData
 
 struct HomeView: View {
+    
     @Namespace private var namespace
+    
     @State private var show = false
     @State private var showPageEntry = false
     @State private var currentPage = 0
     @State private var selectedPage = 0
-    
-    @Environment(\.modelContext) var context
-    @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var timerManager: TimerManager
-    
-    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var allSessions: [ReadingSession]
-    
     @State private var selectedBookIndex: Int = 0
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     @Binding var selectedTab: Int
     @Binding var pendingTab: Int?
+    
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var timerManager: TimerManager
+    
+    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var allSessions: [ReadingSession]
+
     
 
     // Query existing books
@@ -59,15 +61,14 @@ struct HomeView: View {
                     // Background overlay to capture all interactions
                     Color.black.opacity(0.6)
                         .edgesIgnoringSafeArea(.all)
-
-                    // Page entry modal view
+                    
                     PageEntryModalView(
                         book: books[selectedBookIndex],
+                        saveSession: saveSession,
+                        cancelSession:  cancelSession,
                         showPageEntry: $showPageEntry,
                         currentPage: $currentPage,
                         selectedPage: $selectedPage,
-                        saveSession: saveSession,
-                        cancelSession: cancelSession,
                         selectedTab: $selectedTab,
                         pendingTab: $pendingTab
                     )

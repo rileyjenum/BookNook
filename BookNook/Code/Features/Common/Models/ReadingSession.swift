@@ -10,7 +10,9 @@ import SwiftData
 
 @Model
 class ReadingSession: Identifiable, Hashable {
+    
     @Attribute(.unique) var id: String = UUID().uuidString
+    
     var startTime: Date
     var duration: TimeInterval
     var book: Book

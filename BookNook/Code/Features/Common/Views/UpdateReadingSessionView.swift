@@ -12,6 +12,7 @@ import SwiftData
 struct UpdateReadingSessionView: View {
 
     @Bindable var session: ReadingSession
+    
     @Environment(\.dismiss) var dismiss
 
     var isFormIncomplete: Bool {

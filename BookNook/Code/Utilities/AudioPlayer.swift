@@ -8,11 +8,13 @@ import Foundation
 import AVFoundation
 
 class AudioPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
+    
     var player: AVAudioPlayer?
+    var isShuffled: Bool = false
+    
     private var audioFiles: [Song] = []
     private var shuffledFiles: [Song] = []
     private var currentIndex: Int = 0
-    var isShuffled: Bool = false
     
     @Published var isPlaying = false
     @Published var currentTime: TimeInterval = 0

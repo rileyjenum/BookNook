@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct BookSpineView: View {
+    
     let spineColor: Color
     let textColor: Color
     let isSelected: Bool

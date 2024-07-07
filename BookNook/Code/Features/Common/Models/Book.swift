@@ -9,7 +9,10 @@ import SwiftData
 
 @Model
 class Book: Identifiable, Hashable {
+    
+    @Relationship(deleteRule: .cascade, inverse: \ReadingSession.book) var sessions: [ReadingSession]
     @Attribute(.unique) var id: String = UUID().uuidString
+    
     var title: String
     var author: String
     var bookDescription: String?
@@ -19,8 +22,6 @@ class Book: Identifiable, Hashable {
     var categories: [String]?
     var coverImageUrl: String?
     var pagesRead: Int?
-
-    @Relationship(deleteRule: .cascade, inverse: \ReadingSession.book) var sessions: [ReadingSession]
 
     init(id: String = UUID().uuidString, title: String, author: String, bookDescription: String? = nil, publisher: String? = nil, publishedDate: String? = nil, pageCount: Int? = nil, categories: [String]? = nil, coverImageUrl: String? = nil, pagesRead: Int? = 0, sessions: [ReadingSession] = []) {
         self.id = id

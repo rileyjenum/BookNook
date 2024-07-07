@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TabIcon: View {
+    
     var icon: UIImage
     var size: CGSize = CGSize(width: 50, height: 50)
 

@@ -10,6 +10,7 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct BookCoverView: View {
+    
     var book: Book
 
     var body: some View {

@@ -10,8 +10,10 @@ import SplineRuntime
 import SwiftUI
 
 struct HomeScreen2: View {
+    
     @Binding var selectedTab: Int
     @Binding var pendingTab: Int?
+    
     var body: some View {
         let url = URL(string: "https://build.spline.design/CnBGOQjeeH3RlgmJyC1Q/scene.splineswift")!
 

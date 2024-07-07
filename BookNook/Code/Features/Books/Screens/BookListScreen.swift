@@ -10,12 +10,16 @@ import SwiftData
 import SDWebImageSwiftUI
 
 struct BooksListScreen: View {
+    
     @StateObject private var viewModel = BookViewModel()
+    
     @State private var addNewBookShowing: Bool = false
-    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
-    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
     @State private var selectedBook: Book?
     @State private var isEditingBook = false
+    
+    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
+    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
+
     @Environment(\.modelContext) var context
     
     let columns = [
@@ -55,7 +59,7 @@ struct BooksListScreen: View {
                 }
             }
             .sheet(isPresented: $addNewBookShowing) {
-                NewBookView(viewModel: viewModel)
+                NewBookView()
             }
             .toolbar {
                 Button {

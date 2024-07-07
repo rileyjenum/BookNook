@@ -10,17 +10,23 @@ import SwiftData
 import SDWebImageSwiftUI
 
 struct DiscoverScreen: View {
+    
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
+    
     @Environment(\.modelContext) var context
+    
     @StateObject private var viewModel = BookViewModel()
+    
     @State private var searchQuery: String = ""
     @State private var showAlert: Bool = false
     @State private var selectedBook: Book?
     @State private var showSearchResults = false
     @State private var activeAlert: ActiveAlert = .addBook
+    
     var bookTitles: [String] {
         books.map { $0.title }
     }
+    
     enum ActiveAlert {
         case addBook, error, success
     }

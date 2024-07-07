@@ -2,8 +2,12 @@ import SwiftUI
 import SwiftData
 
 struct CreateSessionView: View {
+    
+    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
+
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject var timerManager: TimerManager
 
     @State private var selectedBookIndex: Int = 0
@@ -12,9 +16,6 @@ struct CreateSessionView: View {
     @State private var notes: String = ""
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
-
-    // Query existing books
-    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
 
     var body: some View {
         NavigationView {

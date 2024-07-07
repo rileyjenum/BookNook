@@ -10,9 +10,12 @@ import SwiftUI
 import SwiftData
 
 struct UpdateBookView: View {
-    @Environment(\.modelContext) var context
+    
     @Bindable var book: Book
+    
+    @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
+    
     @State private var selectedImage: UIImage?
     @State private var isPickerPresented = false
 

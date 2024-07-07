@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct SplashScreen: View {
+    
     @State private var isActive = false
     @State private var loadingText = "Loading..."
+    
     private let categories = ["young-adult-hardcover", "hardcover-fiction", "hardcover-nonfiction"]
 
     var body: some View {

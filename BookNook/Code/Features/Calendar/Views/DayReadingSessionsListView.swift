@@ -2,8 +2,11 @@ import SwiftUI
 import SwiftData
 
 struct DaysReadingSessionsListView: View {
+    
     @Binding var dateSelected: DateComponents?
+    
     @Query(sort: [SortDescriptor(\ReadingSession.startTime, order: .reverse)]) private var sessions: [ReadingSession]
+    
     @State var isUpdatingSession: Bool = false
     @State var selectedSession: ReadingSession?
 

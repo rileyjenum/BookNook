@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct MainTabbedView: View {
+    
     @State var selectedTab = 2
     @State private var pendingTab: Int?
+    
     @EnvironmentObject var timerManager: TimerManager
     
     var body: some View {

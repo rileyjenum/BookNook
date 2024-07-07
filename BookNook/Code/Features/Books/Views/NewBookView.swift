@@ -9,10 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct NewBookView: View {
+    
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var viewModel: BookViewModel
-    
+
     @State private var title: String = ""
     @State private var author: String = ""
     @State private var bookDescription: String = ""

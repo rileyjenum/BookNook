@@ -65,6 +65,7 @@ struct ImageLinks: Codable {
 // MARK: - Open Library API
 
 struct OpenLibraryAPI {
+    
     let baseURL = "https://openlibrary.org/search.json"
 
     func searchBooks(query: String, completion: @escaping (Result<[OpenLibraryBookResponse], Error>) -> Void) {

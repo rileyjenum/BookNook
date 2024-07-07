@@ -9,9 +9,12 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ColorExtractingBookCoverView: View {
+    
     var book: Book
+    
     @Binding var spineColor: Color
     @Binding var textColor: Color
+    
     @ObservedObject var viewModel: BookViewModel
 
     var body: some View {

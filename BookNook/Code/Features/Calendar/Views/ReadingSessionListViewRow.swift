@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct ReadingSessionListViewRow: View {
+    
     let session: ReadingSession
 
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(session.book.title)  // Updated to use the Book relationship
+                Text(session.book.title)
                     .font(.headline)
-                Text(session.book.author)  // Updated to use the Book relationship
+                Text(session.book.author)
             }
             Spacer()
             VStack(alignment: .trailing) {
@@ -26,7 +27,7 @@ struct ReadingSessionListViewRow: View {
             }
             .font(.subheadline)
         }
-        .contentShape(Rectangle()) // Ensures the tap gesture covers the entire area of the HStack
+        .contentShape(Rectangle())
     }
 }
 

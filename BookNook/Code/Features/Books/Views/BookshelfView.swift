@@ -100,7 +100,7 @@ struct BookshelfView: View {
                         }
                 )
                 .onAppear {
-                    booksOrder = books
+                    updateBooksOrder()
                     spineColors = Array(repeating: .beige, count: books.count)
                     textColors = Array(repeating: .black, count: books.count)
                     
@@ -118,6 +118,9 @@ struct BookshelfView: View {
                             }
                         }
                     }
+                }
+                .onChange(of: books) { 
+                    updateBooksOrder()
                 }
             }
         }
@@ -167,18 +170,20 @@ struct BookshelfView: View {
         withAnimation(.easeInOut(duration: 0.5)) {
             selectedBookIndex = nil
             rotationAngle = 0
-            booksOrder = books
-            spineColors = books.map { book in
-                viewModel.colorCache[book.id]?.0 ?? .beige
-            }
-            textColors = books.map { book in
-                viewModel.colorCache[book.id]?.1 ?? .black
-            }
+            updateBooksOrder()
+        }
+    }
+    
+    private func updateBooksOrder() {
+        booksOrder = books
+        spineColors = books.map { book in
+            viewModel.colorCache[book.id]?.0 ?? .beige
+        }
+        textColors = books.map { book in
+            viewModel.colorCache[book.id]?.1 ?? .black
         }
     }
 }
-
-
 
 struct BookDropDelegate: DropDelegate {
     let item: Book

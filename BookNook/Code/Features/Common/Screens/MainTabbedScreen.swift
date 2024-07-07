@@ -41,8 +41,8 @@ struct MainTabbedView: View {
                 }
                 .tag(4)
         }
-        .onChange(of: selectedTab) { newValue in
-            attemptChangeTab(to: newValue)
+        .onChange(of: selectedTab) {
+            attemptChangeTab(to: selectedTab)
         }
         .alert(isPresented: $timerManager.showStopAlert) {
             Alert(

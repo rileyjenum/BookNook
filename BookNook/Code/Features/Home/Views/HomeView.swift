@@ -79,8 +79,8 @@ struct HomeView: View {
                 }
             }
         )
-        .onChange(of: timerManager.isActive) { isActive in
-            if !isActive {
+        .onChange(of: timerManager.isActive) {
+            if !timerManager.isActive {
                 showPageEntry = true
             }
         }

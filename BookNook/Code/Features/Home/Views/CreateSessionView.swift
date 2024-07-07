@@ -25,10 +25,10 @@ struct CreateSessionView: View {
                         Text(books[index].title).tag(index + 1)
                     }
                 }
-                .onChange(of: selectedBookIndex) { newValue in
-                    if newValue > 0 {
-                        newBookTitle = books[newValue - 1].title
-                        newAuthor = books[newValue - 1].author
+                .onChange(of: selectedBookIndex) {
+                    if selectedBookIndex > 0 {
+                        newBookTitle = books[selectedBookIndex - 1].title
+                        newAuthor = books[selectedBookIndex - 1].author
                     } else {
                         newBookTitle = ""
                         newAuthor = ""

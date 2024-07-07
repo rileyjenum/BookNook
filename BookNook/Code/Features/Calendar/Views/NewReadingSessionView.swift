@@ -49,9 +49,9 @@ struct NewReadingSessionView: View {
                             Text(book.title).tag(book as Book?)
                         }
                     }
-                    .onChange(of: selectedBook) { newValue in
-                        bookTitle = newValue?.title ?? ""
-                        author = newValue?.author ?? ""
+                    .onChange(of: selectedBook) {
+                        bookTitle = selectedBook?.title ?? ""
+                        author = selectedBook?.author ?? ""
                     }
 
                 

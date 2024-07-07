@@ -84,14 +84,3 @@ struct MyView: View {
 #Preview {
     MyView()
 }
-
-//struct MyView: View {
-//    var body: some View {
-//        MainTabbedView()
-//            .environmentObject(TimerManager())
-//    }
-//}
-
-//#Preview {
-//    MyView()
-//}

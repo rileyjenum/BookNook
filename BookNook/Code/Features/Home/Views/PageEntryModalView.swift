@@ -5,7 +5,6 @@
 //  Created by Riley Jenum on 25/06/24.
 //
 
-import Foundation
 import SwiftUI
 
 struct PageEntryModalView: View {
@@ -29,7 +28,7 @@ struct PageEntryModalView: View {
                     Text("\(page)").tag(page)
                 }
             }
-            .pickerStyle(WheelPickerStyle())
+            .pickerStyle(MenuPickerStyle())
 
             HStack {
                 Button("Save") {
@@ -52,6 +51,8 @@ struct PageEntryModalView: View {
         .onAppear {
             currentPage = book.pagesRead ?? 0
             selectedPage = book.pagesRead ?? 0
+            print("Page count: \(book.pageCount ?? 0)")  // Debug print statement
+            print("Current Page: \(currentPage)")  // Debug print statement
         }
     }
 }

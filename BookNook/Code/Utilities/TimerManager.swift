@@ -18,7 +18,7 @@ class TimerManager: ObservableObject {
 
     func startTimer(session: ReadingSession) {
         self.currentSession = session
-        sessionStartTime = Date() // Store the start time when the timer starts
+        sessionStartTime = Date()
         elapsedTime = 0
         isActive = true
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
@@ -42,7 +42,6 @@ class TimerManager: ObservableObject {
                 let actualDuration = Date().timeIntervalSince(startTime)
                 session.duration = actualDuration
             }
-            // Do not set currentSession to nil here
             self.sessionStartTime = nil
         }
     }

@@ -18,7 +18,7 @@ class Book: Identifiable, Hashable {
     var pageCount: Int?
     var categories: [String]?
     var coverImageUrl: String?
-    var pagesRead: Int?  // New variable to track pages read
+    var pagesRead: Int?
 
     @Relationship(deleteRule: .cascade, inverse: \ReadingSession.book) var sessions: [ReadingSession]
 

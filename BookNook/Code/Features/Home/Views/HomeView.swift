@@ -49,14 +49,6 @@ struct HomeView: View {
                   message: Text(errorMessage),
                   dismissButton: .default(Text("OK")))
         }
-        .alert(isPresented: $timerManager.showStopAlert) {
-            Alert(title: Text("Stop Session"),
-                  message: Text("Are you sure you want to stop the session?"),
-                  primaryButton: .destructive(Text("Stop")) {
-                    stopSession()
-                  },
-                  secondaryButton: .cancel())
-        }
         .overlay(
             ZStack {
                 if showPageEntry {
@@ -93,7 +85,6 @@ struct HomeView: View {
     
     private func stopSession() {
         timerManager.stopTimer()
-        // showPageEntry is now handled in .onChange modifier
     }
     
     @ViewBuilder
@@ -145,9 +136,6 @@ struct HomeView: View {
                 ForEach(books.indices, id: \.self) { index in
                     Text(books[index].title).tag(index)
                 }
-            }
-            .onChange(of: selectedBookIndex) { newValue in
-                // No need to handle newBookTitle and newAuthor since we're not adding new books
             }
             .pickerStyle(MenuPickerStyle())
             

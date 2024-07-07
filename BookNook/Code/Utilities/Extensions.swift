@@ -122,190 +122,91 @@ extension Collection {
 }
 
 
+
 extension UIImage {
-    func getColors() -> [UIColor] {
-        guard let inputImage = CIImage(image: self) else { return [] }
+    func getMainColors() -> (UIColor, UIColor)? {
+        guard let resizedImage = self.resized(to: CGSize(width: 100, height: 100)) else { return nil }
+        guard let inputImage = CIImage(image: resizedImage) else { return nil }
         
-        // Create a Core Image context
-        let context = CIContext(options: [.workingColorSpace: kCFNull!])
+        let context = CIContext(options: nil)
+        guard let cgImage = context.createCGImage(inputImage, from: inputImage.extent) else { return nil }
         
-        // Create a bitmap representation
-        let width = Int(inputImage.extent.width)
-        let height = Int(inputImage.extent.height)
-        var bitmap = [UInt8](repeating: 0, count: width * height * 4)
+        let width = cgImage.width
+        let height = cgImage.height
+        let bytesPerPixel = 4
+        let bytesPerRow = bytesPerPixel * width
+        let bitsPerComponent = 8
+        let bitmapData = calloc(height * width * bytesPerPixel, MemoryLayout<UInt8>.size)
         
-        context.render(inputImage, toBitmap: &bitmap, rowBytes: width * 4, bounds: inputImage.extent, format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB())
+        guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB) else { return nil }
+        let bitmapContext = CGContext(data: bitmapData, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
         
-        // Create a dictionary to count occurrences of each color
+        bitmapContext?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+        
+        guard let pixelData = bitmapContext?.data?.assumingMemoryBound(to: UInt8.self) else { return nil }
+        
         var colorCounts: [UIColor: Int] = [:]
         
         for y in 0..<height {
             for x in 0..<width {
-                let offset = (y * width + x) * 4
-                let r = bitmap[offset]
-                let g = bitmap[offset + 1]
-                let b = bitmap[offset + 2]
-                let a = bitmap[offset + 3]
+                let pixelIndex = (y * width + x) * bytesPerPixel
+                let r = CGFloat(pixelData[pixelIndex]) / 255.0
+                let g = CGFloat(pixelData[pixelIndex + 1]) / 255.0
+                let b = CGFloat(pixelData[pixelIndex + 2]) / 255.0
+                let a = CGFloat(pixelData[pixelIndex + 3]) / 255.0
                 
-                let color = UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(a) / 255.0)
-                
+                let color = UIColor(red: r, green: g, blue: b, alpha: a)
                 colorCounts[color, default: 0] += 1
             }
         }
         
-        // Sort colors by frequency
+        free(bitmapData)
+        
         let sortedColors = colorCounts.sorted { $0.value > $1.value }
+        guard sortedColors.count > 1 else { return nil }
         
-        return sortedColors.map { $0.key }
-    }
-}
-
-//extension UIImage {
-//    func getMainColors() -> (UIColor, UIColor)? {
-//        guard let inputImage = CIImage(image: self) else { return nil }
-//        
-//        let context = CIContext(options: [.workingColorSpace: kCFNull!])
-//        let width = Int(inputImage.extent.width)
-//        let height = Int(inputImage.extent.height)
-//        var bitmap = [UInt8](repeating: 0, count: width * height * 4)
-//        
-//        context.render(inputImage, toBitmap: &bitmap, rowBytes: width * 4, bounds: inputImage.extent, format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB())
-//        
-//        var colorCounts: [UIColor: Int] = [:]
-//        
-//        for y in 0..<height {
-//            for x in 0..<width {
-//                let offset = (y * width + x) * 4
-//                let r = bitmap[offset]
-//                let g = bitmap[offset + 1]
-//                let b = bitmap[offset + 2]
-//                let a = bitmap[offset + 3]
-//                
-//                let color = UIColor(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: CGFloat(a) / 255.0)
-//                
-//                colorCounts[color, default: 0] += 1
-//            }
-//        }
-//        
-//        let sortedColors = colorCounts.sorted { $0.value > $1.value }
-//        
-//        guard sortedColors.count >= 2 else {
-//            return nil
-//        }
-//        
-//        let primaryColor = sortedColors[0].key
-//        var secondaryColor = sortedColors[1].key
-//        
-//        // Ensure secondary color is distinct
-//        for color in sortedColors.dropFirst(1).map({ $0.key }) {
-//            if isColorDistinct(primaryColor, from: color) {
-//                secondaryColor = color
-//                break
-//            }
-//        }
-//        
-//        return (primaryColor, secondaryColor)
-//    }
-//    
-//    private func isColorDistinct(_ color1: UIColor, from color2: UIColor) -> Bool {
-//        let hsl1 = color1.hsl
-//        let hsl2 = color2.hsl
-//        
-//        // Check if the hue difference is significant
-//        let hueDifference = abs(hsl1.hue - hsl2.hue)
-//        if hueDifference > 0.1 {
-//            return true
-//        }
-//        
-//        // Check if the saturation difference is significant
-//        let saturationDifference = abs(hsl1.saturation - hsl2.saturation)
-//        if saturationDifference > 0.2 {
-//            return true
-//        }
-//        
-//        // Check if the lightness difference is significant
-//        let lightnessDifference = abs(hsl1.lightness - hsl2.lightness)
-//        if lightnessDifference > 0.2 {
-//            return true
-//        }
-//        
-//        return false
-//    }
-//}
-//
-//
-//
-//
-//extension UIColor {
-//    var hsl: (hue: CGFloat, saturation: CGFloat, lightness: CGFloat, alpha: CGFloat) {
-//        var hue: CGFloat = 0
-//        var saturation: CGFloat = 0
-//        var brightness: CGFloat = 0
-//        var alpha: CGFloat = 0
-//        getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-//        
-//        let lightness = (2 - saturation) * brightness / 2
-//        let saturationL = (lightness == 0 || lightness == 1) ? 0 : (brightness - lightness) / min(lightness, 1 - lightness)
-//        
-//        return (hue: hue, saturation: saturationL, lightness: lightness, alpha: alpha)
-//    }
-//    
-//    convenience init(hsl: (hue: CGFloat, saturation: CGFloat, lightness: CGFloat, alpha: CGFloat)) {
-//        let (hue, saturationL, lightness, alpha) = hsl
-//        let brightness: CGFloat
-//        
-//        if lightness < 0.5 {
-//            brightness = lightness * (1 + saturationL)
-//        } else {
-//            brightness = lightness + saturationL - lightness * saturationL
-//        }
-//        
-//        let saturation = (brightness == 0) ? 0 : 2 * (1 - lightness / brightness)
-//        
-//        self.init(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
-//    }
-//}
-
-
-
-extension UIImage {
-    func getMainColors() -> (UIColor, UIColor)? {
-        guard let inputImage = CIImage(image: self) else { return nil }
+        let primaryColor = sortedColors[0].key
+        var secondaryColor = sortedColors[1].key
         
-        let extentVector = CIVector(x: inputImage.extent.origin.x, y: inputImage.extent.origin.y, z: inputImage.extent.size.width, w: inputImage.extent.size.height)
+        for color in sortedColors.dropFirst(1).map({ $0.key }) {
+            if primaryColor.contrastsEnough(with: color) {
+                secondaryColor = color
+                break
+            }
+        }
         
-        guard let averageFilter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
-        guard let outputImage = averageFilter.outputImage else { return nil }
-        
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext()
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-        
-        let averageColor = UIColor(red: CGFloat(bitmap[0]) / 255.0,
-                                   green: CGFloat(bitmap[1]) / 255.0,
-                                   blue: CGFloat(bitmap[2]) / 255.0,
-                                   alpha: CGFloat(bitmap[3]) / 255.0)
-        
-        let complementaryColor = averageColor.complementaryColor()
-        
-        return (averageColor, complementaryColor)
+        return (primaryColor, secondaryColor)
     }
 }
 
 extension UIColor {
-    func complementaryColor() -> UIColor {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
+    func contrastsEnough(with color: UIColor) -> Bool {
+        let contrastRatio = (self.luminance() + 0.05) / (color.luminance() + 0.05)
+        return contrastRatio > 1.5 || contrastRatio < 0.67
+    }
+    
+    func luminance() -> CGFloat {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
         
-        self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
         
-        let complementaryRed = 1.0 - red
-        let complementaryGreen = 1.0 - green
-        let complementaryBlue = 1.0 - blue
+        func component(_ c: CGFloat) -> CGFloat {
+            return (c <= 0.03928) ? (c / 12.92) : pow((c + 0.055) / 1.055, 2.4)
+        }
         
-        return UIColor(red: complementaryRed, green: complementaryGreen, blue: complementaryBlue, alpha: alpha)
+        return 0.2126 * component(r) + 0.7152 * component(g) + 0.0722 * component(b)
+    }
+}
+
+extension UIImage {
+    func resized(to size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        self.draw(in: CGRect(origin: .zero, size: size))
+        return UIGraphicsGetImageFromCurrentImageContext()
     }
 }
 

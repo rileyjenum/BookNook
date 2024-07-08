@@ -107,7 +107,6 @@ struct BookshelfView: View {
                     spineColors = Array(repeating: .beige, count: books.count)
                     textColors = Array(repeating: .black, count: books.count)
                     
-                    // Initialize colors for all books
                     for (index, book) in books.enumerated() {
                         if let cachedColors = viewModel.colorCache[book.id] {
                             spineColors[index] = cachedColors.0
@@ -159,7 +158,7 @@ struct BookshelfView: View {
                     .rotation3DEffect(.degrees(rotationAngle), axis: (x: 0, y: 1, z: 0))
                 }
             }
-            .frame(height: 200) // Adjust the frame height as needed
+            .frame(height: 200)
         }
     }
 

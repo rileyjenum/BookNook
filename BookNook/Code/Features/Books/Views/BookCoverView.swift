@@ -10,26 +10,37 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct BookCoverView: View {
-    
     var book: Book
-
+    
     var body: some View {
-        ZStack {
-            if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
-                WebImage(url: url)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 225)
+        VStack {
+            if let urlString = book.coverImageUrl, let url = URL(string: urlString) {
+                WebImage(url: url) { image in
+                    image.resizable()
+                } placeholder: {
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(.gray)
+                }
+                .indicator(.activity)
+                .transition(.fade(duration: 0.5))
+                .scaledToFit()
+                .frame(width: 120, height: 180)
+                .cornerRadius(10)
+                .shadow(radius: 5)
             } else {
-                Color.gray.opacity(0.3)
-                Text(book.title)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.black)
-                    .padding()
+                Image(systemName: "book")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 120, height: 180)
+                    .foregroundColor(.gray)
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
             }
+            Text(book.title)
+                .font(.caption)
+                .fontWeight(.bold)
+                .padding(.top, 5)
+                .multilineTextAlignment(.center)
         }
-        .frame(width: 150, height: 225)
-        .cornerRadius(3)
-        .shadow(radius: 4)
     }
 }

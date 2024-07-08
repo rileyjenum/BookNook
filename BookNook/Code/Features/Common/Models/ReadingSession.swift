@@ -17,7 +17,7 @@ class ReadingSession: Identifiable, Hashable {
     var duration: TimeInterval
     var book: Book
     var notes: String
-    var pagesRead: Int  // New property to track the pages read
+    var pagesRead: Int
 
     init(id: String = UUID().uuidString, startTime: Date, duration: TimeInterval, book: Book, notes: String, pagesRead: Int) {
         self.id = id
@@ -25,6 +25,6 @@ class ReadingSession: Identifiable, Hashable {
         self.duration = duration
         self.book = book
         self.notes = notes
-        self.pagesRead = pagesRead  // Initialize the new property
+        self.pagesRead = pagesRead
     }
 }

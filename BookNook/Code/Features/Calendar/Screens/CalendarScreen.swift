@@ -14,35 +14,49 @@ struct CalendarScreen: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture),
-                                           dateSelected: $dateSelected,
-                                           displaySessions: $displaySessions)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        isPresentingNewSessionForm = true // Trigger form presentation
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .imageScale(.medium)
+            ZStack {
+                ScrollView {
+                    CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture),
+                                 dateSelected: $dateSelected,
+                                 displaySessions: $displaySessions)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.white)
+                            .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 10)
+                    )
+                    .padding()
+                }
+                .navigationTitle("Calendar")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isPresentingNewSessionForm = true
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .imageScale(.large)
+                                .foregroundColor(.blue)
+                                .shadow(radius: 5)
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        NavigationLink(destination: StatisticsScreen()) {
+                            Image(systemName: "chart.bar.fill")
+                                .imageScale(.large)
+                                .foregroundColor(.blue)
+                                .shadow(radius: 5)
+                        }
                     }
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    NavigationLink(destination: StatisticsScreen()) {
-                        Image(systemName: "chart.bar.fill")
-                            .imageScale(.medium)
-                    }
-                }
             }
-            .sheet(isPresented: $isPresentingNewSessionForm) { // Present the form as a sheet
-                NewReadingSessionView() // Assuming this form view can handle creating new sessions
+            .sheet(isPresented: $isPresentingNewSessionForm) {
+                NewReadingSessionView()
+                    .presentationDetents([.medium, .large])
             }
             .sheet(isPresented: $displaySessions) {
                 DaysReadingSessionsListView(dateSelected: $dateSelected)
                     .presentationDetents([.medium, .large])
             }
-            .navigationTitle("Calendar")
         }
     }
 }

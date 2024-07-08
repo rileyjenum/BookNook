@@ -15,7 +15,7 @@ struct DiscoverScreen: View {
     
     @Environment(\.modelContext) var context
     
-    @StateObject private var viewModel = BookViewModel()
+    @StateObject private var viewModel = DiscoverScreenViewModel.shared
     
     @State private var searchQuery: String = ""
     @State private var showAlert: Bool = false
@@ -110,11 +110,6 @@ struct DiscoverScreen: View {
                             message: Text("This book was successfully added to your library"),
                             dismissButton: .default(Text("OK"))
                         )
-                    }
-                }
-                .onAppear {
-                    for category in categories {
-                        viewModel.fetchBestsellers(for: category)
                     }
                 }
             }

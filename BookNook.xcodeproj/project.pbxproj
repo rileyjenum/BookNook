@@ -18,7 +18,7 @@
 		515B0E9F2C31FBBA00806BB3 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B902BF36A9300F75F86 /* UpdateBookView.swift */; };
-		51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* BookViewModel.swift */; };
+		51731B962BF39D7F00F75F86 /* DiscoverScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */; };
 		51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */; };
 		51745CA22C0922050012386E /* BookListScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51745CA12C0922050012386E /* BookListScreen2.swift */; };
 		518C9C1A2C36C0A6002E3627 /* Baskerville Bold font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */; };
@@ -100,7 +100,7 @@
 		515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51731B902BF36A9300F75F86 /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
-		51731B952BF39D7F00F75F86 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
+		51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreenViewModel.swift; sourceTree = "<group>"; };
 		51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
 		51745CA12C0922050012386E /* BookListScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen2.swift; sourceTree = "<group>"; };
 		518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baskerville Bold font.ttf"; sourceTree = "<group>"; };
@@ -192,6 +192,14 @@
 			path = SplineFiles;
 			sourceTree = "<group>";
 		};
+		513ADD5B2C3C8A5B0008D5B1 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
 		515B0E9D2C31FBA400806BB3 /* Colors */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,7 +211,6 @@
 		51731B942BF39D6A00F75F86 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				51731B952BF39D7F00F75F86 /* BookViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -570,6 +577,7 @@
 		51D2E43A2BF8FF4E008798FA /* Discover */ = {
 			isa = PBXGroup;
 			children = (
+				513ADD5B2C3C8A5B0008D5B1 /* View Models */,
 				51D2E43C2BF8FF5E008798FA /* Screens */,
 				51D2E43B2BF8FF56008798FA /* Views */,
 			);
@@ -777,7 +785,7 @@
 				51AD11382BEEB907000D672C /* HomeScreen.swift in Sources */,
 				51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */,
 				51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */,
-				51731B962BF39D7F00F75F86 /* BookViewModel.swift in Sources */,
+				51731B962BF39D7F00F75F86 /* DiscoverScreenViewModel.swift in Sources */,
 				51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */,
 				5190FA4E2C3B005300ED20D5 /* SplashScreen.swift in Sources */,
 				51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */,

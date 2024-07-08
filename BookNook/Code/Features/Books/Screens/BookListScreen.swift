@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct BooksListScreen: View {
     
-    @StateObject private var viewModel = BookViewModel()
+    @StateObject private var viewModel = DiscoverScreenViewModel()
     
     @State private var addNewBookShowing: Bool = false
     @State private var selectedBook: Book?

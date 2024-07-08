@@ -15,7 +15,7 @@ struct ColorExtractingBookCoverView: View {
     @Binding var spineColor: Color
     @Binding var textColor: Color
     
-    @ObservedObject var viewModel: BookViewModel
+    @ObservedObject var viewModel: DiscoverScreenViewModel
 
     var body: some View {
         ZStack {

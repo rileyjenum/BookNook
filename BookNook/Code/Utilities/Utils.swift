@@ -14,7 +14,7 @@ import SwiftUI
 import SDWebImage
 
 struct Utils {
-    func extractColors(for book: Book, index: Int, viewModel: BookViewModel, completion: @escaping (Color, Color) -> Void) {
+    func extractColors(for book: Book, index: Int, viewModel: DiscoverScreenViewModel, completion: @escaping (Color, Color) -> Void) {
         guard let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) else {
             completion(.beige, .black)
             return

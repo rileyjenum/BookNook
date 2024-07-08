@@ -16,7 +16,7 @@ struct BookshelfView: View {
     
     @Environment(\.modelContext) var context
     
-    @StateObject private var viewModel = BookViewModel()
+    @StateObject private var viewModel = DiscoverScreenViewModel()
     
     @State private var selectedBookIndex: Int? = nil
     @State private var addNewBookShowing: Bool = false

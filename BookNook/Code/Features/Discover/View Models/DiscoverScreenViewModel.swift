@@ -1,5 +1,5 @@
 //
-//  BookViewModel.swift
+//  DiscoverScreenViewModel.swift
 //  BookNook
 //
 //  Created by Riley Jenum on 14/05/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-class BookViewModel: ObservableObject {
+class DiscoverScreenViewModel: ObservableObject {
     
     private let openLibraryAPI = OpenLibraryAPI()
     private let googleBooksAPI = GoogleBooksAPI()
@@ -17,6 +17,8 @@ class BookViewModel: ObservableObject {
     @Published var nytBestsellers: [String: [Book]] = [:]
     @Published var books: [Book] = []
     @Published var colorCache: [String: (Color, Color)] = [:]
+    
+    static let shared = DiscoverScreenViewModel()
 
 
     
@@ -37,7 +39,7 @@ class BookViewModel: ObservableObject {
         }
     }
     
-    func fetchBestsellers(for category: String) {
+    func fetchBestsellers(for category: String, completion: @escaping () -> Void) {
         nytAPI.fetchBestsellers(for: category) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -65,13 +67,16 @@ class BookViewModel: ObservableObject {
                     
                     group.notify(queue: .main) {
                         self?.nytBestsellers[category] = detailedBooks
+                        completion()
                     }
                 case .failure(let error):
                     print("Error fetching bestsellers: \(error.localizedDescription)")
+                    completion()
                 }
             }
         }
     }
+
     
     private func fetchBookDetailsFromGoogleBooks(openLibraryBooks: [OpenLibraryBookResponse], completion: @escaping ([Book]) -> Void) {
         let group = DispatchGroup()

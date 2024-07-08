@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Dispatch
+
 
 struct SplashScreen: View {
     
@@ -20,7 +22,7 @@ struct SplashScreen: View {
                 ContentView()
             } else {
                 VStack {
-                    Image(systemName: "book.fill") // Replace with your app logo
+                    Image(systemName: "book.fill")
                         .resizable()
                         .frame(width: 100, height: 100)
                         .padding()
@@ -42,11 +44,19 @@ struct SplashScreen: View {
     }
 
     private func performLoading() {
+        let dispatchGroup = DispatchGroup()
         
-        self.isActive = true
-
-    }
-}
+        for category in categories {
+            dispatchGroup.enter()
+            DiscoverScreenViewModel.shared.fetchBestsellers(for: category) {
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.isActive = true
+        }
+    }}
 
 struct SplashScreen_Previews: PreviewProvider {
     static var previews: some View {

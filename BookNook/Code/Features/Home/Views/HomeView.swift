@@ -13,24 +13,22 @@ struct HomeView: View {
     @Namespace private var namespace
     
     @State private var show = false
-    @State private var showPageEntry = false
-    @State private var currentPage = 0
-    @State private var selectedPage = 0
-    @State private var selectedBookIndex: Int = 0
-    @State private var showError: Bool = false
-    @State private var errorMessage: String = ""
     
     @Binding var selectedTab: Int
     @Binding var pendingTab: Int?
+    @Binding var showPageEntry: Bool
+    @Binding var selectedBookIndex: Int
+    @Binding var currentPage: Int
+    @Binding var selectedPage: Int
+    @Binding var showError: Bool
+    @Binding var errorMessage: String
     
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var timerManager: TimerManager
     
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var allSessions: [ReadingSession]
-
     
-
     // Query existing books
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     
@@ -50,41 +48,6 @@ struct HomeView: View {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
         )
         .animation(.spring(response: 0.6, dampingFraction: 0.8), value: show)
-        .alert(isPresented: $showError) {
-            Alert(title: Text("Error"),
-                  message: Text(errorMessage),
-                  dismissButton: .default(Text("OK")))
-        }
-        .overlay(
-            ZStack {
-                if showPageEntry {
-                    // Background overlay to capture all interactions
-                    Color.black.opacity(0.6)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    PageEntryModalView(
-                        book: books[selectedBookIndex],
-                        saveSession: saveSession,
-                        cancelSession:  cancelSession,
-                        showPageEntry: $showPageEntry,
-                        currentPage: $currentPage,
-                        selectedPage: $selectedPage,
-                        selectedTab: $selectedTab,
-                        pendingTab: $pendingTab
-                    )
-                    .frame(maxWidth: 300)
-                    .background(Color.white)
-                    .cornerRadius(12)
-                    .shadow(radius: 20)
-                    .padding()
-                }
-            }
-        )
-        .onChange(of: timerManager.isActive) {
-            if !timerManager.isActive {
-                showPageEntry = true
-            }
-        }
     }
     
     private func stopSession() {
@@ -143,7 +106,6 @@ struct HomeView: View {
             }
             .pickerStyle(MenuPickerStyle())
             
-            
             Button("Start Session") {
                 if canStartSession() {
                     startNewSession()
@@ -183,35 +145,6 @@ struct HomeView: View {
         } catch {
             showError = true
             errorMessage = "Failed to save session: \(error.localizedDescription)"
-        }
-    }
-    
-    private func saveSession() {
-        do {
-            let book = books[selectedBookIndex]
-            let pagesRead = selectedPage - currentPage
-            book.pagesRead! += pagesRead
-            if let currentSession = timerManager.currentSession {
-                currentSession.pagesRead = pagesRead
-                try context.save()
-                timerManager.completeSession() // Move completion after saving
-            }
-        } catch {
-            showError = true
-            errorMessage = "Failed to save session: \(error.localizedDescription)"
-        }
-    }
-
-    private func cancelSession() {
-        if let currentSession = timerManager.currentSession {
-            context.delete(currentSession)
-            timerManager.completeSession()
-        }
-        do {
-            try context.save()
-        } catch {
-            showError = true
-            errorMessage = "Failed to delete session: \(error.localizedDescription)"
         }
     }
     

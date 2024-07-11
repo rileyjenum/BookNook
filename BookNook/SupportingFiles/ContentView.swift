@@ -24,11 +24,11 @@ struct ContentView: View {
                 do {
                     for session in foundSessions {
                         print(session)
-//                        context.delete(session)
+                        context.delete(session)
 
                     }
                     for book in foundBooks {
-//                        context.delete(book)
+                        context.delete(book)
                         print(book)
                     }
                     try context.save()

@@ -22,12 +22,14 @@ struct ColorExtractingBookCoverView: View {
             if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
                 WebImage(url: url)
                     .onSuccess { image, data, cacheType in
-                        if let colors = image.getMainColors() {
-                            let spineColor = Color(colors.0)
-                            let textColor = Color(colors.1)
-                            self.spineColor = spineColor
-                            self.textColor = textColor
-                            viewModel.colorCache[book.id] = (spineColor, textColor)
+                        DispatchQueue.main.async {
+                            if let colors = image.getMainColors() {
+                                let spineColor = Color(colors.0)
+                                let textColor = Color(colors.1)
+                                self.spineColor = spineColor
+                                self.textColor = textColor
+                                viewModel.colorCache[book.id] = (spineColor, textColor)
+                            }
                         }
                     }
                     .resizable()
@@ -44,22 +46,6 @@ struct ColorExtractingBookCoverView: View {
         .frame(width: 150, height: 225)
         .cornerRadius(3)
         .shadow(radius: 4)
-        .onAppear {
-            // Load image and trigger color extraction immediately
-            if let coverImageUrl = book.coverImageUrl, let url = URL(string: coverImageUrl) {
-                WebImage(url: url)
-                    .onSuccess { image, data, cacheType in
-                        if let colors = image.getMainColors() {
-                            let spineColor = Color(colors.0)
-                            let textColor = Color(colors.1)
-                            self.spineColor = spineColor
-                            self.textColor = textColor
-                            viewModel.colorCache[book.id] = (spineColor, textColor)
-                        }
-                    }
-                    .renderingMode(.original) // Ensure the image is loaded immediately
-            }
-        }
     }
 }
 

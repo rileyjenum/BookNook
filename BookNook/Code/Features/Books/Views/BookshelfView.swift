@@ -62,7 +62,7 @@ struct BookshelfView: View {
                                             draggingBookIndex = index
                                             return NSItemProvider(object: String(index) as NSString)
                                         }
-                                        .onDrop(of: [UTType.text], delegate: BookDropDelegate(item: booksOrder[index], booksOrder: $booksOrder, draggingBookIndex: $draggingBookIndex))
+                                        .onDrop(of: [UTType.text], delegate: BookDropDelegate(item: booksOrder[index], booksOrder: $booksOrder, draggingBookIndex: $draggingBookIndex, spineColors: $spineColors, textColors: $textColors))
                                         .background(
                                             NavigationLink(destination: BookDetailView(book: booksOrder[index], sessions: sessions.filter { $0.book.id == booksOrder[index].id }), isActive: Binding<Bool>(
                                                 get: { selectedBookIndex == index && showBookDetail },
@@ -165,7 +165,11 @@ struct BookshelfView: View {
     private func reorderBooks(from source: Int, to destination: Int) {
         guard source != destination else { return }
         let movedBook = booksOrder.remove(at: source)
+        let movedSpineColor = spineColors.remove(at: source)
+        let movedTextColor = textColors.remove(at: source)
         booksOrder.insert(movedBook, at: destination)
+        spineColors.insert(movedSpineColor, at: destination)
+        textColors.insert(movedTextColor, at: destination)
     }
 
     private func resetViewState() {
@@ -191,6 +195,8 @@ struct BookDropDelegate: DropDelegate {
     let item: Book
     @Binding var booksOrder: [Book]
     @Binding var draggingBookIndex: Int?
+    @Binding var spineColors: [Color]
+    @Binding var textColors: [Color]
     
     func performDrop(info: DropInfo) -> Bool {
         draggingBookIndex = nil
@@ -204,8 +210,14 @@ struct BookDropDelegate: DropDelegate {
         if fromIndex != toIndex {
             withAnimation {
                 let draggedItem = booksOrder[fromIndex]
+                let draggedSpineColor = spineColors[fromIndex]
+                let draggedTextColor = textColors[fromIndex]
                 booksOrder.remove(at: fromIndex)
+                spineColors.remove(at: fromIndex)
+                textColors.remove(at: fromIndex)
                 booksOrder.insert(draggedItem, at: toIndex)
+                spineColors.insert(draggedSpineColor, at: toIndex)
+                textColors.insert(draggedTextColor, at: toIndex)
                 draggingBookIndex = toIndex
             }
         }

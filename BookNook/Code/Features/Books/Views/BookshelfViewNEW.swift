@@ -6,26 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct SpineViewNEW: View {
-    
-    let backgroundColor: Color
-    
-    var body: some View {
-        VStack {
-            Spacer()
-            Text(backgroundColor.description.capitalized)
-                .rotationEffect(.degrees(90))
-                .frame(width: 290)
-            Spacer()
-        }
-        .frame(width: 50, height: 280)
-        .background(backgroundColor)
-        .cornerRadius(20)
-    }
-}
 
 struct BookshelfViewNEW: View {
+    
+    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
+    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
+    
+    @Environment(\.modelContext) var context
+    
+    @StateObject private var viewModel = DiscoverScreenViewModel()
+
+
     
     @State private var draggedColor: Color?
     @State private var colors: [Color] = [.purple, .blue, .cyan, .green, .yellow, .orange, .red]
@@ -47,6 +40,29 @@ struct BookshelfViewNEW: View {
             }
         }
         .ignoresSafeArea()
+    }
+}
+
+#Preview {
+    BookshelfViewNEW()
+}
+
+
+struct SpineViewNEW: View {
+    
+    let backgroundColor: Color
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            Text(backgroundColor.description.capitalized)
+                .rotationEffect(.degrees(90))
+                .frame(width: 290)
+            Spacer()
+        }
+        .frame(width: 50, height: 280)
+        .background(backgroundColor)
+        .cornerRadius(20)
     }
 }
 
@@ -79,8 +95,4 @@ struct DropViewDelegate: DropDelegate {
             }
         }
     }
-}
-
-#Preview {
-    BookshelfViewNEW()
 }

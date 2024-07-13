@@ -49,7 +49,7 @@ struct MainTabbedView: View {
                     Label("History", systemImage: "calendar")
                 }
                 .tag(3)
-            SettingsScreen()
+            BookshelfViewNEW()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }

@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct Playground: View {
+    @State var bookColor: Color = .blue
+    let bookHeightArray: [Double]
+
     var body: some View {
-        VStack {
-            Group {
-                Text("1")
-                Text("2")
-                Text("3")
-                Text("4")
-                Text("5")
-                Text("6")
-                Text("7")
-                Text("8")
-                Text("9")
-                Text("10")
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: -65) {
+                ForEach(bookHeightArray, id: \.self) { height in
+                    TestView(bookColor: $bookColor, bookHeight: height) // Pass each height value here
+                }
             }
-            Text("11")
+            .frame(height: 600)
         }
     }
 }
 
+struct MyView: View {
+    var body: some View {
+        Playground(bookHeightArray: [200, 100, 150])
+    }
+}
+
 #Preview {
-    Playground()
+    MyView()
 }

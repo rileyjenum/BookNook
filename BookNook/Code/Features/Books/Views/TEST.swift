@@ -24,13 +24,13 @@ struct TestView: View {
         VStack {
             Color.orange
                 .frame(width: 200, height: 200)
-                .matchedGeometryEffect(id: "cube", in: cubeNS, properties: .position, anchor: .leading, isSource: false)
                 .rotation3DEffect(
                     .degrees(-degrees + 90),
                     axis: (x: 0.0, y: 1.0, z: 0.0),
                     anchor: .leading,
                     perspective: 0.25
                 )
+                .matchedGeometryEffect(id: "cube", in: cubeNS, properties: .position, anchor: .leading, isSource: false)
                 .scaleEffect(1 + sin(radians) * 0.38) // <-- 🤔
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 1.0)) {

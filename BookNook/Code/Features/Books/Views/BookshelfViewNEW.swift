@@ -25,9 +25,9 @@ struct BookshelfViewNEW: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
+            HStack(spacing: -60) {
                 ForEach(colors, id: \.self) { color in
-                    SpineViewNEW(backgroundColor: color)
+                    TestView(bookColor: color)
                         .onDrag {
                             self.draggedColor = color
                             return NSItemProvider()
@@ -35,9 +35,11 @@ struct BookshelfViewNEW: View {
                         .onDrop(of: [.text],
                                 delegate: DropViewDelegate(destinationItem: color, colors: $colors, draggedItem: $draggedColor)
                         )
-                        .zIndex(draggedColor == color ? 1 : 0)
+                        .zIndex((draggedColor == color) ? 1 : 0)
                 }
             }
+            .ignoresSafeArea()
+            .frame(height: 900)
         }
         .ignoresSafeArea()
     }
@@ -45,25 +47,6 @@ struct BookshelfViewNEW: View {
 
 #Preview {
     BookshelfViewNEW()
-}
-
-
-struct SpineViewNEW: View {
-    
-    let backgroundColor: Color
-    
-    var body: some View {
-        VStack {
-            Spacer()
-            Text(backgroundColor.description.capitalized)
-                .rotationEffect(.degrees(90))
-                .frame(width: 290)
-            Spacer()
-        }
-        .frame(width: 50, height: 280)
-        .background(backgroundColor)
-        .cornerRadius(20)
-    }
 }
 
 struct DropViewDelegate: DropDelegate {

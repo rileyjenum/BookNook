@@ -12,8 +12,8 @@ struct TestView: View {
     @State var bookColor: Color = .brown
     @State private var isRotated = false
     @State private var isScaleEnabled = false
-    
-    
+    @Binding var selectedColor: Color?
+
     @Namespace private var cubeNS
     
     var degrees: Double {
@@ -46,9 +46,11 @@ struct TestView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     withAnimation(.easeInOut(duration: 1.0)) {
                         isRotated.toggle()
+                        selectedColor = isRotated ? bookColor : nil
                     }
                 }
             }
+            
             
             ZStack {
                 bookColor
@@ -68,20 +70,21 @@ struct TestView: View {
                 withAnimation(.easeInOut(duration: 1.0)) {
                     isRotated.toggle()
                 }
+                // Delay the rotation toggle until the scale animation is finished
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         isScaleEnabled.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            selectedColor = isRotated ? bookColor : nil
+                        }
                     }
                 }
             }
-            
-
         }
         .scaleEffect(isScaleEnabled ? 1.3 : 1, anchor: .center)
         .offset(x: isRotated ? -80 : 0)
     }
 }
-
 #Preview {
-    TestView()
+    TestView(selectedColor: .constant(.brown))
 }

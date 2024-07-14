@@ -8,7 +8,6 @@
 import SwiftUI
 import SwiftData
 
-
 struct BookshelfViewNEW: View {
     
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
@@ -18,16 +17,15 @@ struct BookshelfViewNEW: View {
     
     @StateObject private var viewModel = DiscoverScreenViewModel()
 
-
-    
     @State private var draggedColor: Color?
     @State private var colors: [Color] = [.purple, .blue, .cyan, .green, .yellow, .orange, .red]
-    
+    @State private var selectedColor: Color?
+
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: -60) {
+            HStack {
                 ForEach(colors, id: \.self) { color in
-                    TestView(bookColor: color)
+                    TestView(bookColor: color, selectedColor: $selectedColor)
                         .onDrag {
                             self.draggedColor = color
                             return NSItemProvider()
@@ -35,7 +33,7 @@ struct BookshelfViewNEW: View {
                         .onDrop(of: [.text],
                                 delegate: DropViewDelegate(destinationItem: color, colors: $colors, draggedItem: $draggedColor)
                         )
-                        .zIndex((draggedColor == color) ? 1 : 0)
+                        .zIndex((draggedColor == color) || (selectedColor == color) ? 1 : 0)
                 }
             }
             .ignoresSafeArea()

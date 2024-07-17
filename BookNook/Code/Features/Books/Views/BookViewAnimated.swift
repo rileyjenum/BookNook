@@ -13,6 +13,7 @@ struct BookViewAnimated: View {
     @State private var isRotated = false
     @State private var isScaleEnabled = false
     @Binding var selectedColor: Color?
+    @State private var bookHeight: CGFloat = CGFloat.random(in: 170...200)
 
     @Namespace private var cubeNS
     
@@ -32,7 +33,7 @@ struct BookViewAnimated: View {
                     
                     LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.2), Color.clear]), startPoint: .leading, endPoint: .trailing)
                 }
-                .frame(width: 40, height: 200)
+                .frame(width: 40, height: bookHeight)
                 .matchedGeometryEffect(id: "cube", in: cubeNS, properties: .position, anchor: .trailing, isSource: true)
                 .rotation3DEffect(
                     .degrees(-degrees),
@@ -41,15 +42,19 @@ struct BookViewAnimated: View {
                     perspective: 1.0
                 )
                 .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.5)) {
+                    withAnimation(.easeInOut(duration: 1.0)) {
                         if selectedColor == bookColor {
-                            selectedColor = nil
                             isRotated = false
-                            isScaleEnabled = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    isScaleEnabled = false
+                                    selectedColor = nil
+                                }
+                            }
                         } else {
                             selectedColor = bookColor
                             isScaleEnabled.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 withAnimation(.easeInOut(duration: 1.0)) {
                                     isRotated.toggle()
                                 }
@@ -63,7 +68,7 @@ struct BookViewAnimated: View {
                     
                     LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.2), Color.clear]), startPoint: .leading, endPoint: .trailing)
                 }
-                .frame(width: 130, height: 200)
+                .frame(width: 130, height: bookHeight)
                 .rotation3DEffect(
                     .degrees(-degrees + 90),
                     axis: (x: 0.0, y: 1.0, z: 0.0),
@@ -75,19 +80,20 @@ struct BookViewAnimated: View {
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 1.0)) {
                         if selectedColor == bookColor {
-                            selectedColor = nil
                             isRotated.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     isScaleEnabled.toggle()
+                                    selectedColor = nil
                                 }
                             }
                         } else {
-                            selectedColor = bookColor
                             isRotated.toggle()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     isScaleEnabled.toggle()
+                                    selectedColor = bookColor
+
                                 }
                             }
                         }
@@ -110,7 +116,7 @@ struct BookViewAnimated: View {
                 }
             }
         }
-        .frame(width: 40)
+        .frame(width: 40, height: bookHeight)
     }
 }
 

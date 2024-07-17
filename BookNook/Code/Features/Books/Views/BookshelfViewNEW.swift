@@ -18,13 +18,13 @@ struct BookshelfViewNEW: View {
     @StateObject private var viewModel = DiscoverScreenViewModel()
 
     @State private var draggedColor: Color?
-    @State private var colors: [Color] = [.purple, .blue, .cyan, .green, .yellow, .orange, .red]
+    @State private var colors: [Color] = [.purple, .blue, .cyan, .green, .yellow, .orange, .red, .brown, .black, .pink, .gray]
     @State private var selectedColor: Color?
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
-                HStack(spacing: 0) {
+                HStack(alignment: .bottom, spacing: 2) {
                     ForEach(colors, id: \.self) { color in
                         BookViewAnimated(bookColor: color, selectedColor: $selectedColor)
                             .id(color)
@@ -38,8 +38,7 @@ struct BookshelfViewNEW: View {
                             .zIndex((draggedColor == color) || (selectedColor == color) ? 1 : 0)
                     }
                 }
-                //TODO: fix
-                .offset(y: 190)
+                .frame(height: 600)
                 .onChange(of: selectedColor) {
                     if let color = selectedColor {
                         withAnimation {

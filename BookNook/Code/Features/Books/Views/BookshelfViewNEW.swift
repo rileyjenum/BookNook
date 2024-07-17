@@ -23,21 +23,31 @@ struct BookshelfViewNEW: View {
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(colors, id: \.self) { color in
-                    TestView(bookColor: color, selectedColor: $selectedColor)
-                        .onDrag {
-                            self.draggedColor = color
-                            return NSItemProvider()
+            ScrollViewReader { proxy in
+                HStack(spacing: 0) {
+                    ForEach(colors, id: \.self) { color in
+                        BookViewAnimated(bookColor: color, selectedColor: $selectedColor)
+                            .id(color)
+                            .onDrag {
+                                self.draggedColor = color
+                                return NSItemProvider()
+                            }
+                            .onDrop(of: [.text],
+                                    delegate: DropViewDelegate(destinationItem: color, colors: $colors, draggedItem: $draggedColor)
+                            )
+                            .zIndex((draggedColor == color) || (selectedColor == color) ? 1 : 0)
+                    }
+                }
+                //TODO: fix
+                .offset(y: 190)
+                .onChange(of: selectedColor) {
+                    if let color = selectedColor {
+                        withAnimation {
+                            proxy.scrollTo(color, anchor: .center)
                         }
-                        .onDrop(of: [.text],
-                                delegate: DropViewDelegate(destinationItem: color, colors: $colors, draggedItem: $draggedColor)
-                        )
-                        .zIndex((draggedColor == color) || (selectedColor == color) ? 1 : 0)
+                    }
                 }
             }
-            .ignoresSafeArea()
-            .frame(height: 900)
         }
         .ignoresSafeArea()
     }

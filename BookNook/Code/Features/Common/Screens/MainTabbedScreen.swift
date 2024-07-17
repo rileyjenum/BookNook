@@ -33,7 +33,7 @@ struct MainTabbedView: View {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
-            BookListScreen2()
+            BookshelfViewNEW()
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }
@@ -49,7 +49,7 @@ struct MainTabbedView: View {
                     Label("History", systemImage: "calendar")
                 }
                 .tag(3)
-            BookshelfViewNEW()
+            SettingsScreen()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }

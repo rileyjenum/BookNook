@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct Playground: View {
-
     var body: some View {
-        Text("")
+        Text("dadf")
     }
 }
 

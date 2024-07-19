@@ -10,57 +10,59 @@ import SwiftData
 
 struct BookshelfViewNEW: View {
     
-    @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
+    @Query(sort: [SortDescriptor(\Book.title)]) private var queriedBooks: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
     
     @Environment(\.modelContext) var context
     
     @StateObject private var viewModel = DiscoverScreenViewModel()
 
-    @State private var draggedColor: Color?
-    @State private var colors: [Color] = [.purple, .blue, .cyan, .green, .yellow, .orange, .red, .brown, .black, .pink, .gray]
-    @State private var selectedColor: Color?
+    @State private var draggedBook: Book?
+    @State private var selectedBook: Book?
+    @State private var books: [Book] = []
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { proxy in
-                HStack(alignment: .bottom, spacing: 2) {
-                    ForEach(colors, id: \.self) { color in
-                        BookViewAnimated(bookColor: color, selectedColor: $selectedColor)
-                            .id(color)
+                HStack(alignment: .bottom, spacing: 0) {
+                    ForEach(books, id: \.self) { book in
+                        BookViewAnimated(book: book, selectedBook: $selectedBook)
+                            .id(book)
                             .onDrag {
-                                self.draggedColor = color
+                                self.draggedBook = book
                                 return NSItemProvider()
                             }
                             .onDrop(of: [.text],
-                                    delegate: DropViewDelegate(destinationItem: color, colors: $colors, draggedItem: $draggedColor)
+                                    delegate: DropViewDelegate(destinationItem: book, books: $books, draggedItem: $draggedBook)
                             )
-                            .zIndex((draggedColor == color) || (selectedColor == color) ? 1 : 0)
+                            .zIndex((draggedBook == book) || (selectedBook == book) ? 1 : 0)
                     }
                 }
                 .frame(height: 600)
-                .onChange(of: selectedColor) {
-                    if let color = selectedColor {
+                .onChange(of: selectedBook) {
+                    if let book = selectedBook {
                         withAnimation {
-                            proxy.scrollTo(color, anchor: .center)
+                            proxy.scrollTo(book, anchor: .center)
                         }
                     }
                 }
             }
         }
         .ignoresSafeArea()
+        .onAppear {
+            books = queriedBooks
+        }
+        .onChange(of: queriedBooks) {
+            books = queriedBooks
+        }
     }
-}
-
-#Preview {
-    BookshelfViewNEW()
 }
 
 struct DropViewDelegate: DropDelegate {
     
-    let destinationItem: Color
-    @Binding var colors: [Color]
-    @Binding var draggedItem: Color?
+    let destinationItem: Book
+    @Binding var books: [Book]
+    @Binding var draggedItem: Book?
     
     func dropUpdated(info: DropInfo) -> DropProposal? {
         return DropProposal(operation: .move)
@@ -74,15 +76,30 @@ struct DropViewDelegate: DropDelegate {
     func dropEntered(info: DropInfo) {
         // Swap Items
         if let draggedItem {
-            let fromIndex = colors.firstIndex(of: draggedItem)
+            let fromIndex = books.firstIndex(of: draggedItem)
             if let fromIndex {
-                let toIndex = colors.firstIndex(of: destinationItem)
+                let toIndex = books.firstIndex(of: destinationItem)
                 if let toIndex, fromIndex != toIndex {
                     withAnimation {
-                        self.colors.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: (toIndex > fromIndex ? (toIndex + 1) : toIndex))
+                        self.books.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: (toIndex > fromIndex ? (toIndex + 1) : toIndex))
                     }
                 }
             }
         }
     }
 }
+
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Book.self, configurations: config)
+
+    for i in 1..<10 {
+        let book = Book(title: "Example Book \(i)", author: "")
+        container.mainContext.insert(book)
+    }
+
+    return BookshelfViewNEW()
+        .modelContainer(container)
+}
+
+

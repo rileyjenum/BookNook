@@ -134,3 +134,25 @@ struct BookDetailView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 }
+
+struct SessionView: View {
+    @Bindable var session: ReadingSession
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Session on \(session.startTime, formatter: Formatter.item)")
+            Text("Duration: \(session.duration) seconds")
+            Text("Notes: \(session.notes)")
+        }
+        .padding()
+    }
+}
+
+struct Formatter {
+    static let item: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        return formatter
+    }()
+}

@@ -10,6 +10,7 @@ import SwiftData
 
 struct BookshelfViewNEW: View {
     var category: BookCategory
+    var height: CGFloat
     
     @Query(sort: [SortDescriptor(\Book.title)]) private var queriedBooks: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
@@ -39,7 +40,7 @@ struct BookshelfViewNEW: View {
                             .zIndex((draggedBook == book) || (selectedBook == book) ? 1 : 0)
                     }
                 }
-                .frame(height: 400)
+                .frame(height: height)
                 .onChange(of: selectedBook) {
                     if let book = selectedBook {
                         withAnimation {
@@ -49,7 +50,6 @@ struct BookshelfViewNEW: View {
                 }
             }
         }
-        .background(.red)
         .onAppear {
             filterBooksByCategory()
         }
@@ -57,6 +57,7 @@ struct BookshelfViewNEW: View {
             filterBooksByCategory()
         }
     }
+    
     private func filterBooksByCategory() {
         books = queriedBooks.filter { $0.category == category }
     }
@@ -101,7 +102,7 @@ struct DropViewDelegate: DropDelegate {
         container.mainContext.insert(book)
     }
 
-    return BookshelfViewNEW(category: .currentlyReading)
+    return BookshelfViewNEW(category: .currentlyReading, height: 400)
         .modelContainer(container)
 }
 

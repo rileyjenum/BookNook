@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct BookViewAnimated: View {
     
     var book: Book
@@ -51,7 +52,7 @@ struct BookViewAnimated: View {
                     .degrees(-degrees),
                     axis: (x: 0.0, y: 1.0, z: 0.0),
                     anchor: .leading,
-                    perspective: 1.0
+                    perspective: bookHeight / 200
                 )
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 1.0)) {
@@ -89,7 +90,7 @@ struct BookViewAnimated: View {
                     .degrees(-degrees + 90),
                     axis: (x: 0.0, y: 1.0, z: 0.0),
                     anchor: .leading,
-                    perspective: 0.25
+                    perspective: 0.5
                 )
                 .matchedGeometryEffect(id: "cube", in: cubeNS, properties: .position, anchor: .leading, isSource: false)
                 .scaleEffect(1 + sin(radians) * 0.32)
@@ -139,15 +140,23 @@ struct BookViewAnimated: View {
         return Color(hue: Double(book.title.hashValue % 256) / 256.0, saturation: 0.7, brightness: 0.9)
     }
 }
-//
-//struct BindingBookViewAnimatedPreview: View {
-//    @State private var selectedBook: Book?
-//    var book = Book(title: "asdfa", author: "adsfa")
-//    var body: some View {
-//        BookViewAnimated(book: book, selectedBook: $selectedBook)
-//    }
-//}
-//
-//#Preview {
-//    BindingBookViewAnimatedPreview()
-//}
+
+
+import SwiftData
+
+struct BookViewAnimatedPreview: View {
+    @State var selectedBook: Book? = Book(title: "", author: "")
+    var book: Book = Book(title: "", author: "")
+    var body: some View {
+        BookViewAnimated(book: book, selectedBook: $selectedBook)
+        
+    }
+}
+
+#Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Book.self, configurations: config)
+    
+    return BookViewAnimatedPreview()
+        .modelContainer(container)
+}

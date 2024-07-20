@@ -11,10 +11,12 @@ import SwiftData
 struct BookListScreen2: View {
     
     var body: some View {
-        VStack {
-            BookshelfViewNEW(category: .currentlyReading)
-            BookshelfViewNEW(category: .haveRead)
-            BookshelfViewNEW(category: .willRead)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                BookshelfViewNEW(category: .currentlyReading, height: geometry.size.height / 3)
+                BookshelfViewNEW(category: .haveRead, height: geometry.size.height / 3)
+                BookshelfViewNEW(category: .willRead, height: geometry.size.height / 3)
+            }
         }
     }
 }

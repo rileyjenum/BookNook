@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct BookshelfViewNEW: View {
+    var category: BookCategory
     
     @Query(sort: [SortDescriptor(\Book.title)]) private var queriedBooks: [Book]
     @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
@@ -38,7 +39,7 @@ struct BookshelfViewNEW: View {
                             .zIndex((draggedBook == book) || (selectedBook == book) ? 1 : 0)
                     }
                 }
-                .frame(height: 600)
+                .frame(height: 400)
                 .onChange(of: selectedBook) {
                     if let book = selectedBook {
                         withAnimation {
@@ -48,13 +49,16 @@ struct BookshelfViewNEW: View {
                 }
             }
         }
-        .ignoresSafeArea()
+        .background(.red)
         .onAppear {
-            books = queriedBooks
+            filterBooksByCategory()
         }
         .onChange(of: queriedBooks) {
-            books = queriedBooks
+            filterBooksByCategory()
         }
+    }
+    private func filterBooksByCategory() {
+        books = queriedBooks.filter { $0.category == category }
     }
 }
 
@@ -93,11 +97,11 @@ struct DropViewDelegate: DropDelegate {
     let container = try! ModelContainer(for: Book.self, configurations: config)
 
     for i in 1..<10 {
-        let book = Book(title: "Example Book \(i)", author: "")
+        let book = Book(title: "Example Book \(i)", author: "", category: .currentlyReading)
         container.mainContext.insert(book)
     }
 
-    return BookshelfViewNEW()
+    return BookshelfViewNEW(category: .currentlyReading)
         .modelContainer(container)
 }
 

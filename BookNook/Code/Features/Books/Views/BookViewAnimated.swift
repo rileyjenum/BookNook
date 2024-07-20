@@ -139,3 +139,15 @@ struct BookViewAnimated: View {
         return Color(hue: Double(book.title.hashValue % 256) / 256.0, saturation: 0.7, brightness: 0.9)
     }
 }
+//
+//struct BindingBookViewAnimatedPreview: View {
+//    @State private var selectedBook: Book?
+//    var book = Book(title: "asdfa", author: "adsfa")
+//    var body: some View {
+//        BookViewAnimated(book: book, selectedBook: $selectedBook)
+//    }
+//}
+//
+//#Preview {
+//    BindingBookViewAnimatedPreview()
+//}

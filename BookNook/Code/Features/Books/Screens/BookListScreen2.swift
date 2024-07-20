@@ -11,7 +11,7 @@ struct BookListScreen2: View {
     
     var body: some View {
         VStack {
-            BookshelfView()
+            BookshelfViewNEW()
         }
     }
 }

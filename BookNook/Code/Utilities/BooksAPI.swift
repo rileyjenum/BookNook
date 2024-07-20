@@ -138,6 +138,35 @@ struct GoogleBooksAPI {
         }
         task.resume()
     }
+    
+    func searchBooks(title: String, completion: @escaping (Result<[GoogleBooksBookResponse]?, Error>) -> Void) {
+
+        let urlString = "\(baseURL)?q=\(title)&key=\(apiKey)&maxResults=20"
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+                return
+            }
+            
+            do {
+                let response = try JSONDecoder().decode(VolumeResponse.self, from: data)
+                completion(.success(response.items))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
 }
 
 // MARK: - NYT Bestsellers API

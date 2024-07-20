@@ -23,12 +23,15 @@ class DiscoverScreenViewModel: ObservableObject {
 
     
     func searchBooks(query: String) {
-        openLibraryAPI.searchBooks(query: query) { [weak self] result in
-            switch result {
-            case .success(let openLibraryBooks):
-                self?.fetchBookDetailsFromGoogleBooks(openLibraryBooks: openLibraryBooks) { detailedBooks in
-                    DispatchQueue.main.async {
-                        self?.books = detailedBooks
+        googleBooksAPI.searchBooks(title: query) { books in
+            switch books {
+            case .success(let books):
+                for i in 0...(books?.count ?? 1) - 1 {
+                    if let googleBookInfo = books?[i].volumeInfo {
+                        let book = self.convertToBook(volumeInfo: googleBookInfo)
+                        DispatchQueue.main.async {
+                            self.books.append(book)
+                        }
                     }
                 }
             case .failure(let error):
@@ -73,41 +76,6 @@ class DiscoverScreenViewModel: ObservableObject {
                     print("Error fetching bestsellers: \(error.localizedDescription)")
                     completion()
                 }
-            }
-        }
-    }
-
-    
-    private func fetchBookDetailsFromGoogleBooks(openLibraryBooks: [OpenLibraryBookResponse], completion: @escaping ([Book]) -> Void) {
-        let group = DispatchGroup()
-        var detailedBooks: [Book?] = Array(repeating: nil, count: openLibraryBooks.count)
-        var errors: [Error] = []
-        
-        for (index, openLibraryBook) in openLibraryBooks.enumerated() {
-            group.enter()
-            
-            googleBooksAPI.searchBookByTitleAndAuthor(title: openLibraryBook.title, author: openLibraryBook.author_name?.first) { googleBooksResult in
-                defer { group.leave() }
-                
-                switch googleBooksResult {
-                case .success(let googleBook):
-                    if let googleBookInfo = googleBook?.volumeInfo {
-                        let book = self.convertToBook(volumeInfo: googleBookInfo)
-                        detailedBooks[index] = book
-                    }
-                case .failure(let error):
-                    errors.append(error)
-                }
-            }
-        }
-        
-        group.notify(queue: .main) {
-            let filteredBooks = detailedBooks.compactMap { $0 } // Remove nil values
-            if errors.isEmpty {
-                completion(filteredBooks)
-            } else {
-                print("Some errors occurred: \(errors)")
-                completion(filteredBooks)
             }
         }
     }

@@ -14,7 +14,8 @@ struct BookViewAnimated: View {
     @State private var isRotated = false
     @State private var isScaleEnabled = false
     @Binding var selectedBook: Book?
-    @State private var bookHeight: CGFloat = CGFloat.random(in: 150...200)
+    @State private var bookHeight: CGFloat = 220
+    @State private var bookWidth: CGFloat = 30
 
     @Namespace private var cubeNS
     
@@ -24,6 +25,18 @@ struct BookViewAnimated: View {
     
     var radians: Double {
         (isRotated ? 0.999999 : 0) * (Double.pi / 2)
+    }
+    var perspective: Double {
+        // Polynomial coefficients from the Python fit
+        let a: Double = 0.00207143
+        let b: Double = -0.18728571
+        let c: Double = 4.09
+
+        // Polynomial effect for the given width
+        let polynomialEffect = a * pow(Double(bookWidth), 2) + b * bookWidth + c
+
+        let perspective = (bookHeight / 200) + polynomialEffect
+        return perspective
     }
     
     var body: some View {
@@ -35,24 +48,24 @@ struct BookViewAnimated: View {
                         Spacer()
                         Text(book.title)
                             .rotationEffect(.degrees(90))
-                            .frame(width: bookHeight, height: 40)
+                            .frame(width: bookHeight, height: bookWidth)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(nil)
                             .minimumScaleFactor(0.5)
                             .allowsTightening(true)
                         Spacer()
                     }
-                    .frame(width: 40, height: bookHeight)
+                    .frame(width: bookWidth, height: bookHeight)
 
                 }
                 .background(bookColor(book))
-                .frame(width: 40, height: bookHeight)
+                .frame(width: bookWidth, height: bookHeight)
                 .matchedGeometryEffect(id: "cube", in: cubeNS, properties: .position, anchor: .trailing, isSource: true)
                 .rotation3DEffect(
                     .degrees(-degrees),
                     axis: (x: 0.0, y: 1.0, z: 0.0),
                     anchor: .leading,
-                    perspective: bookHeight / 200
+                    perspective: perspective
                 )
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 1.0)) {
@@ -117,7 +130,7 @@ struct BookViewAnimated: View {
                     }
                 }
             }
-            .frame(width: 40)
+            .frame(width: bookWidth)
             .scaleEffect(isScaleEnabled ? 1.3 : 1, anchor: .center)
             .offset(x: isRotated ? -80 : 0)
             .onChange(of: selectedBook) {
@@ -133,7 +146,7 @@ struct BookViewAnimated: View {
                 }
             }
         }
-        .frame(width: 40, height: bookHeight)
+        .frame(width: bookWidth, height: bookHeight)
     }
     
     private func bookColor(_ book: Book) -> Color {

@@ -66,8 +66,7 @@ struct NewBookView: View {
             bookDescription: bookDescription,
             publisher: publisher,
             publishedDate: publishedDate,
-            pageCount: Int(pageCount),
-            categories: categories.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
+            pageCount: Int(pageCount)
         )
         
         context.insert(book)

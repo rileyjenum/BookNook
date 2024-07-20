@@ -33,14 +33,7 @@ struct UpdateBookView: View {
                     TextField("Publisher", text: Binding($book.publisher, default: ""))
                     TextField("Published Date", text: Binding($book.publishedDate, default: ""))
                     TextField("Page Count", value: $book.pageCount, formatter: NumberFormatter())
-                    TextField("Categories", text: Binding(
-                        get: {
-                            book.categories?.joined(separator: ", ") ?? ""
-                        },
-                        set: { newValue in
-                            book.categories = newValue.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-                        }
-                    ))
+                    //TODO: add category
                     TextField("Cover Image URL", text: Binding($book.coverImageUrl, default: ""))
 
                     if let selectedImage = selectedImage {

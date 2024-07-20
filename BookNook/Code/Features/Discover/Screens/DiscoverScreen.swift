@@ -19,9 +19,13 @@ struct DiscoverScreen: View {
     
     @State private var searchQuery: String = ""
     @State private var showAlert: Bool = false
+    @State private var showCategorySheet: Bool = false
     @State private var selectedBook: Book?
     @State private var showSearchResults = false
     @State private var activeAlert: ActiveAlert = .addBook
+    @State private var selectedCategory: BookCategory = .willRead
+    @State private var bookCategories: [BookCategory] = [.willRead, .haveRead, .currentlyReading]
+
     
     var bookTitles: [String] {
         books.map { $0.title }
@@ -84,23 +88,9 @@ struct DiscoverScreen: View {
                         return Alert(
                             title: Text("Add Book"),
                             message: Text("Do you want to add this book to your library?"),
-                            primaryButton: .default(Text("Add")) {
-                                if let book = selectedBook {
-                                    if bookTitles.contains(book.title) {
-                                        showAlert = false
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                            activeAlert = .error
-                                            showAlert = true
-                                        }
-                                    } else {
-                                        addBookToContext(book)
-                                        showAlert = false
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                            activeAlert = .success
-                                            showAlert = true
-                                        }
-                                    }
-                                }
+                            primaryButton: .default(Text("Select Category")) {
+                                showAlert = false
+                                showCategorySheet = true
                             },
                             secondaryButton: .cancel()
                         )
@@ -118,6 +108,27 @@ struct DiscoverScreen: View {
                             dismissButton: .default(Text("OK"))
                         )
                     }
+                }
+                .actionSheet(isPresented: $showCategorySheet) {
+                    ActionSheet(
+                        title: Text("Select Category"),
+                        message: Text("Choose a category to add the book to."),
+                        buttons: bookCategories.map { category in
+                                .default(Text(category.rawValue)) {
+                                selectedCategory = category
+                                if let book = selectedBook {
+                                    if bookTitles.contains(book.title) {
+                                        activeAlert = .error
+                                        showAlert = true
+                                    } else {
+                                        addBookToContext(book, category: selectedCategory)
+                                        activeAlert = .success
+                                        showAlert = true
+                                    }
+                                }
+                            }
+                        } + [.cancel()]
+                    )
                 }
             }
             
@@ -140,7 +151,8 @@ struct DiscoverScreen: View {
         }
     }
     
-    private func addBookToContext(_ book: Book) {
+    private func addBookToContext(_ book: Book, category: BookCategory) {
+        book.category = category
         context.insert(book)
         do {
             try context.save()
@@ -182,14 +194,9 @@ struct SearchResultsView: View {
     var onSelectBook: (Book) -> Void
     var onClose: () -> Void
     
-    @StateObject private var viewModel = DiscoverScreenViewModel.shared
-
-    
     var body: some View {
         VStack {
-            SearchBar(text: $searchQuery, onSearchButtonClicked: {
-                viewModel.searchBooks(query: searchQuery)
-            })
+            SearchBar(text: $searchQuery, onSearchButtonClicked: {})
                 .padding()
             
             List(books, id: \.id) { book in

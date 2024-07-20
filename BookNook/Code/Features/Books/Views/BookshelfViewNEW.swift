@@ -74,7 +74,6 @@ struct DropViewDelegate: DropDelegate {
     }
     
     func dropEntered(info: DropInfo) {
-        // Swap Items
         if let draggedItem {
             let fromIndex = books.firstIndex(of: draggedItem)
             if let fromIndex {

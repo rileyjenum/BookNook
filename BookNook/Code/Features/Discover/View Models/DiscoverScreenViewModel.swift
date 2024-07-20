@@ -23,6 +23,9 @@ class DiscoverScreenViewModel: ObservableObject {
 
     
     func searchBooks(query: String) {
+        DispatchQueue.main.async {
+            self.books.removeAll()
+        }
         googleBooksAPI.searchBooks(title: query) { books in
             switch books {
             case .success(let books):

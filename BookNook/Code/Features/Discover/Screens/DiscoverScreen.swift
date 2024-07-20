@@ -182,9 +182,14 @@ struct SearchResultsView: View {
     var onSelectBook: (Book) -> Void
     var onClose: () -> Void
     
+    @StateObject private var viewModel = DiscoverScreenViewModel.shared
+
+    
     var body: some View {
         VStack {
-            SearchBar(text: $searchQuery, onSearchButtonClicked: {})
+            SearchBar(text: $searchQuery, onSearchButtonClicked: {
+                viewModel.searchBooks(query: searchQuery)
+            })
                 .padding()
             
             List(books, id: \.id) { book in

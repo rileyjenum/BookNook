@@ -14,8 +14,8 @@ struct BookViewAnimated: View {
     @State private var isRotated = false
     @State private var isScaleEnabled = false
     @Binding var selectedBook: Book?
-    @State private var bookHeight: CGFloat = 220
-    @State private var bookWidth: CGFloat = 30
+    @Binding var bookHeight: CGFloat
+    @Binding var bookWidth: CGFloat
 
     @Namespace private var cubeNS
     
@@ -161,7 +161,7 @@ struct BookViewAnimatedPreview: View {
     @State var selectedBook: Book? = Book(title: "", author: "")
     var book: Book = Book(title: "", author: "")
     var body: some View {
-        BookViewAnimated(book: book, selectedBook: $selectedBook)
+        BookViewAnimated(book: book, selectedBook: $selectedBook, bookHeight: .constant(220), bookWidth: .constant(30))
         
     }
 }

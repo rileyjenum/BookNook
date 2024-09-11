@@ -8,9 +8,7 @@ import Foundation
 import SwiftData
 
 enum BookCategory: String, CaseIterable, Codable {
-    case currentlyReading
-    case willRead
-    case haveRead
+    case currentlyReading, willRead, haveRead
 }
 
 @Model
@@ -25,11 +23,11 @@ class Book: Identifiable, Hashable {
     var publisher: String?
     var publishedDate: String?
     var pageCount: Int?
-    var category: BookCategory?
+    var category: BookCategory
     var coverImageUrl: String?
     var pagesRead: Int?
 
-    init(id: String = UUID().uuidString, title: String, author: String, bookDescription: String? = nil, publisher: String? = nil, publishedDate: String? = nil, pageCount: Int? = nil, category: BookCategory? = nil, coverImageUrl: String? = nil, pagesRead: Int? = 0, sessions: [ReadingSession] = []) {
+    init(id: String = UUID().uuidString, title: String, author: String, bookDescription: String? = nil, publisher: String? = nil, publishedDate: String? = nil, pageCount: Int? = nil, category: BookCategory, coverImageUrl: String? = nil, pagesRead: Int? = 0, sessions: [ReadingSession] = []) {
         self.id = id
         self.title = title
         self.author = author

@@ -17,11 +17,11 @@ struct BookshelfViewNEW: View {
     
     @Environment(\.modelContext) var context
     
-    @StateObject private var viewModel = DiscoverScreenViewModel()
-
     @State private var draggedBook: Book?
     @State private var books: [Book] = []
     @State private var bookDimensions: [Book: (height: CGFloat, width: CGFloat)] = [:]
+    @State private var isAnimating = false
+
     
     @Binding var selectedBook: Book?
 
@@ -32,22 +32,24 @@ struct BookshelfViewNEW: View {
                 HStack(alignment: .bottom, spacing: 0) {
                     ForEach(books, id: \.self) { book in
                         if let dimensions = bookDimensions[book] {
-                            BookViewAnimated(book: book, selectedBook: $selectedBook, bookHeight: .constant(dimensions.height), bookWidth: .constant(dimensions.width))
+                            BookViewAnimated(book: book, isAnimating: $isAnimating, selectedBook: $selectedBook, bookHeight: .constant(dimensions.height), bookWidth: .constant(dimensions.width))
                                 .id(book)
                                 .onDrag {
                                     self.draggedBook = book
-                                    return NSItemProvider()
+                                    return NSItemProvider(object: book.title as NSString)
                                 }
                                 .onDrop(of: [.text],
                                         delegate: DropViewDelegate(destinationItem: book, books: $books, draggedItem: $draggedBook)
                                 )
                                 .zIndex((draggedBook == book) || (selectedBook == book) ? 1 : 0)
+                                .allowsHitTesting(selectedBook == nil || (selectedBook == book && isAnimating == false))
+                                .opacity(selectedBook == nil ? 1 : selectedBook == book ? 1 : 0.4)
                         }
                     }
                 }
+                .padding(.leading, 20)
                 .frame(height: height)
                 .opacity(height == 0 ? 0 : 1)
-                .animation(.easeInOut(duration: 0.5), value: height)
                 .onChange(of: selectedBook) {
                     if let book = selectedBook {
                         withAnimation {
@@ -57,6 +59,7 @@ struct BookshelfViewNEW: View {
                 }
             }
         }
+        .scrollDisabled(selectedBook == nil ? false : true)
         .onAppear {
             filterBooksByCategory()
             generateRandomDimensions()
@@ -71,7 +74,6 @@ struct BookshelfViewNEW: View {
         books = queriedBooks.filter { $0.category == category }
     }
     
-    // Generate random dimensions for each book
     private func generateRandomDimensions() {
         for book in books {
             bookDimensions[book] = (height: CGFloat.random(in: 200...250), width: CGFloat.random(in: 30...50))
@@ -117,7 +119,7 @@ struct DropViewDelegate: DropDelegate {
         let book = Book(title: "Example Book \(i)", author: "", category: .currentlyReading)
         container.mainContext.insert(book)
     }
-    @State var selectedBook: Book? = Book(title: "", author: "")
+    @State var selectedBook: Book? = Book(title: "", author: "", category: .haveRead)
 
 
     return BookshelfViewNEW(category: .currentlyReading, height: 400, selectedBook: $selectedBook)

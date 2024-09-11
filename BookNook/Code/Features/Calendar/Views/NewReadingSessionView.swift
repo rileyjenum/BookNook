@@ -83,7 +83,7 @@ struct NewReadingSessionView: View {
         if let selectedBook = selectedBook {
             book = selectedBook
         } else {
-            book = Book(title: "", author: "")
+            book = Book(title: "", author: "", category: .currentlyReading)
         }
         //TODO: fix pagesRead issue
 

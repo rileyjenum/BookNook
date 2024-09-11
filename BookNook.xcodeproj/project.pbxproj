@@ -447,6 +447,7 @@
 		51AD111B2BEEB347000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				516ED7D92C42E065006B62BC /* Playground.swift */,
 				5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */,
 				51E7FA002C342AAF0084B94D /* TabIconView.swift */,
 			);
@@ -508,7 +509,6 @@
 				51F235182C3958E200FA09C3 /* BookCoverView.swift */,
 				5127B6B02C429DE700FB1866 /* BookshelfViewNEW.swift */,
 				516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */,
-				516ED7D92C42E065006B62BC /* Playground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

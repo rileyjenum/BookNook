@@ -41,7 +41,7 @@ func formatDuration(_ duration: TimeInterval) -> String {
 
 // Update the preview provider to reflect changes
 struct ReadingSessionListViewRow_Previews: PreviewProvider {
-    static let book = Book(title: "War and Peace", author: "Leo Tolstoy")
+    static let book = Book(title: "War and Peace", author: "Leo Tolstoy", category: .currentlyReading)
     static let session = ReadingSession(startTime: Date(), duration: 3600, book: book, notes: "Captivating narrative", pagesRead: 1)
     
     static var previews: some View {

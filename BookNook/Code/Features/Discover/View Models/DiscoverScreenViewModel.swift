@@ -92,6 +92,8 @@ class DiscoverScreenViewModel: ObservableObject {
             publisher: volumeInfo.publisher,
             publishedDate: volumeInfo.publishedDate,
             pageCount: volumeInfo.pageCount,
+            //TODO: check if this is okay
+            category: .currentlyReading,
             coverImageUrl: volumeInfo.imageLinks?.thumbnail?.replacingOccurrences(of: "http", with: "https")
         )
     }

@@ -11,8 +11,11 @@ import SwiftUI
 struct BookViewAnimated: View {
     
     var book: Book
+    
     @State private var isRotated = false
     @State private var isScaleEnabled = false
+    
+    @Binding var isAnimating: Bool
     @Binding var selectedBook: Book?
     @Binding var bookHeight: CGFloat
     @Binding var bookWidth: CGFloat
@@ -20,11 +23,11 @@ struct BookViewAnimated: View {
     @Namespace private var cubeNS
     
     var degrees: Double {
-        (isRotated ? 0.99999 : 0) * 90
+        (isRotated ? 0.99999 : 0.00001) * 90
     }
     
     var radians: Double {
-        (isRotated ? 0.999999 : 0) * (Double.pi / 2)
+        (isRotated ? 0.999999 : 0.00001) * (Double.pi / 2)
     }
     var perspective: Double {
         // Polynomial coefficients from the Python fit
@@ -68,28 +71,21 @@ struct BookViewAnimated: View {
                     perspective: perspective
                 )
                 .onTapGesture {
-                    withAnimation(.easeInOut(duration: 1.0)) {
-                        if selectedBook == book {
-                            isRotated = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    isScaleEnabled = false
-                                    selectedBook = nil
-                                }
-                            }
-                        } else {
-                            selectedBook = book
-                            isScaleEnabled.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                withAnimation(.easeInOut(duration: 1.0)) {
-                                    isRotated.toggle()
-                                }
+                    isAnimating = true
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        selectedBook = book
+                        isScaleEnabled = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                isRotated = true
+                                isAnimating = false
+
                             }
                         }
                     }
                 }
                 
-                ZStack {                    
+                ZStack {
                     LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.2), Color.clear]), startPoint: .leading, endPoint: .trailing)
                     
                     Text(book.title)
@@ -108,22 +104,17 @@ struct BookViewAnimated: View {
                 .matchedGeometryEffect(id: "cube", in: cubeNS, properties: .position, anchor: .leading, isSource: false)
                 .scaleEffect(1 + sin(radians) * 0.32)
                 .onTapGesture {
+                    isAnimating = true
                     withAnimation(.easeInOut(duration: 1.0)) {
-                        if selectedBook == book {
-                            isRotated.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    isScaleEnabled.toggle()
-                                    selectedBook = nil
-                                }
-                            }
-                        } else {
-                            isRotated.toggle()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    isScaleEnabled.toggle()
-                                    selectedBook = book
-
+                        isRotated = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                isScaleEnabled.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    withAnimation(.easeInOut) {
+                                        isAnimating = false
+                                        selectedBook = nil
+                                    }
                                 }
                             }
                         }
@@ -131,20 +122,8 @@ struct BookViewAnimated: View {
                 }
             }
             .frame(width: bookWidth)
-            .scaleEffect(isScaleEnabled ? 1.3 : 1, anchor: .center)
-            .offset(x: isRotated ? -80 : 0)
-            .onChange(of: selectedBook) {
-                if selectedBook != book {
-                    withAnimation(.easeInOut(duration: 1.0)) {
-                        isRotated = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                isScaleEnabled = false
-                            }
-                        }
-                    }
-                }
-            }
+            .scaleEffect(isScaleEnabled ? 1.3 : 1.0, anchor: .center)
+            .offset(x: isRotated ? -80 : 0, y: isRotated ? -80 : 0)
         }
         .frame(width: bookWidth, height: bookHeight)
     }
@@ -158,10 +137,13 @@ struct BookViewAnimated: View {
 import SwiftData
 
 struct BookViewAnimatedPreview: View {
-    @State var selectedBook: Book? = Book(title: "", author: "")
-    var book: Book = Book(title: "", author: "")
+    @State var selectedBook: Book? = Book(title: "", author: "", category: .haveRead)
+    @State private var isAnimating = false
+
+
+    var book: Book = Book(title: "", author: "", category: .haveRead)
     var body: some View {
-        BookViewAnimated(book: book, selectedBook: $selectedBook, bookHeight: .constant(220), bookWidth: .constant(30))
+        BookViewAnimated(book: book, isAnimating: $isAnimating, selectedBook: $selectedBook, bookHeight: .constant(220), bookWidth: .constant(30))
         
     }
 }

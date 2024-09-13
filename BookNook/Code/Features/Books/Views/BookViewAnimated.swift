@@ -27,7 +27,7 @@ struct BookViewAnimated: View {
     }
     
     var radians: Double {
-        (isRotated ? 0.999999 : 0.00001) * (Double.pi / 2)
+        (isRotated ? 0.999999 : 0.01) * (Double.pi / 2)
     }
     var perspective: Double {
         // Polynomial coefficients from the Python fit

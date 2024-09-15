@@ -32,7 +32,8 @@ struct BookCoverView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 180)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
+                    .background(.gray)
                     .cornerRadius(10)
                     .shadow(radius: 5)
             }

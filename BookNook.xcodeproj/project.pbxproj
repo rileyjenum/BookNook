@@ -10,20 +10,20 @@
 		510470FA2BFA5559000BA602 /* character_with_temperate_room.splineswift in Resources */ = {isa = PBXBuildFile; fileRef = 510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */; };
 		510B2D2A2BFF651100E40B49 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 510B2D292BFF651100E40B49 /* SDWebImageSwiftUI */; };
 		510B2D2C2BFF75BB00E40B49 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */; };
-		5115B5522C0378DB00056C34 /* BookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5115B5512C0378DB00056C34 /* BookshelfView.swift */; };
 		5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6362BF1665E00DFB2E3 /* Book.swift */; };
 		5126F6392BF1790C00DFB2E3 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126F6382BF1790C00DFB2E3 /* TimerManager.swift */; };
-		5127B6B12C429DE700FB1866 /* BookshelfViewNEW.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5127B6B02C429DE700FB1866 /* BookshelfViewNEW.swift */; };
+		5127B6B12C429DE700FB1866 /* BookshelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5127B6B02C429DE700FB1866 /* BookshelfView.swift */; };
 		512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */; };
 		51380D252C2AA57700FDF65D /* PageEntryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51380D242C2AA57700FDF65D /* PageEntryModalView.swift */; };
 		515B0E9F2C31FBBA00806BB3 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */; };
 		516ED7D82C42D11F006B62BC /* BookViewAnimated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */; };
 		516ED7DA2C42E065006B62BC /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ED7D92C42E065006B62BC /* Playground.swift */; };
+		5172EA882C96C86C00BB364C /* BookListScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172EA872C96C86C00BB364C /* BookListScreen2.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51731B912BF36A9300F75F86 /* UpdateBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B902BF36A9300F75F86 /* UpdateBookView.swift */; };
 		51731B962BF39D7F00F75F86 /* DiscoverScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */; };
 		51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */; };
-		51745CA22C0922050012386E /* BookListScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51745CA12C0922050012386E /* BookListScreen2.swift */; };
+		51745CA22C0922050012386E /* BookListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51745CA12C0922050012386E /* BookListScreen.swift */; };
 		518C9C1A2C36C0A6002E3627 /* Baskerville Bold font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */; };
 		518C9C1B2C36C0A6002E3627 /* BASKE9.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C0F2C36C0A6002E3627 /* BASKE9.ttf */; };
 		518C9C1C2C36C0A6002E3627 /* BaskervilleItalicBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C102C36C0A6002E3627 /* BaskervilleItalicBT.ttf */; };
@@ -64,7 +64,7 @@
 		51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */; };
 		51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */; };
 		51D2E4372BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */; };
-		51D8D57B2C930D5E002814D7 /* BookViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D8D57A2C930D5E002814D7 /* BookViewTest.swift */; };
+		51D8D57B2C930D5E002814D7 /* BookshelfView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D8D57A2C930D5E002814D7 /* BookshelfView2.swift */; };
 		51E7F9FF2C3426CF0084B94D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51E7F9FE2C3426CF0084B94D /* Images.xcassets */; };
 		51E7FA012C342AAF0084B94D /* TabIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E7FA002C342AAF0084B94D /* TabIconView.swift */; };
 		51ECD1642BF6300D0049144A /* HomeScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ECD1632BF6300D0049144A /* HomeScreen2.swift */; };
@@ -95,20 +95,20 @@
 /* Begin PBXFileReference section */
 		510470F92BFA5559000BA602 /* character_with_temperate_room.splineswift */ = {isa = PBXFileReference; lastKnownFileType = file; path = character_with_temperate_room.splineswift; sourceTree = "<group>"; };
 		510B2D2B2BFF75BB00E40B49 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
-		5115B5512C0378DB00056C34 /* BookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView.swift; sourceTree = "<group>"; };
 		5126F6362BF1665E00DFB2E3 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		5126F6382BF1790C00DFB2E3 /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
-		5127B6B02C429DE700FB1866 /* BookshelfViewNEW.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfViewNEW.swift; sourceTree = "<group>"; };
+		5127B6B02C429DE700FB1866 /* BookshelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView.swift; sourceTree = "<group>"; };
 		512EBB752BFDC99F0025A4E6 /* BooksAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksAPI.swift; sourceTree = "<group>"; };
 		51380D242C2AA57700FDF65D /* PageEntryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEntryModalView.swift; sourceTree = "<group>"; };
 		515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewAnimated.swift; sourceTree = "<group>"; };
 		516ED7D92C42E065006B62BC /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		5172EA872C96C86C00BB364C /* BookListScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen2.swift; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51731B902BF36A9300F75F86 /* UpdateBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookView.swift; sourceTree = "<group>"; };
 		51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreenViewModel.swift; sourceTree = "<group>"; };
 		51731B972BF39D9F00F75F86 /* DiscoverScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreen.swift; sourceTree = "<group>"; };
-		51745CA12C0922050012386E /* BookListScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen2.swift; sourceTree = "<group>"; };
+		51745CA12C0922050012386E /* BookListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen.swift; sourceTree = "<group>"; };
 		518C9C0E2C36C0A6002E3627 /* Baskerville Bold font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Baskerville Bold font.ttf"; sourceTree = "<group>"; };
 		518C9C0F2C36C0A6002E3627 /* BASKE9.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BASKE9.ttf; sourceTree = "<group>"; };
 		518C9C102C36C0A6002E3627 /* BaskervilleItalicBT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BaskervilleItalicBT.ttf; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		51D2E4342BF8CF91008798FA /* Sonder(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Sonder(chosic.com).mp3"; sourceTree = "<group>"; };
 		51D2E4362BF8D18A008798FA /* Colorful-Flowers(chosic.com).mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Colorful-Flowers(chosic.com).mp3"; sourceTree = "<group>"; };
-		51D8D57A2C930D5E002814D7 /* BookViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewTest.swift; sourceTree = "<group>"; };
+		51D8D57A2C930D5E002814D7 /* BookshelfView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfView2.swift; sourceTree = "<group>"; };
 		51E7F9FE2C3426CF0084B94D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		51E7FA002C342AAF0084B94D /* TabIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIconView.swift; sourceTree = "<group>"; };
 		51ECD1632BF6300D0049144A /* HomeScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen2.swift; sourceTree = "<group>"; };
@@ -494,7 +494,8 @@
 		51AD11202BEEB35D000D672C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				51745CA12C0922050012386E /* BookListScreen2.swift */,
+				51745CA12C0922050012386E /* BookListScreen.swift */,
+				5172EA872C96C86C00BB364C /* BookListScreen2.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -502,16 +503,15 @@
 		51AD11212BEEB363000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */,
+				51F235142C394A8000FA09C3 /* BookSpineView.swift */,
+				51F235182C3958E200FA09C3 /* BookCoverView.swift */,
+				51F235162C394AF400FA09C3 /* ColorExtractingBookCoverView.swift */,
+				5127B6B02C429DE700FB1866 /* BookshelfView.swift */,
+				51D8D57A2C930D5E002814D7 /* BookshelfView2.swift */,
 				51ADD5742BF1F0860023DEFE /* NewBookView.swift */,
 				51731B902BF36A9300F75F86 /* UpdateBookView.swift */,
-				5115B5512C0378DB00056C34 /* BookshelfView.swift */,
 				51A67CB32C12258F00B1F0DA /* BookDetailView.swift */,
-				51F235142C394A8000FA09C3 /* BookSpineView.swift */,
-				51F235162C394AF400FA09C3 /* ColorExtractingBookCoverView.swift */,
-				51F235182C3958E200FA09C3 /* BookCoverView.swift */,
-				5127B6B02C429DE700FB1866 /* BookshelfViewNEW.swift */,
-				516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */,
-				51D8D57A2C930D5E002814D7 /* BookViewTest.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -772,6 +772,7 @@
 				51AD11362BEEB8A8000D672C /* CreateSessionView.swift in Sources */,
 				51ADD5752BF1F0860023DEFE /* NewBookView.swift in Sources */,
 				51F235152C394A8000FA09C3 /* BookSpineView.swift in Sources */,
+				5172EA882C96C86C00BB364C /* BookListScreen2.swift in Sources */,
 				51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */,
 				51AD11122BEEB2BB000D672C /* Extensions.swift in Sources */,
 				51AD114A2BEF6AA5000D672C /* NewReadingSessionView.swift in Sources */,
@@ -786,8 +787,7 @@
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
-				5115B5522C0378DB00056C34 /* BookshelfView.swift in Sources */,
-				51745CA22C0922050012386E /* BookListScreen2.swift in Sources */,
+				51745CA22C0922050012386E /* BookListScreen.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
 				516ED7D82C42D11F006B62BC /* BookViewAnimated.swift in Sources */,
 				51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */,
@@ -798,11 +798,11 @@
 				51731B962BF39D7F00F75F86 /* DiscoverScreenViewModel.swift in Sources */,
 				51ADD5772BF206520023DEFE /* SettingsScreen.swift in Sources */,
 				5190FA4E2C3B005300ED20D5 /* SplashScreen.swift in Sources */,
-				51D8D57B2C930D5E002814D7 /* BookViewTest.swift in Sources */,
+				51D8D57B2C930D5E002814D7 /* BookshelfView2.swift in Sources */,
 				51AD11342BEEB654000D672C /* ReadingSession.swift in Sources */,
 				512EBB762BFDC99F0025A4E6 /* BooksAPI.swift in Sources */,
 				51F235192C3958E200FA09C3 /* BookCoverView.swift in Sources */,
-				5127B6B12C429DE700FB1866 /* BookshelfViewNEW.swift in Sources */,
+				5127B6B12C429DE700FB1866 /* BookshelfView.swift in Sources */,
 				51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */,
 				51B815BF2C2870A600CDB29D /* StatisticsScreen.swift in Sources */,
 			);

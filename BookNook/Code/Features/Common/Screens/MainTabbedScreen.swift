@@ -33,12 +33,12 @@ struct MainTabbedView: View {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
-            BookViewTest()
+            BookListScreen2()
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }
                 .tag(1)
-            HomeScreen2(selectedTab: $selectedTab, pendingTab: $pendingTab, showPageEntry: $showPageEntry, selectedBookIndex: $selectedBookIndex, currentPage: $currentPage, selectedPage: $selectedPage, showError: $showError, errorMessage: $errorMessage)
+            SettingsScreen()
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }

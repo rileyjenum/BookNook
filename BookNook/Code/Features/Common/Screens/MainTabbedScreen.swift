@@ -39,6 +39,7 @@ struct MainTabbedView: View {
                 }
                 .tag(1)
             SettingsScreen()
+//            HomeScreen2(selectedTab: $selectedTab, pendingTab: $pendingTab, showPageEntry: $showPageEntry, selectedBookIndex: $selectedBookIndex, currentPage: $currentPage, selectedPage: $selectedPage, showError: $showError, errorMessage: $errorMessage)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }

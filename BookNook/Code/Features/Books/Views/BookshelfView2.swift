@@ -18,6 +18,8 @@ struct BookshelfView2: View {
     
     @State var selectedBook: Book?
     
+    @State private var bookRotation: Double = 0
+    
     @Namespace private var bookAnimation
     
     var body: some View {
@@ -43,7 +45,7 @@ struct BookshelfView2: View {
                                     withAnimation(.spring()) {
                                         selectedBook = book
                                         isBookDetailViewOpen.toggle()
-                                        
+                                        bookRotation = 360
                                     }
                                 }
                         }
@@ -61,6 +63,12 @@ struct BookshelfView2: View {
                             BookCoverView(book: selectedBook)
                                 .frame(width: 200, height: 300)
                                 .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation)
+                                .rotation3DEffect(Angle(degrees: bookRotation), axis: (x: 0, y: 1.0, z: 0))
+                                .onAppear {
+                                    withAnimation(.bouncy(duration: 0.8)) {
+                                        bookRotation = 0
+                                    }
+                                }
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)

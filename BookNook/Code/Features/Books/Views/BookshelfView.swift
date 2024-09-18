@@ -64,32 +64,49 @@ struct BookshelfView: View {
                     cachedBooks = queriedBooks.filter { $0.category == category }
                 }
             }
-            
         }
         .overlay {
             if isBookDetailViewOpen {
                 ZStack(alignment: .top) {
                     Color.white
-                    
-                    if let selectedBook = selectedBook {
-                        VStack {
+                    VStack {
+                        HStack {
+                            ZStack {
+                                Circle()
+                                    .frame(width: 40)
+                                    .foregroundStyle(.gray)
+                                Image(systemName: "xmark")
+                                
+                            }
+                            .padding()
+                            .onTapGesture {
+                                guard !isAnimating else { return }
+                                isAnimating = true
+                                
+                                withAnimation(.spring()) {
+                                    isBookDetailViewOpen = false
+                                    selectedBook = nil
+                                } completion: {
+                                    isAnimating = false
+                                }
+                            }
+                            Spacer()
+                        }
+                        
+                        if let selectedBook = selectedBook {
                             BookCoverView(book: selectedBook)
                                 .frame(width: 200, height: 300)
                                 .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation, isSource: isBookDetailViewOpen)
-                            Spacer()
                         }
-                        .padding(.top, 100)
-                    }
-                }
-                .onTapGesture {
-                    guard !isAnimating else { return }
-                    isAnimating = true
-                    
-                    withAnimation(.spring()) {
-                        isBookDetailViewOpen = false
-                        selectedBook = nil
-                    } completion: {
-                        isAnimating = false
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    .frame(width: 60)
+                                    .foregroundStyle(.gray)
+                                Image(systemName: "play.fill")
+                            }
+                        }
                         
                     }
                 }
@@ -111,6 +128,6 @@ struct BookshelfView: View {
     ]
 
 
-    return BookshelfView(category: .currentlyReading, cachedBooks: .constant(mockBooks))
+    return BookshelfView(category: .currentlyReading,selectedBook: mockBooks[0], cachedBooks: .constant(mockBooks))
         .modelContainer(container)
 }

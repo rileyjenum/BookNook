@@ -17,9 +17,7 @@ struct BookshelfView2: View {
     @State var isBookDetailViewOpen: Bool = false
     
     @State var selectedBook: Book?
-    
-    @State private var bookRotation: Double = 0
-    
+        
     @State private var cachedBooks: [Book] = []
     
     @State private var isAnimating: Bool = false
@@ -43,7 +41,7 @@ struct BookshelfView2: View {
                                     .blur(radius: phase.isIdentity ? 0 : 5)
                                     .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
                             }
-                            .matchedGeometryEffect(id: book.id, in: bookAnimation)
+                            .matchedGeometryEffect(id: book.id, in: bookAnimation, isSource: !isBookDetailViewOpen)
                             .onTapGesture {
                                 guard !isAnimating else { return }
                                 isAnimating = true
@@ -51,7 +49,6 @@ struct BookshelfView2: View {
                                 withAnimation(.spring()) {
                                     selectedBook = book
                                     isBookDetailViewOpen = true
-                                    bookRotation = 360
                                 } completion: {
                                     isAnimating = false
                                 }
@@ -78,16 +75,9 @@ struct BookshelfView2: View {
                         VStack(spacing: 20) {
                             BookCoverView(book: selectedBook)
                                 .frame(width: 200, height: 300)
-                                .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation)
-                                .rotation3DEffect(Angle(degrees: bookRotation), axis: (x: 0, y: 1.0, z: 0))
-                                .onAppear {
-                                    withAnimation(.bouncy(duration: 0.8)) {
-                                        bookRotation = 0
-                                    }
-                                }
+                                .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation, isSource: isBookDetailViewOpen)
                             Spacer()
                         }
-                        .frame(maxWidth: .infinity)
                         .padding(.top, 100)
                     }
                 }

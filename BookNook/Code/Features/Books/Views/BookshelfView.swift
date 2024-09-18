@@ -1,109 +1,96 @@
 //
-//  TEST.swift
+//  BookViewTest.swift
 //  BookNook
 //
-//  Created by Riley Jenum on 13/07/24.
+//  Created by Riley Jenum on 12/09/24.
 //
 
 import SwiftUI
 import SwiftData
 
 struct BookshelfView: View {
-    var category: BookCategory
-    var height: CGFloat
     
     @Query(sort: [SortDescriptor(\Book.title)]) private var queriedBooks: [Book]
-    @Query(sort: [SortDescriptor(\ReadingSession.startTime)]) var sessions: [ReadingSession]
     
-    @Environment(\.modelContext) var context
+    let category: BookCategory
     
-    @State private var draggedBook: Book?
-    @State private var books: [Book] = []
-    @State private var bookDimensions: [Book: (height: CGFloat, width: CGFloat)] = [:]
-    @State private var isAnimating = false
-
+    @State var isBookDetailViewOpen: Bool = false
     
-    @Binding var selectedBook: Book?
-
-
+    @State var selectedBook: Book?
+        
+    @Binding var cachedBooks: [Book]
+    
+    @State private var isAnimating: Bool = false
+    
+    @Namespace private var bookAnimation
+    
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            ScrollViewReader { proxy in
-                HStack(alignment: .bottom, spacing: 0) {
-                    ForEach(books, id: \.self) { book in
-                        if let dimensions = bookDimensions[book] {
-                            BookViewAnimated(book: book, isAnimating: $isAnimating, selectedBook: $selectedBook, bookHeight: .constant(dimensions.height), bookWidth: .constant(dimensions.width))
-                                .id(book)
-                                .onDrag {
-                                    self.draggedBook = book
-                                    return NSItemProvider(object: book.title as NSString)
+        VStack {
+            Text(category.rawValue)
+                .font(.system(.title2, design: .monospaced, weight: .bold))
+                .padding(.top, 50)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    ForEach(cachedBooks) { book in
+                        BookCoverView(book: book)
+                            .frame(width: 200, height: 300)
+                            .scrollTransition(.animated.threshold(.visible(0.9))) { content, phase in
+                                content
+                                    .scaleEffect(phase.isIdentity ? 1.0 : 0.75)
+                                    .blur(radius: phase.isIdentity ? 0 : 5)
+                                    .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
+                            }
+                            .matchedGeometryEffect(id: book.id, in: bookAnimation, isSource: !isBookDetailViewOpen)
+                            .onTapGesture {
+                                guard !isAnimating else { return }
+                                isAnimating = true
+                                
+                                withAnimation(.spring()) {
+                                    selectedBook = book
+                                    isBookDetailViewOpen = true
+                                } completion: {
+                                    isAnimating = false
                                 }
-                                .onDrop(of: [.text],
-                                        delegate: DropViewDelegate(destinationItem: book, books: $books, draggedItem: $draggedBook)
-                                )
-                                .zIndex((draggedBook == book) || (selectedBook == book) ? 1 : 0)
-                                .allowsHitTesting(selectedBook == nil || (selectedBook == book && isAnimating == false))
-                                .opacity(selectedBook == nil ? 1 : selectedBook == book ? 1 : 0.4)
-                        }
+                            }
                     }
                 }
-                .padding(.leading, 20)
-                .frame(height: height)
-                .opacity(height == 0 ? 0 : 1)
-                .onChange(of: selectedBook) {
-                    if let book = selectedBook {
-                        withAnimation {
-                            proxy.scrollTo(book, anchor: .center)
-                        }
-                    }
+                .scrollTargetLayout()
+                .padding(.horizontal, UIScreen.main.bounds.width / 2 - 100)
+            }
+            .scrollTargetBehavior(.viewAligned)
+            .onAppear {
+                if cachedBooks.isEmpty {
+                    cachedBooks = queriedBooks.filter { $0.category == category }
                 }
             }
+            
         }
-        .scrollDisabled(selectedBook == nil ? false : true)
-        .onAppear {
-            filterBooksByCategory()
-            generateRandomDimensions()
-        }
-        .onChange(of: queriedBooks) {
-            filterBooksByCategory()
-            generateRandomDimensions()
-        }
-    }
-    
-    private func filterBooksByCategory() {
-        books = queriedBooks.filter { $0.category == category }
-    }
-    
-    private func generateRandomDimensions() {
-        for book in books {
-            bookDimensions[book] = (height: CGFloat.random(in: 200...250), width: CGFloat.random(in: 30...50))
-        }
-    }
-}
-
-struct DropViewDelegate: DropDelegate {
-    
-    let destinationItem: Book
-    @Binding var books: [Book]
-    @Binding var draggedItem: Book?
-    
-    func dropUpdated(info: DropInfo) -> DropProposal? {
-        return DropProposal(operation: .move)
-    }
-    
-    func performDrop(info: DropInfo) -> Bool {
-        draggedItem = nil
-        return true
-    }
-    
-    func dropEntered(info: DropInfo) {
-        if let draggedItem {
-            let fromIndex = books.firstIndex(of: draggedItem)
-            if let fromIndex {
-                let toIndex = books.firstIndex(of: destinationItem)
-                if let toIndex, fromIndex != toIndex {
-                    withAnimation {
-                        self.books.move(fromOffsets: IndexSet(integer: fromIndex), toOffset: (toIndex > fromIndex ? (toIndex + 1) : toIndex))
+        .overlay {
+            if isBookDetailViewOpen {
+                ZStack(alignment: .top) {
+                    Color.white
+                    
+                    if let selectedBook = selectedBook {
+                        VStack(spacing: 20) {
+                            BookCoverView(book: selectedBook)
+                                .frame(width: 200, height: 300)
+                                .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                            Spacer()
+                        }
+                        .padding(.top, 100)
+                    }
+                }
+                .onTapGesture {
+                    guard !isAnimating else { return }
+                    isAnimating = true
+                    
+                    withAnimation(.spring()) {
+                        isBookDetailViewOpen = false
+                        selectedBook = nil
+                    } completion: {
+                        isAnimating = false
+                        
                     }
                 }
             }
@@ -122,6 +109,6 @@ struct DropViewDelegate: DropDelegate {
     @State var selectedBook: Book? = Book(title: "", author: "", category: .haveRead)
 
 
-    return BookshelfView(category: .currentlyReading, height: 400, selectedBook: $selectedBook)
+    return BookshelfView(category: .currentlyReading, cachedBooks: .constant([]))
         .modelContainer(container)
 }

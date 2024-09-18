@@ -18,6 +18,9 @@ struct MainTabbedView: View {
     @State private var selectedBookIndex: Int = 0
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
+    @State var currentlyReadingCachedBooks: [Book] = []
+    @State var haveReadCachedBooks: [Book] = []
+    @State var willReadCachedBooks: [Book] = []
     
     
     @EnvironmentObject var timerManager: TimerManager
@@ -28,12 +31,12 @@ struct MainTabbedView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            DiscoverScreen()
+            DiscoverScreen(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $haveReadCachedBooks)
                 .tabItem {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
-            BookListScreen2()
+            BookListScreen2(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $haveReadCachedBooks)
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }

@@ -11,12 +11,16 @@ import SwiftData
 struct BookListScreen2: View {
     let categories: [BookCategory] = [.currentlyReading, .haveRead, .willRead]
     
+    @Binding var currentlyReadingCachedBooks: [Book]
+    @Binding var haveReadCachedBooks: [Book]
+    @Binding var willReadCachedBooks: [Book]
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: false) {
                 LazyVStack {
                     ForEach(categories, id: \.self) { category in
-                        BookshelfView2(category: category)
+                        BookshelfView2(category: category, cachedBooks: bindingForCategory(category))
                             .frame(width: geometry.size.width, height: geometry.size.height)
                             .scrollTransition(.animated.threshold(.visible(0.9))) { content, phase in
                                 content
@@ -29,7 +33,19 @@ struct BookListScreen2: View {
             .scrollTargetBehavior(.paging)
         }
     }
+    
+    private func bindingForCategory(_ category: BookCategory) -> Binding<[Book]> {
+        switch category {
+        case .currentlyReading:
+            return $currentlyReadingCachedBooks
+        case .haveRead:
+            return $haveReadCachedBooks
+        case .willRead:
+            return $willReadCachedBooks
+        }
+    }
 }
+
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
@@ -44,6 +60,6 @@ struct BookListScreen2: View {
         container.mainContext.insert(bookHaveRead)
     }
 
-    return BookListScreen2()
+    return BookListScreen2(currentlyReadingCachedBooks: .constant([]), haveReadCachedBooks: .constant([]), willReadCachedBooks: .constant([]))
         .modelContainer(container)
 }

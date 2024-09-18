@@ -18,7 +18,7 @@ struct BookshelfView2: View {
     
     @State var selectedBook: Book?
         
-    @State private var cachedBooks: [Book] = []
+    @Binding var cachedBooks: [Book]
     
     @State private var isAnimating: Bool = false
     
@@ -109,6 +109,6 @@ struct BookshelfView2: View {
     @State var selectedBook: Book? = Book(title: "", author: "", category: .haveRead)
 
 
-    return BookshelfView2(category: .currentlyReading)
+    return BookshelfView2(category: .currentlyReading, cachedBooks: .constant([]))
         .modelContainer(container)
 }

@@ -25,6 +25,10 @@ struct DiscoverScreen: View {
     @State private var activeAlert: ActiveAlert = .addBook
     @State private var selectedCategory: BookCategory = .willRead
     @State private var bookCategories: [BookCategory] = [.willRead, .haveRead, .currentlyReading]
+    
+    @Binding var currentlyReadingCachedBooks: [Book]
+    @Binding var haveReadCachedBooks: [Book]
+    @Binding var willReadCachedBooks: [Book]
 
     
     var bookTitles: [String] {
@@ -154,6 +158,23 @@ struct DiscoverScreen: View {
     private func addBookToContext(_ book: Book, category: BookCategory) {
         book.category = category
         context.insert(book)
+        
+        func indexForInsertion(in books: [Book], book: Book) -> Int {
+            return books.firstIndex(where: { $0.title.lowercased() > book.title.lowercased() }) ?? books.count
+        }
+        
+        switch category {
+        case .currentlyReading:
+            let index = indexForInsertion(in: currentlyReadingCachedBooks, book: book)
+            currentlyReadingCachedBooks.insert(book, at: index)
+        case .haveRead:
+            let index = indexForInsertion(in: haveReadCachedBooks, book: book)
+            haveReadCachedBooks.insert(book, at: index)
+        case .willRead:
+            let index = indexForInsertion(in: willReadCachedBooks, book: book)
+            willReadCachedBooks.insert(book, at: index)
+        }
+        
         do {
             try context.save()
         } catch {
@@ -256,6 +277,6 @@ struct SearchResultsView: View {
 
 struct DiscoverScreen_Previews: PreviewProvider {
     static var previews: some View {
-        DiscoverScreen()
+        DiscoverScreen(currentlyReadingCachedBooks: .constant([]), haveReadCachedBooks: .constant([]), willReadCachedBooks: .constant([]))
     }
 }

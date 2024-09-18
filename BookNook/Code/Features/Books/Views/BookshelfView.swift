@@ -14,9 +14,9 @@ struct BookshelfView: View {
     
     let category: BookCategory
     
-    @State var isBookDetailViewOpen: Bool = false
+    @State var isBookDetailViewOpen: Bool = true
     
-    @State var selectedBook: Book?
+    @State var selectedBook: Book? = Book(title: "Sample Book 1", author: "Author 1", category: .currentlyReading)
         
     @Binding var cachedBooks: [Book]
     
@@ -72,7 +72,7 @@ struct BookshelfView: View {
                     Color.white
                     
                     if let selectedBook = selectedBook {
-                        VStack(spacing: 20) {
+                        VStack {
                             BookCoverView(book: selectedBook)
                                 .frame(width: 200, height: 300)
                                 .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation, isSource: isBookDetailViewOpen)
@@ -101,14 +101,16 @@ struct BookshelfView: View {
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Book.self, configurations: config)
+    let mockBooks = [
+        Book(title: "Sample Book 1", author: "Author 1", category: .currentlyReading),
+        Book(title: "Sample Book 2", author: "Author 2", category: .currentlyReading),
+        Book(title: "Sample Book 3", author: "Author 3", category: .currentlyReading),
+        Book(title: "Sample Book 4", author: "Author 4", category: .currentlyReading),
+        Book(title: "Sample Book 5", author: "Author 5", category: .currentlyReading),
+        Book(title: "Sample Book 6", author: "Author 6", category: .currentlyReading)
+    ]
 
-    for i in 1..<25 {
-        let book = Book(title: "Example Book \(i)", author: "", category: .currentlyReading)
-        container.mainContext.insert(book)
-    }
-    @State var selectedBook: Book? = Book(title: "", author: "", category: .haveRead)
 
-
-    return BookshelfView(category: .currentlyReading, cachedBooks: .constant([]))
+    return BookshelfView(category: .currentlyReading, cachedBooks: .constant(mockBooks))
         .modelContainer(container)
 }

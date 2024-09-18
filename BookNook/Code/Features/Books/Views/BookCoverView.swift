@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SDWebImageSwiftUI
+import SwiftData
 
 struct BookCoverView: View {
     var book: Book
@@ -38,10 +39,33 @@ struct BookCoverView: View {
                     .shadow(radius: 5)
             }
             Text(book.title)
-                .font(.caption)
-                .fontWeight(.bold)
-                .padding(.top, 5)
+                .font(.custom("Baskerville Bold", size: 25))
+                .padding(.top, 10)
+                .multilineTextAlignment(.center)
+            Text(book.author)
+                .font(.custom("Baskerville Light", size: 20))
+                .padding(.top, 3)
                 .multilineTextAlignment(.center)
         }
     }
 }
+
+
+struct BookCoverView_Previews: PreviewProvider {
+    static var previews: some View {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try! ModelContainer(for: Book.self, configurations: config)
+        let mockBookWithoutImage = Book(
+            title: "Sample Book",
+            author: "Author Name",
+            category: .currentlyReading,
+            coverImageUrl: nil
+        )
+        
+        BookCoverView(book: mockBookWithoutImage)
+            .modelContainer(container)
+
+
+    }
+}
+

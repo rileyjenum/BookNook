@@ -36,7 +36,7 @@ struct ContentView: View {
 //        
 //        
 //            .onAppear(perform: {
-//                for i in 1...200 {
+//                for i in 1...5 {
 //                    context.insert(Book(title: "Currently Reading Book \(i)", author: "Author \(i)", category: .currentlyReading))
 //                    context.insert(Book(title: "Have Read Book \(i)", author: "Author \(i)", category: .haveRead))
 //                    context.insert(Book(title: "Will Read Book \(i)", author: "Author \(i)", category: .willRead))

@@ -20,41 +20,57 @@ struct BookshelfView2: View {
     
     @State private var bookRotation: Double = 0
     
+    @State private var cachedBooks: [Book] = []
+    
+    @State private var isAnimating: Bool = false
+    
     @Namespace private var bookAnimation
     
     var body: some View {
         VStack {
-            if !isBookDetailViewOpen {
-                Text(category.rawValue)
-                    .font(.system(.title2, design: .monospaced, weight: .bold))
-                    .padding(.top, 50)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach(queriedBooks) { book in
-                            BookCoverView(book: book)
-                                .frame(width: 200, height: 300)
-                                .scrollTransition(.animated.threshold(.visible(0.9))) { content, phase in
-                                    content
-                                        .scaleEffect(phase.isIdentity ? 1.0 : 0.75)
-                                        .blur(radius: phase.isIdentity ? 0 : 5)
-                                        .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
+            Text(category.rawValue)
+                .font(.system(.title2, design: .monospaced, weight: .bold))
+                .padding(.top, 50)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    ForEach(cachedBooks) { book in
+                        BookCoverView(book: book)
+                            .frame(width: 200, height: 300)
+                            .scrollTransition(.animated.threshold(.visible(0.9))) { content, phase in
+                                content
+                                    .scaleEffect(phase.isIdentity ? 1.0 : 0.75)
+                                    .blur(radius: phase.isIdentity ? 0 : 5)
+                                    .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
+                            }
+                            .matchedGeometryEffect(id: book.id, in: bookAnimation)
+                            .onTapGesture {
+                                guard !isAnimating else { return }
+                                isAnimating = true
+                                
+                                withAnimation(.spring()) {
+                                    selectedBook = book
+                                    isBookDetailViewOpen = true
+                                    bookRotation = 360
+                                } completion: {
+                                    isAnimating = false
                                 }
-                                .matchedGeometryEffect(id: book.id, in: bookAnimation, isSource: selectedBook == book)
-                                .onTapGesture {
-                                    withAnimation(.spring()) {
-                                        selectedBook = book
-                                        isBookDetailViewOpen = true
-                                        bookRotation = 360
-                                    }
-                                }
-                        }
+                            }
                     }
-                    .scrollTargetLayout()
-                    .padding(.horizontal, UIScreen.main.bounds.width / 2 - 100)
                 }
-                .scrollTargetBehavior(.viewAligned)
-            } else {
+                .scrollTargetLayout()
+                .padding(.horizontal, UIScreen.main.bounds.width / 2 - 100)
+            }
+            .scrollTargetBehavior(.viewAligned)
+            .onAppear {
+                if cachedBooks.isEmpty {
+                    cachedBooks = queriedBooks
+                }
+            }
+            
+        }
+        .overlay {
+            if isBookDetailViewOpen {
                 ZStack(alignment: .top) {
                     Color.white
                     
@@ -76,10 +92,15 @@ struct BookshelfView2: View {
                     }
                 }
                 .onTapGesture {
+                    guard !isAnimating else { return }
+                    isAnimating = true
+                    
                     withAnimation(.spring()) {
                         isBookDetailViewOpen = false
                         selectedBook = nil
-
+                    } completion: {
+                        isAnimating = false
+                        
                     }
                 }
             }

@@ -61,7 +61,7 @@ struct BookshelfView2: View {
             .scrollTargetBehavior(.viewAligned)
             .onAppear {
                 if cachedBooks.isEmpty {
-                    cachedBooks = queriedBooks
+                    cachedBooks = queriedBooks.filter { $0.category == category }
                 }
             }
             

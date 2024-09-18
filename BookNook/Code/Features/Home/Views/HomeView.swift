@@ -33,21 +33,25 @@ struct HomeView: View {
     @Query(sort: [SortDescriptor(\Book.title)]) var books: [Book]
     
     var body: some View {
-        VStack {
-            headerView()
-            
-            if show {
-                expandedView()
-                    .transition(.opacity)
+        ZStack {
+            Color.black.ignoresSafeArea(.all)
+            VStack {
+                headerView()
+                
+                if show {
+                    expandedView()
+                        .transition(.opacity)
+                }
+                Spacer()
+                AudioPlayerView()
             }
-            Spacer()
-            AudioPlayerView()
+            .padding()
+            .mask(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+            )
+            .animation(.spring(response: 0.6, dampingFraction: 0.8), value: show)
+
         }
-        .padding()
-        .mask(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-        )
-        .animation(.spring(response: 0.6, dampingFraction: 0.8), value: show)
     }
     
     private func stopSession() {

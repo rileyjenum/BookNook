@@ -14,9 +14,9 @@ struct BookshelfView: View {
     
     let category: BookCategory
     
-    @State var isBookDetailViewOpen: Bool = true
+    @State var isBookDetailViewOpen: Bool = false
     
-    @State var selectedBook: Book? = Book(title: "Sample Book 1", author: "Author 1", category: .currentlyReading)
+    @State var selectedBook: Book?
         
     @Binding var cachedBooks: [Book]
     

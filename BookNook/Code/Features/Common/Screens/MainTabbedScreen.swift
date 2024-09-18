@@ -52,11 +52,6 @@ struct MainTabbedView: View {
                     Label("History", systemImage: "calendar")
                 }
                 .tag(3)
-            SettingsScreen()
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-                .tag(4)
         }
         .onChange(of: selectedTab) {
             attemptChangeTab(to: selectedTab)

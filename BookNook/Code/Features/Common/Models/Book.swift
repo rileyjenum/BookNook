@@ -7,27 +7,8 @@
 import Foundation
 import SwiftData
 
-//enum BookCategory: String, CaseIterable, Codable {
-//    case currentlyReading, willRead, haveRead
-//}
-
 enum BookCategory: String, CaseIterable, Codable {
-    case currentlyReading
-    case willRead
-    case haveRead
-
-    init(_ value: String) {
-        switch value {
-        case "currentlyReading":
-            self = .currentlyReading
-        case "willRead":
-            self = .willRead
-        case "haveRead":
-            self = .haveRead
-        default:
-            self = .currentlyReading
-        }
-    }
+    case currentlyReading, willRead, haveRead
 }
 
 @Model

@@ -40,11 +40,11 @@ struct BookshelfView2: View {
                                         .blur(radius: phase.isIdentity ? 0 : 5)
                                         .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
                                 }
-                                .matchedGeometryEffect(id: book.id, in: bookAnimation)
+                                .matchedGeometryEffect(id: book.id, in: bookAnimation, isSource: selectedBook == book)
                                 .onTapGesture {
                                     withAnimation(.spring()) {
                                         selectedBook = book
-                                        isBookDetailViewOpen.toggle()
+                                        isBookDetailViewOpen = true
                                         bookRotation = 360
                                     }
                                 }
@@ -77,7 +77,7 @@ struct BookshelfView2: View {
                 }
                 .onTapGesture {
                     withAnimation(.spring()) {
-                        isBookDetailViewOpen.toggle()
+                        isBookDetailViewOpen = false
                         selectedBook = nil
 
                     }

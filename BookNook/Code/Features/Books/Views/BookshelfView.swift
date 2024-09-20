@@ -22,6 +22,8 @@ struct BookshelfView: View {
     
     @State private var isAnimating: Bool = false
     
+    @State private var degrees: Double = 0
+    
     @Namespace private var bookAnimation
     
     var body: some View {
@@ -51,6 +53,9 @@ struct BookshelfView: View {
                                     isBookDetailViewOpen = true
                                 } completion: {
                                     isAnimating = false
+                                    withAnimation(.spring(duration: 1)) {
+                                        degrees = -180
+                                    }
                                 }
                             }
                     }
@@ -74,15 +79,19 @@ struct BookshelfView: View {
                             BookCoverView(book: selectedBookCover)
                                 .frame(width: 200, height: 300)
                                 .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                .rotation3DEffect(.degrees(degrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading)
                                 .onTapGesture {
                                     guard !isAnimating else { return }
                                     isAnimating = true
-                                    
-                                    withAnimation(.spring()) {
-                                        isBookDetailViewOpen = false
-                                        selectedBook = nil
+                                    withAnimation(.spring(duration: 1)) {
+                                        degrees = 0
                                     } completion: {
-                                        isAnimating = false
+                                        withAnimation(.spring()) {
+                                            isBookDetailViewOpen = false
+                                            selectedBook = nil
+                                        } completion: {
+                                            isAnimating = false
+                                        }
                                     }
                                 }
                         }

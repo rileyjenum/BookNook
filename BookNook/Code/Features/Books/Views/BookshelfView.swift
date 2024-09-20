@@ -70,44 +70,22 @@ struct BookshelfView: View {
                 ZStack(alignment: .top) {
                     Color.white
                     VStack {
-                        HStack {
-                            ZStack {
-                                Circle()
-                                    .frame(width: 40)
-                                    .foregroundStyle(.gray)
-                                Image(systemName: "xmark")
-                                
-                            }
-                            .padding()
-                            .onTapGesture {
-                                guard !isAnimating else { return }
-                                isAnimating = true
-                                
-                                withAnimation(.spring()) {
-                                    isBookDetailViewOpen = false
-                                    selectedBook = nil
-                                } completion: {
-                                    isAnimating = false
-                                }
-                            }
-                            Spacer()
-                        }
-                        
-                        if let selectedBook = selectedBook {
-                            BookCoverView(book: selectedBook)
+                        if let selectedBookCover = selectedBook {
+                            BookCoverView(book: selectedBookCover)
                                 .frame(width: 200, height: 300)
-                                .matchedGeometryEffect(id: selectedBook.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                .onTapGesture {
+                                    guard !isAnimating else { return }
+                                    isAnimating = true
+                                    
+                                    withAnimation(.spring()) {
+                                        isBookDetailViewOpen = false
+                                        selectedBook = nil
+                                    } completion: {
+                                        isAnimating = false
+                                    }
+                                }
                         }
-                        
-                        VStack {
-                            ZStack {
-                                Circle()
-                                    .frame(width: 60)
-                                    .foregroundStyle(.gray)
-                                Image(systemName: "play.fill")
-                            }
-                        }
-                        
                     }
                 }
             }

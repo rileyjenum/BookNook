@@ -72,8 +72,6 @@ struct DiscoverScreen: View {
                                                         showAlert = true
                                                     }
                                                     .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                                                    .scaleEffect(1.0)
-                                                    .animation(.easeInOut)
                                             }
                                         }
                                         .padding(.horizontal)

@@ -38,14 +38,6 @@ struct BookCoverView: View {
                     .cornerRadius(10)
                     .shadow(radius: 5)
             }
-            Text(book.title)
-                .font(.custom("Baskerville Bold", size: 25))
-                .padding(.top, 10)
-                .multilineTextAlignment(.center)
-            Text(book.author)
-                .font(.custom("Baskerville Light", size: 20))
-                .padding(.top, 3)
-                .multilineTextAlignment(.center)
         }
     }
 }

@@ -8,102 +8,31 @@
 import SwiftUI
 
 struct Playground: View {
-
-    @State private var isProfileExpanded = false
-    @Namespace private var profileAnimation
-    @Namespace private var profileName
-    @Namespace private var profileAvatar
-    @Namespace private var profileJob
+    @State private var flipped = false
     
     var body: some View {
-        VStack {
-            if isProfileExpanded {
-                expandedProfileView
+        ZStack {
+            if flipped {
+                Color.blue
+                    .frame(width: 200, height: 200)
+                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             } else {
-                collapsedProfileView
-            }
-            videoList
-        }
-    }
-
-    var collapsedProfileView: some View {
-        HStack {
-            profileImage
-                .matchedGeometryEffect(id: profileAvatar, in: profileAnimation)
-                .frame(width: 60, height: 60)
-
-            VStack(alignment: .leading) {
-                Text("Profile Name")
-                    .font(.title).bold()
-                    .matchedGeometryEffect(id: profileName, in: profileAnimation)
-
-                Text("iOS Developer")
-                    .foregroundColor(.secondary)
-                    .matchedGeometryEffect(id: profileJob, in: profileAnimation)
-            }
-
-            Spacer()
-        }
-        .padding()
-    }
-
-    var expandedProfileView: some View {
-        VStack {
-            profileImage
-                .matchedGeometryEffect(id: profileAvatar, in: profileAnimation)
-                .frame(width: 130, height: 130)
-
-            VStack {
-                Text("Profile Name")
-                    .font(.title).bold()
-                    .matchedGeometryEffect(id: profileName, in: profileAnimation)
-
-                Text("iOS Developer")
-                    .foregroundColor(.pink)
-                    .matchedGeometryEffect(id: profileJob, in: profileAnimation)
-
-                Text("Check this Cool description, Check this Cool description, Check this Cool description.")
-                    .padding()
+                Color.red
+                    .frame(width: 200, height: 200)
             }
         }
-        .padding()
-    }
-
-    var profileImage: some View {
-        Image(.homeTabIcon)
-            .resizable()
-            .clipShape(Circle())
-            .onTapGesture {
-                withAnimation(.spring()) {
-                    isProfileExpanded.toggle()
-                }
+        .onTapGesture {
+            withAnimation {
+                flipped.toggle()
             }
-    }
-
-    var videoList: some View {
-        List {
-            ForEach(0...5, id: \.self) { _ in
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .frame(height: 180)
-                        .foregroundColor(.gray.opacity(0.2))
-
-                    Image(systemName: "play.fill")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .opacity(0.3)
-                }
-                .padding(.vertical)
-
-            }
-            .listRowSeparator(.hidden)
         }
-        .listStyle(.plain)
+        .rotation3DEffect(.degrees(flipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+        .animation(.easeInOut, value: flipped)
     }
 }
 
-struct Playground_previews: PreviewProvider {
+struct PlaygroundViewPreviews: PreviewProvider {
     static var previews: some View {
-        Playground().preferredColorScheme(.light)
+        Playground()
     }
 }

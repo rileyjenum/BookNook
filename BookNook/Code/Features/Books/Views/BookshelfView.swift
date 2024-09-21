@@ -16,6 +16,9 @@ struct BookshelfView: View {
     
     @State var isBookDetailViewOpen: Bool = false
     
+    @State var showBackOfBook: Bool = false
+
+    
     @State var selectedBook: Book?
         
     @Binding var cachedBooks: [Book]
@@ -46,6 +49,7 @@ struct BookshelfView: View {
                                         selectedBook = book
                                         isBookDetailViewOpen = true
                                     } completion: {
+                                        showBackOfBook = true
                                         withAnimation(.spring(duration: 1)) {
                                             degrees = -180
                                         } completion: {
@@ -88,16 +92,10 @@ struct BookshelfView: View {
                     Color.white
                     ZStack {
                         Group {
-                            // Book is opened, show "inside"
-                            if degrees == -180 {
-                                Image(systemName: "book")
-                                    .resizable()
-                                    .scaledToFit()
+                            if showBackOfBook {
+                                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
                                     .frame(width: 120, height: 180)
-                                    .foregroundColor(.black)
-                                    .background(.gray)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 5)
+                                    .foregroundColor(.gray)
                             }
                             if let selectedBookCover = selectedBook {
                                 BookCoverView(book: selectedBookCover)
@@ -109,6 +107,7 @@ struct BookshelfView: View {
                                         withAnimation(.spring(duration: 1)) {
                                             degrees = 0
                                         } completion: {
+                                            showBackOfBook = false
                                             withAnimation(.spring()) {
                                                 isBookDetailViewOpen = false
                                                 selectedBook = nil

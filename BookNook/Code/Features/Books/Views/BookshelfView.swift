@@ -45,12 +45,12 @@ struct BookshelfView: View {
                                     guard !isAnimating else { return }
                                     isAnimating = true
                                     
-                                    withAnimation(.spring()) {
+                                    withAnimation {
                                         selectedBook = book
                                         isBookDetailViewOpen = true
                                     } completion: {
                                         showBackOfBook = true
-                                        withAnimation(.spring(duration: 1)) {
+                                        withAnimation(.easeOut) {
                                             degrees = -180
                                         } completion: {
                                             isAnimating = false
@@ -93,22 +93,51 @@ struct BookshelfView: View {
                     ZStack {
                         Group {
                             if showBackOfBook {
-                                RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                // Back Cover of book
+                                Rectangle()
                                     .frame(width: 120, height: 180)
+                                    .clipShape(
+                                        .rect(
+                                            topLeadingRadius: 2,
+                                            bottomLeadingRadius: 2,
+                                            bottomTrailingRadius: 10,
+                                            topTrailingRadius: 10
+                                        )
+                                    )
                                     .foregroundColor(.gray)
+                                    .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
                             }
                             if let selectedBookCover = selectedBook {
-                                BookCoverView(book: selectedBookCover)
-                                    .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                    ZStack {
+                                        // Front side of the front book cover
+                                        BookCoverView(book: selectedBookCover)
+                                            .opacity(degrees > -90 ? 1 : 0)
+                                            .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                    
+                                        // Back side of the front book cover
+                                        Rectangle()
+                                            .frame(width: 120, height: 180)
+                                            .clipShape(
+                                                .rect(
+                                                    topLeadingRadius: 2,
+                                                    bottomLeadingRadius: 2,
+                                                    bottomTrailingRadius: 10,
+                                                    topTrailingRadius: 10
+                                                )
+                                            )
+                                            .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                            .foregroundColor(.gray)
+                                            .opacity(degrees <= -90 ? 1 : 0)
+                                    }
                                     .rotation3DEffect(.degrees(degrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading)
                                     .onTapGesture {
                                         guard !isAnimating else { return }
                                         isAnimating = true
-                                        withAnimation(.spring(duration: 1)) {
+                                        withAnimation {
                                             degrees = 0
                                         } completion: {
                                             showBackOfBook = false
-                                            withAnimation(.spring()) {
+                                            withAnimation{
                                                 isBookDetailViewOpen = false
                                                 selectedBook = nil
                                             } completion: {

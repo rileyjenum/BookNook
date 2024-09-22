@@ -23,20 +23,32 @@ struct BookCoverView: View {
                         .foregroundColor(.gray)
                 }
                 .indicator(.activity)
+                .clipShape(
+                    .rect(
+                        topLeadingRadius: 2,
+                        bottomLeadingRadius: 2,
+                        bottomTrailingRadius: 10,
+                        topTrailingRadius: 10
+                    )
+                )
                 .transition(.fade(duration: 0.5))
                 .scaledToFit()
+                .shadow(color: .black.opacity(0.5), radius: 5, x: 10, y: 0.0)
                 .frame(width: 120, height: 180)
-                .cornerRadius(10)
-                .shadow(radius: 5)
             } else {
-                Image(systemName: "book")
-                    .resizable()
-                    .scaledToFit()
+                Rectangle()
                     .frame(width: 120, height: 180)
-                    .foregroundColor(.black)
-                    .background(.gray)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
+                    .clipShape(
+                        .rect(
+                            topLeadingRadius: 2,
+                            bottomLeadingRadius: 2,
+                            bottomTrailingRadius: 10,
+                            topTrailingRadius: 10
+                        )
+                    )
+                    .foregroundColor(.gray)
+                    .shadow(color: .black.opacity(0.5), radius: 5, x: 10, y: 0.0)
+
             }
         }
     }

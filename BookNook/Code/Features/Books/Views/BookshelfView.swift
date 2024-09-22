@@ -17,15 +17,18 @@ struct BookshelfView: View {
     @State var isBookDetailViewOpen: Bool = false
     
     @State var showBackOfBook: Bool = false
-
     
     @State var selectedBook: Book?
-        
+    
     @Binding var cachedBooks: [Book]
     
     @State private var isAnimating: Bool = false
     
-    @State private var degrees: Double = 0
+    @State private var coverDegrees: Double = 0
+    
+    @State private var pageDegrees: Double = 0
+    
+    
     
     @Namespace private var bookAnimation
     
@@ -50,8 +53,10 @@ struct BookshelfView: View {
                                         isBookDetailViewOpen = true
                                     } completion: {
                                         showBackOfBook = true
-                                        withAnimation(.easeOut) {
-                                            degrees = -180
+                                        withAnimation(.easeOut(duration: 0.5)) {
+                                            coverDegrees = -180
+                                            pageDegrees = -150
+                                            
                                         } completion: {
                                             isAnimating = false
                                         }
@@ -73,7 +78,7 @@ struct BookshelfView: View {
                                 .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
                         }
                         .frame(width: 200, height: 300)
-
+                        
                     }
                 }
                 .scrollTargetLayout()
@@ -93,7 +98,6 @@ struct BookshelfView: View {
                     ZStack {
                         Group {
                             if showBackOfBook {
-                                // Back Cover of book
                                 Rectangle()
                                     .frame(width: 120, height: 180)
                                     .clipShape(
@@ -106,48 +110,50 @@ struct BookshelfView: View {
                                     )
                                     .foregroundColor(.gray)
                                     .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                
                             }
                             if let selectedBookCover = selectedBook {
-                                    ZStack {
-                                        // Front side of the front book cover
-                                        BookCoverView(book: selectedBookCover)
-                                            .opacity(degrees > -90 ? 1 : 0)
-                                            .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                ZStack {
+                                    // Front side of the front book cover
+                                    BookCoverView(book: selectedBookCover)
+                                        .opacity(coverDegrees > -90 ? 1 : 0)
+                                        .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
                                     
-                                        // Back side of the front book cover
-                                        Rectangle()
-                                            .frame(width: 120, height: 180)
-                                            .clipShape(
-                                                .rect(
-                                                    topLeadingRadius: 2,
-                                                    bottomLeadingRadius: 2,
-                                                    bottomTrailingRadius: 10,
-                                                    topTrailingRadius: 10
-                                                )
+                                    // Back side of the front book cover
+                                    Rectangle()
+                                        .frame(width: 120, height: 180)
+                                        .clipShape(
+                                            .rect(
+                                                topLeadingRadius: 2,
+                                                bottomLeadingRadius: 2,
+                                                bottomTrailingRadius: 10,
+                                                topTrailingRadius: 10
                                             )
-                                            .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                            .foregroundColor(.gray)
-                                            .opacity(degrees <= -90 ? 1 : 0)
-                                    }
-                                    .rotation3DEffect(.degrees(degrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading)
-                                    .onTapGesture {
-                                        guard !isAnimating else { return }
-                                        isAnimating = true
-                                        withAnimation {
-                                            degrees = 0
+                                        )
+                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                        .foregroundColor(.gray)
+                                        .opacity(coverDegrees <= -90 ? 1 : 0)
+                                }
+                                .rotation3DEffect(.degrees(coverDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
+                                .onTapGesture {
+                                    guard !isAnimating else { return }
+                                    isAnimating = true
+                                    withAnimation {
+                                        coverDegrees = 0
+                                        pageDegrees = 0
+                                    } completion: {
+                                        showBackOfBook = false
+                                        withAnimation{
+                                            isBookDetailViewOpen = false
+                                            selectedBook = nil
                                         } completion: {
-                                            showBackOfBook = false
-                                            withAnimation{
-                                                isBookDetailViewOpen = false
-                                                selectedBook = nil
-                                            } completion: {
-                                                isAnimating = false
-                                            }
+                                            isAnimating = false
                                         }
                                     }
+                                }
                             }
                         }
-                        .offset(x: degrees == -180 ? 50 : 0)
+                        .offset(x: coverDegrees == -180 ? 50 : 0)
                     }
                 }
             }
@@ -166,8 +172,8 @@ struct BookshelfView: View {
         Book(title: "Sample Book 5", author: "Author 5", category: .currentlyReading),
         Book(title: "Sample Book 6", author: "Author 6", category: .currentlyReading)
     ]
-
-
+    
+    
     return BookshelfView(category: .currentlyReading,selectedBook: mockBooks[0], cachedBooks: .constant(mockBooks))
         .modelContainer(container)
 }

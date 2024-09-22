@@ -55,7 +55,7 @@ struct BookshelfView: View {
                                         showBackOfBook = true
                                         withAnimation(.easeOut(duration: 0.5)) {
                                             coverDegrees = -180
-                                            pageDegrees = -150
+                                            pageDegrees = -30
                                             
                                         } completion: {
                                             isAnimating = false
@@ -98,19 +98,34 @@ struct BookshelfView: View {
                     ZStack {
                         Group {
                             if showBackOfBook {
-                                Rectangle()
-                                    .frame(width: 120, height: 180)
-                                    .clipShape(
-                                        .rect(
-                                            topLeadingRadius: 2,
-                                            bottomLeadingRadius: 2,
-                                            bottomTrailingRadius: 10,
-                                            topTrailingRadius: 10
+                                ZStack(alignment: .leading) {
+                                    // Back of book
+                                    Rectangle()
+                                        .frame(width: 120, height: 180)
+                                        .clipShape(
+                                            .rect(
+                                                topLeadingRadius: 2,
+                                                bottomLeadingRadius: 2,
+                                                bottomTrailingRadius: 10,
+                                                topTrailingRadius: 10
+                                            )
                                         )
-                                    )
-                                    .foregroundColor(.gray)
-                                    .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                
+                                        .foregroundColor(.gray)
+                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                    // Page of book
+                                    Rectangle()
+                                        .frame(width: 110, height: 170)
+                                        .foregroundColor(.lightGray)
+                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                        .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
+                                        .overlay {
+                                            ZStack {
+                                                LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]), startPoint: .leading, endPoint: .trailing)
+                                                Text("hello")
+                                            }
+                                            .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
+                                        }
+                                }
                             }
                             if let selectedBookCover = selectedBook {
                                 ZStack {

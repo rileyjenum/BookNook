@@ -23,7 +23,6 @@ struct DiscoverScreen: View {
     @State private var selectedBook: Book?
     @State private var showSearchResults = false
     @State private var activeAlert: ActiveAlert = .addBook
-    @State private var selectedCategory: BookCategory = .willRead
     @State private var bookCategories: [BookCategory] = [.willRead, .haveRead, .currentlyReading]
     
     @Binding var currentlyReadingCachedBooks: [Book]
@@ -117,13 +116,12 @@ struct DiscoverScreen: View {
                         message: Text("Choose a category to add the book to."),
                         buttons: bookCategories.map { category in
                                 .default(Text(category.rawValue)) {
-                                selectedCategory = category
                                 if let book = selectedBook {
                                     if bookTitles.contains(book.title) {
                                         activeAlert = .error
                                         showAlert = true
                                     } else {
-                                        addBookToContext(book, category: selectedCategory)
+                                        addBookToContext(book, category: category)
                                         activeAlert = .success
                                         showAlert = true
                                     }
@@ -273,8 +271,8 @@ struct SearchResultsView: View {
     }
 }
 
-struct DiscoverScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        DiscoverScreen(currentlyReadingCachedBooks: .constant([]), haveReadCachedBooks: .constant([]), willReadCachedBooks: .constant([]))
-    }
-}
+//struct DiscoverScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DiscoverScreen(currentlyReadingCachedBooks: .constant([]), haveReadCachedBooks: .constant([]), willReadCachedBooks: .constant([]))
+//    }
+//}

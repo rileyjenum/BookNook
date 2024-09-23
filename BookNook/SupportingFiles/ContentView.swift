@@ -33,8 +33,8 @@ struct ContentView: View {
 //                    print("Failed to delete all objects: \(error)")
 //                }
 //            }
-////        
 //        
+        
 //            .onAppear(perform: {
 //                for i in 1...20 {
 //                    context.insert(Book(title: "Currently Reading Book \(i)", author: "Author \(i)", category: .currentlyReading))

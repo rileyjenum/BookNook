@@ -17,12 +17,12 @@ struct MainTabbedView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            DiscoverScreen(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $haveReadCachedBooks)
+            DiscoverScreen(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $willReadCachedBooks)
                 .tabItem {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
-            BookListScreen(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $haveReadCachedBooks)
+            BookListScreen(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $willReadCachedBooks)
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }

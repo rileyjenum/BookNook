@@ -17,7 +17,7 @@ struct BookCoverView: View {
         VStack {
             if let urlString = book.coverImageUrl, let url = URL(string: urlString) {
                 WebImage(url: url) { image in
-                    image.resizable()
+                    image
                 } placeholder: {
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(.gray)

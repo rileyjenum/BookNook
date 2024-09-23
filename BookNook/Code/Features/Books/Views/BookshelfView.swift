@@ -124,10 +124,15 @@ struct BookshelfView: View {
                                                 )
                                                 .foregroundColor(.gray)
                                                 .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                            
                                             // Page of book
                                             Rectangle()
+                                                .fill(
+                                                    LinearGradient(gradient: Gradient(colors: [Color(red: 0.98, green: 0.96, blue: 0.9), Color(red: 0.95, green: 0.92, blue: 0.85)]),
+                                                                   startPoint: .topLeading,
+                                                                   endPoint: .bottomTrailing)
+                                                )
                                                 .frame(width: 110, height: 175)
-                                                .foregroundColor(.white)
                                                 .clipShape(
                                                     .rect(
                                                         topLeadingRadius: 0,
@@ -138,14 +143,11 @@ struct BookshelfView: View {
                                                 )
                                                 .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
                                                 .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                                .overlay {
-                                                    ZStack {
-                                                        LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]), startPoint: .leading, endPoint: .trailing)
-                                                        Text("Text of book goes here Text of book goes here Text of book goes here")
-                                                            .font(.system(size: 10, weight: .light, design: .rounded))
-                                                    }
-                                                    .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                                }
+                                                .overlay(
+                                                    Color.white.opacity(0.02)
+                                                        .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
+
+                                                )
                                         }
                                     }
                                     if let selectedBookCover = selectedBook {

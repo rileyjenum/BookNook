@@ -46,12 +46,12 @@ struct SplashScreen: View {
     private func performLoading() {
         let dispatchGroup = DispatchGroup()
         
-        for category in categories {
-            dispatchGroup.enter()
-            DiscoverScreenViewModel.shared.fetchBestsellers(for: category) {
-                dispatchGroup.leave()
-            }
-        }
+//        for category in categories {
+//            dispatchGroup.enter()
+//            DiscoverScreenViewModel.shared.fetchBestsellers(for: category) {
+//                dispatchGroup.leave()
+//            }
+//        }
         
         dispatchGroup.notify(queue: .main) {
             self.isActive = true

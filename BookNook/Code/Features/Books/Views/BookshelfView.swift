@@ -113,6 +113,15 @@ struct BookshelfView: View {
                                         ZStack(alignment: .leading) {
                                             // Back of book
                                             Rectangle()
+                                                .fill(
+                                                    LinearGradient(gradient: Gradient(colors: [Color(red: 0.4, green: 0.3, blue: 0.2), Color(red: 0.5, green: 0.4, blue: 0.3)]),
+                                                                   startPoint: .topLeading,
+                                                                   endPoint: .bottomTrailing)
+                                                )
+                                                .overlay(
+                                                    Color.black.opacity(0.03) // Simulates slight texture variation or wear
+                                                )
+                                                .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
                                                 .frame(width: 120, height: 180)
                                                 .clipShape(
                                                     .rect(
@@ -122,8 +131,6 @@ struct BookshelfView: View {
                                                         topTrailingRadius: 10
                                                     )
                                                 )
-                                                .foregroundColor(.gray)
-                                                .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
                                             
                                             // Page of book
                                             Rectangle()
@@ -146,7 +153,7 @@ struct BookshelfView: View {
                                                 .overlay(
                                                     Color.white.opacity(0.02)
                                                         .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-
+                                                    
                                                 )
                                         }
                                     }
@@ -159,6 +166,15 @@ struct BookshelfView: View {
                                             
                                             // Back side of the front book cover
                                             Rectangle()
+                                                .fill(
+                                                    LinearGradient(gradient: Gradient(colors: [Color(red: 0.4, green: 0.3, blue: 0.2), Color(red: 0.5, green: 0.4, blue: 0.3)]),
+                                                                   startPoint: .topLeading,
+                                                                   endPoint: .bottomTrailing)
+                                                )
+                                                .overlay(
+                                                    Color.black.opacity(0.03) // Simulates slight texture variation or wear
+                                                )
+                                                .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
                                                 .frame(width: 120, height: 180)
                                                 .clipShape(
                                                     .rect(
@@ -168,8 +184,6 @@ struct BookshelfView: View {
                                                         topTrailingRadius: 10
                                                     )
                                                 )
-                                                .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                                .foregroundColor(.gray)
                                                 .opacity(coverDegrees <= -90 ? 1 : 0)
                                         }
                                         .rotation3DEffect(.degrees(coverDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)

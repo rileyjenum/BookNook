@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import SDWebImageSwiftUI
 
 struct BookshelfView: View {
     
@@ -27,8 +28,6 @@ struct BookshelfView: View {
     @State private var coverDegrees: Double = 0
     
     @State private var pageDegrees: Double = 0
-    
-    
     
     @Namespace private var bookAnimation
     
@@ -55,8 +54,7 @@ struct BookshelfView: View {
                                         showBackOfBook = true
                                         withAnimation(.easeOut(duration: 0.5)) {
                                             coverDegrees = -180
-                                            pageDegrees = -30
-                                            
+                                            pageDegrees = -10
                                         } completion: {
                                             isAnimating = false
                                         }
@@ -93,82 +91,102 @@ struct BookshelfView: View {
         }
         .overlay {
             if isBookDetailViewOpen {
-                ZStack(alignment: .top) {
-                    Color.white
-                    ZStack {
-                        Group {
-                            if showBackOfBook {
-                                ZStack(alignment: .leading) {
-                                    // Back of book
-                                    Rectangle()
-                                        .frame(width: 120, height: 180)
-                                        .clipShape(
-                                            .rect(
-                                                topLeadingRadius: 2,
-                                                bottomLeadingRadius: 2,
-                                                bottomTrailingRadius: 10,
-                                                topTrailingRadius: 10
-                                            )
-                                        )
-                                        .foregroundColor(.gray)
-                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                    // Page of book
-                                    Rectangle()
-                                        .frame(width: 110, height: 170)
-                                        .foregroundColor(.lightGray)
-                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                        .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
-                                        .overlay {
-                                            ZStack {
-                                                LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]), startPoint: .leading, endPoint: .trailing)
-                                                Text("hello")
-                                            }
-                                            .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
-                                        }
-                                }
+                GeometryReader { geo in
+                    ZStack(alignment: .top) {
+                        Color.white
+                        if let book = selectedBook, let urlString = book.coverImageUrl, let url = URL(string: urlString) {
+                            WebImage(url: url) { image in
+                                image.resizable()
+                            } placeholder: {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(.gray)
                             }
-                            if let selectedBookCover = selectedBook {
-                                ZStack {
-                                    // Front side of the front book cover
-                                    BookCoverView(book: selectedBookCover)
-                                        .opacity(coverDegrees > -90 ? 1 : 0)
-                                        .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
-                                    
-                                    // Back side of the front book cover
-                                    Rectangle()
-                                        .frame(width: 120, height: 180)
-                                        .clipShape(
-                                            .rect(
-                                                topLeadingRadius: 2,
-                                                bottomLeadingRadius: 2,
-                                                bottomTrailingRadius: 10,
-                                                topTrailingRadius: 10
+                            .frame(width: geo.size.width, height:  geo.size.height)
+                            .ignoresSafeArea(.all)
+                            .blur(radius: 30.0)
+                        }
+                        ZStack {
+                            Group {
+                                if showBackOfBook {
+                                    ZStack(alignment: .leading) {
+                                        // Back of book
+                                        Rectangle()
+                                            .frame(width: 120, height: 180)
+                                            .clipShape(
+                                                .rect(
+                                                    topLeadingRadius: 2,
+                                                    bottomLeadingRadius: 2,
+                                                    bottomTrailingRadius: 10,
+                                                    topTrailingRadius: 10
+                                                )
                                             )
-                                        )
-                                        .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                        .foregroundColor(.gray)
-                                        .opacity(coverDegrees <= -90 ? 1 : 0)
+                                            .foregroundColor(.gray)
+                                            .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                        // Page of book
+                                        Rectangle()
+                                            .frame(width: 110, height: 175)
+                                            .foregroundColor(.white)
+                                            .clipShape(
+                                                .rect(
+                                                    topLeadingRadius: 0,
+                                                    bottomLeadingRadius: 0,
+                                                    bottomTrailingRadius: 3,
+                                                    topTrailingRadius: 3
+                                                )
+                                            )
+                                            .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                            .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
+                                            .overlay {
+                                                ZStack {
+                                                    LinearGradient(gradient: Gradient(colors: [Color.black.opacity(0.3), Color.clear]), startPoint: .leading, endPoint: .trailing)
+                                                }
+                                                .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
+                                            }
+                                    }
                                 }
-                                .rotation3DEffect(.degrees(coverDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
-                                .onTapGesture {
-                                    guard !isAnimating else { return }
-                                    isAnimating = true
-                                    withAnimation {
-                                        coverDegrees = 0
-                                        pageDegrees = 0
-                                    } completion: {
-                                        showBackOfBook = false
-                                        withAnimation{
-                                            isBookDetailViewOpen = false
-                                            selectedBook = nil
+                                if let selectedBookCover = selectedBook {
+                                    ZStack {
+                                        // Front side of the front book cover
+                                        BookCoverView(book: selectedBookCover)
+                                            .opacity(coverDegrees > -90 ? 1 : 0)
+                                            .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                        
+                                        // Back side of the front book cover
+                                        Rectangle()
+                                            .frame(width: 120, height: 180)
+                                            .clipShape(
+                                                .rect(
+                                                    topLeadingRadius: 2,
+                                                    bottomLeadingRadius: 2,
+                                                    bottomTrailingRadius: 10,
+                                                    topTrailingRadius: 10
+                                                )
+                                            )
+                                            .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
+                                            .foregroundColor(.gray)
+                                            .opacity(coverDegrees <= -90 ? 1 : 0)
+                                    }
+                                    .rotation3DEffect(.degrees(coverDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.5)
+                                    .onTapGesture {
+                                        guard !isAnimating else { return }
+                                        isAnimating = true
+                                        withAnimation {
+                                            coverDegrees = 0
+                                            pageDegrees = 0
                                         } completion: {
-                                            isAnimating = false
+                                            showBackOfBook = false
+                                            withAnimation{
+                                                isBookDetailViewOpen = false
+                                                selectedBook = nil
+                                            } completion: {
+                                                isAnimating = false
+                                            }
                                         }
                                     }
                                 }
                             }
+                            .offset(x: coverDegrees == -180 ? 50 : 0)
                         }
-                        .offset(x: coverDegrees == -180 ? 50 : 0)
                     }
                 }
             }

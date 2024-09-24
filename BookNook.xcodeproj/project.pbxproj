@@ -15,7 +15,7 @@
 		51380D252C2AA57700FDF65D /* PageEntryModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51380D242C2AA57700FDF65D /* PageEntryModalView.swift */; };
 		515B0E9F2C31FBBA00806BB3 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */; };
 		516ED7D82C42D11F006B62BC /* BookViewAnimated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */; };
-		516ED7DA2C42E065006B62BC /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ED7D92C42E065006B62BC /* Playground.swift */; };
+		516ED7DA2C42E065006B62BC /* BookCoverView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ED7D92C42E065006B62BC /* BookCoverView2.swift */; };
 		5172EA882C96C86C00BB364C /* BookListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172EA872C96C86C00BB364C /* BookListScreen.swift */; };
 		5172F3292BF0A59D00491A8E /* UpdateReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */; };
 		51731B962BF39D7F00F75F86 /* DiscoverScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */; };
@@ -51,6 +51,7 @@
 		51AD11422BEF6870000D672C /* DayReadingSessionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */; };
 		51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */; };
 		51AD114A2BEF6AA5000D672C /* NewReadingSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD11492BEF6AA5000D672C /* NewReadingSessionView.swift */; };
+		51AFB61A2CA31838007FB94C /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AFB6192CA31838007FB94C /* Playground.swift */; };
 		51B815BF2C2870A600CDB29D /* StatisticsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B815BE2C2870A600CDB29D /* StatisticsScreen.swift */; };
 		51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */; };
 		51D2E4322BF8CF48008798FA /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */; };
@@ -88,7 +89,7 @@
 		51380D242C2AA57700FDF65D /* PageEntryModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageEntryModalView.swift; sourceTree = "<group>"; };
 		515B0E9E2C31FBBA00806BB3 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		516ED7D72C42D11F006B62BC /* BookViewAnimated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewAnimated.swift; sourceTree = "<group>"; };
-		516ED7D92C42E065006B62BC /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		516ED7D92C42E065006B62BC /* BookCoverView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverView2.swift; sourceTree = "<group>"; };
 		5172EA872C96C86C00BB364C /* BookListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListScreen.swift; sourceTree = "<group>"; };
 		5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReadingSessionView.swift; sourceTree = "<group>"; };
 		51731B952BF39D7F00F75F86 /* DiscoverScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverScreenViewModel.swift; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 		51AD11412BEF6870000D672C /* DayReadingSessionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayReadingSessionsListView.swift; sourceTree = "<group>"; };
 		51AD11472BEF69DC000D672C /* ReadingSessionListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingSessionListViewRow.swift; sourceTree = "<group>"; };
 		51AD11492BEF6AA5000D672C /* NewReadingSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReadingSessionView.swift; sourceTree = "<group>"; };
+		51AFB6192CA31838007FB94C /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		51B815BE2C2870A600CDB29D /* StatisticsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsScreen.swift; sourceTree = "<group>"; };
 		51D2E42F2BF8CF0A008798FA /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		51D2E4312BF8CF48008798FA /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
@@ -403,8 +405,8 @@
 		51AD111B2BEEB347000D672C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				516ED7D92C42E065006B62BC /* Playground.swift */,
 				5172F3282BF0A59D00491A8E /* UpdateReadingSessionView.swift */,
+				51AFB6192CA31838007FB94C /* Playground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -457,6 +459,7 @@
 				51F235142C394A8000FA09C3 /* BookSpineView.swift */,
 				5127B6B02C429DE700FB1866 /* BookshelfViewOLD.swift */,
 				51F235182C3958E200FA09C3 /* BookCoverView.swift */,
+				516ED7D92C42E065006B62BC /* BookCoverView2.swift */,
 				51D8D57A2C930D5E002814D7 /* BookshelfView.swift */,
 			);
 			path = Views;
@@ -702,12 +705,13 @@
 				51AD11482BEF69DC000D672C /* ReadingSessionListViewRow.swift in Sources */,
 				5126F6372BF1665E00DFB2E3 /* Book.swift in Sources */,
 				51AD11322BEEB5B5000D672C /* MainTabbedScreen.swift in Sources */,
+				51AFB61A2CA31838007FB94C /* Playground.swift in Sources */,
 				51745CA22C0922050012386E /* BookListScreenOLD.swift in Sources */,
 				51AD11402BEF63EF000D672C /* CalendarScreen.swift in Sources */,
 				516ED7D82C42D11F006B62BC /* BookViewAnimated.swift in Sources */,
 				51731B982BF39D9F00F75F86 /* DiscoverScreen.swift in Sources */,
 				51D2E4302BF8CF0A008798FA /* AudioPlayer.swift in Sources */,
-				516ED7DA2C42E065006B62BC /* Playground.swift in Sources */,
+				516ED7DA2C42E065006B62BC /* BookCoverView2.swift in Sources */,
 				51731B962BF39D7F00F75F86 /* DiscoverScreenViewModel.swift in Sources */,
 				5190FA4E2C3B005300ED20D5 /* SplashScreen.swift in Sources */,
 				51D8D57B2C930D5E002814D7 /* BookshelfView.swift in Sources */,

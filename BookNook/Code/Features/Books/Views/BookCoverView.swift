@@ -63,7 +63,7 @@ struct BookCoverView_Previews: PreviewProvider {
             title: "Sample Book",
             author: "Author Name",
             category: .currentlyReading,
-            coverImageUrl: nil
+            coverImageUrl: "https://books.google.com/books/content?id=54BEAAAACAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
         )
         
         BookCoverView(book: mockBookWithoutImage)

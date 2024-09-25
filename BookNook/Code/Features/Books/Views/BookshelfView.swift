@@ -16,18 +16,14 @@ struct BookshelfView: View {
     let category: BookCategory
     
     @State var isBookDetailViewOpen: Bool = false
-    
-    @State var showBackOfBook: Bool = false
-    
+        
     @State var selectedBook: Book?
     
     @Binding var cachedBooks: [Book]
     
     @State private var isAnimating: Bool = false
     
-    @State private var coverDegrees: Double = 0
-    
-    @State private var pageDegrees: Double = 0
+    @State private var isBookOpen: Bool = false
     
     @Namespace private var bookAnimation
     
@@ -51,13 +47,7 @@ struct BookshelfView: View {
                                         selectedBook = book
                                         isBookDetailViewOpen = true
                                     } completion: {
-                                        showBackOfBook = true
-                                        withAnimation(.easeOut(duration: 0.5)) {
-                                            coverDegrees = -180
-                                            pageDegrees = -20
-                                        } completion: {
-                                            isAnimating = false
-                                        }
+                                        isAnimating = false
                                     }
                                 }
                             Text(book.title)
@@ -92,7 +82,8 @@ struct BookshelfView: View {
         .overlay {
             if isBookDetailViewOpen {
                 GeometryReader { geo in
-                    ZStack(alignment: .top) {
+                    ZStack(alignment: .center) {
+                        Color.white.ignoresSafeArea(.all)
                         if let book = selectedBook, let urlString = book.coverImageUrl, let url = URL(string: urlString) {
                             WebImage(url: url) { image in
                                 image.resizable()
@@ -105,138 +96,29 @@ struct BookshelfView: View {
                             .scaleEffect(1.5)
                             .blur(radius: 50.0)
                         }
-                        
                         VStack {
-                            // Whole book
-                            ZStack {
-                                Group {
-                                    if showBackOfBook {
-                                        ZStack(alignment: .leading) {
-                                            // Back of book
-                                            Rectangle()
-                                                .fill(
-                                                    LinearGradient(gradient: Gradient(colors: [Color(red: 0.4, green: 0.3, blue: 0.2), Color(red: 0.5, green: 0.4, blue: 0.3)]),
-                                                                   startPoint: .topLeading,
-                                                                   endPoint: .bottomTrailing)
-                                                )
-                                                .overlay(
-                                                    Color.black.opacity(0.03) // Simulates slight texture variation or wear
-                                                )
-                                                .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                                .frame(width: 120, height: 180)
-                                                .clipShape(
-                                                    .rect(
-                                                        topLeadingRadius: 2,
-                                                        bottomLeadingRadius: 2,
-                                                        bottomTrailingRadius: 10,
-                                                        topTrailingRadius: 10
-                                                    )
-                                                )
-                                            
-                                            // Second page of book
-                                            Rectangle()
-                                                .fill(
-                                                    LinearGradient(gradient: Gradient(colors: [Color(red: 0.98, green: 0.96, blue: 0.9), Color(red: 0.95, green: 0.92, blue: 0.85)]),
-                                                                   startPoint: .topLeading,
-                                                                   endPoint: .bottomTrailing)
-                                                )
-                                                .frame(width: 110, height: 175)
-                                                .clipShape(
-                                                    .rect(
-                                                        topLeadingRadius: 0,
-                                                        bottomLeadingRadius: 0,
-                                                        bottomTrailingRadius: 3,
-                                                        topTrailingRadius: 3
-                                                    )
-                                                )
-                                                .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                                .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                                .overlay(
-                                                    Color.white.opacity(0.02)
-                                                        .rotation3DEffect(.degrees(pageDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                                    
-                                                )
+                            if let selectedBookCover = selectedBook {
+                                BookCoverView2(isBookOpen: $isBookOpen, book: selectedBookCover)
+                                    .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                    .onTapGesture {
+                                        guard !isAnimating else { return }
+                                        isAnimating = true
+                                        withAnimation{
+                                            isBookDetailViewOpen = false
+                                            selectedBook = nil
+                                        } completion: {
+                                            isAnimating = false
                                         }
                                     }
-                                    
-                                    
-                                    ZStack(alignment: .leading) {
-                                        if let selectedBookCover = selectedBook {
-                                            ZStack {
-                                                // Front side of the front book cover
-                                                BookCoverView(book: selectedBookCover)
-                                                    .opacity(coverDegrees > -90 ? 1 : 0)
-                                                    .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
-                                                
-                                                // Back side of the front book cover
-                                                Rectangle()
-                                                    .fill(
-                                                        LinearGradient(gradient: Gradient(colors: [Color(red: 0.4, green: 0.3, blue: 0.2), Color(red: 0.5, green: 0.4, blue: 0.3)]),
-                                                                       startPoint: .topLeading,
-                                                                       endPoint: .bottomTrailing)
-                                                    )
-                                                    .overlay(
-                                                        Color.black.opacity(0.03) // Simulates slight texture variation or wear
-                                                    )
-                                                    .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                                    .frame(width: 120, height: 180)
-                                                    .clipShape(
-                                                        .rect(
-                                                            topLeadingRadius: 2,
-                                                            bottomLeadingRadius: 2,
-                                                            bottomTrailingRadius: 10,
-                                                            topTrailingRadius: 10
-                                                        )
-                                                    )
-                                                    .opacity(coverDegrees <= -90 ? 1 : 0)
-                                            }
-                                            .rotation3DEffect(.degrees(coverDegrees),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                        }
-                                        // First page of book
-                                        Rectangle()
-                                            .fill(
-                                                LinearGradient(gradient: Gradient(colors: [Color(red: 0.98, green: 0.96, blue: 0.9), Color(red: 0.95, green: 0.92, blue: 0.85)]),
-                                                               startPoint: .topLeading,
-                                                               endPoint: .bottomTrailing)
-                                            )
-                                            .frame(width: 110, height: 175)
-                                            .clipShape(
-                                                .rect(
-                                                    topLeadingRadius: 0,
-                                                    bottomLeadingRadius: 0,
-                                                    bottomTrailingRadius: 3,
-                                                    topTrailingRadius: 3
-                                                )
-                                            )
-                                            .shadow(color: .black.opacity(0.5), radius: 5, x: 5, y: 0.0)
-                                            .rotation3DEffect(.degrees(coverDegrees + 20),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                            .overlay(
-                                                Color.white.opacity(0.02)
-                                                    .rotation3DEffect(.degrees(coverDegrees + 20),axis: (x: 0.0, y: 1.0, z: 0.0), anchor: .leading, perspective: 0.3)
-                                                
-                                            )
-                                            .opacity(coverDegrees <= -90 ? 1 : 0)
-                                            .onTapGesture {
-                                                guard !isAnimating else { return }
-                                                isAnimating = true
-                                                withAnimation {
-                                                    coverDegrees = 0
-                                                    pageDegrees = 0
-                                                } completion: {
-                                                    showBackOfBook = false
-                                                    withAnimation{
-                                                        isBookDetailViewOpen = false
-                                                        selectedBook = nil
-                                                    } completion: {
-                                                        isAnimating = false
-                                                    }
-                                                }
-                                            }
-
-                                    }
-                                }
-                                .offset(x: coverDegrees == -180 ? 50 : 0)
+                                    .offset(x: isBookOpen ? 60 : 0)
                             }
+                            Button(action: {
+                                withAnimation {
+                                    isBookOpen.toggle()
+                                }
+                            }, label: {
+                                Text("Start reading")
+                            })
                             Spacer()
                         }
                     }

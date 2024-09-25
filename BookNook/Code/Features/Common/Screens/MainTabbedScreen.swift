@@ -22,16 +22,27 @@ struct MainTabbedView: View {
                     Label("Discover", systemImage: "magnifyingglass")
                 }
                 .tag(0)
+                .toolbarBackground(.hidden, for: .tabBar)
+
             BookListScreen(currentlyReadingCachedBooks: $currentlyReadingCachedBooks, haveReadCachedBooks: $haveReadCachedBooks, willReadCachedBooks: $willReadCachedBooks)
                 .tabItem {
                     Label("Books", systemImage: "book.closed")
                 }
                 .tag(1)
+                .toolbarBackground(.hidden, for: .tabBar)
+
             CalendarScreen()
                 .tabItem {
                     Label("History", systemImage: "calendar")
                 }
                 .tag(2)
+                .toolbarBackground(.hidden, for: .tabBar)
+
         }
+        .accentColor(.black)
+        .onAppear(perform: {
+            UITabBar.appearance().unselectedItemTintColor = .systemBrown
+
+        })
     }
 }

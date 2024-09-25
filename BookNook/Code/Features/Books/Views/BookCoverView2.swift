@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 
 struct BookCoverView2: View {
-    @State private var isOpen: Bool = false
+    @Binding var isBookOpen: Bool
     @State private var animationDone: Bool = false
     
     var book: Book?
@@ -32,24 +32,33 @@ struct BookCoverView2: View {
         VStack {
             ZStack {
                 ForEach(0..<totalItems, id: \.self) { index in
-                    Rectangle()
-                        .fill(LinearGradient(gradient: Gradient(colors:  colors), startPoint: .leading, endPoint: .trailing))
-                        .frame(width: 120 , height: 180)
-                        .clipShape(
-                            .rect(
-                                topLeadingRadius: 2,
-                                bottomLeadingRadius: 2,
-                                bottomTrailingRadius: 10,
-                                topTrailingRadius: 10
+                    ZStack {
+                        Rectangle()
+                            .fill(LinearGradient(gradient: Gradient(colors:  colors), startPoint: .leading, endPoint: .trailing))
+                            .frame(width: 120 , height: 180)
+                            .clipShape(
+                                .rect(
+                                    topLeadingRadius: 2,
+                                    bottomLeadingRadius: 2,
+                                    bottomTrailingRadius: 10,
+                                    topTrailingRadius: 10
+                                )
                             )
-                        )
-                        .rotation3DEffect(
-                            Angle(degrees: isOpen ? calculateRotation(for: index) : 0),
-                            axis: (x: 0.0, y: 1.0, z: 0.0),
-                            anchor: .leading,
-                            perspective: 0.3
-                        )
-                        .zIndex(calculateZIndex(for: index))
+                        Text(Utils.bookText)
+                            .font(.system(size: 5))
+                            .padding([.leading, .trailing], 10)
+                            .multilineTextAlignment(.center)
+
+                    }
+                    .frame(width: 120 , height: 180)
+
+                    .rotation3DEffect(
+                        Angle(degrees: isBookOpen ? calculateRotation(for: index) : 0),
+                        axis: (x: 0.0, y: 1.0, z: 0.0),
+                        anchor: .leading,
+                        perspective: 0.3
+                    )
+                    .zIndex(calculateZIndex(for: index))
                     
                 }
                 if let selectedBook = book {
@@ -70,9 +79,9 @@ struct BookCoverView2: View {
                         )
                     )
                     .transition(.fade(duration: 0.5))
-                    .opacity(isOpen ? 0 : 1)
+                    .opacity(isBookOpen ? 0 : 1)
                     .rotation3DEffect(
-                        Angle(degrees: isOpen ? -180 : 0),
+                        Angle(degrees: isBookOpen ? -180 : 0),
                         axis: (x: 0.0, y: 1.0, z: 0.0),
                         anchor: .leading,
                         perspective: 0.3
@@ -81,14 +90,6 @@ struct BookCoverView2: View {
                     .frame(width: 120, height: 180)
                 }
             }
-            .offset(x: isOpen ? 60 : 0)
-            .onTapGesture {
-                withAnimation(.easeInOut(duration: 0.8)) {
-                    isOpen.toggle()
-                }
-            }
-            Spacer()
-
         }
     }
     func calculateRotation(for index: Int) -> Double {
@@ -115,6 +116,6 @@ struct BookCoverView2: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: Book.self, configurations: config)
     
-    return BookCoverView2(book: Book(title: "", author: "", category: .currentlyReading, coverImageUrl: "https://books.google.com/books/content?id=54BEAAAACAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"))
+    return BookCoverView2(isBookOpen: .constant(false), book: Book(title: "", author: "", category: .currentlyReading, coverImageUrl: "https://books.google.com/books/content?id=54BEAAAACAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"))
         .modelContainer(container)
 }

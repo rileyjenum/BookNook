@@ -40,9 +40,5 @@ struct MainTabbedView: View {
 
         }
         .accentColor(.black)
-        .onAppear(perform: {
-            UITabBar.appearance().unselectedItemTintColor = .systemBrown
-
-        })
     }
 }

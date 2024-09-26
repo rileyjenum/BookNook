@@ -96,30 +96,33 @@ struct BookshelfView: View {
                             .scaleEffect(1.5)
                             .blur(radius: 50.0)
                         }
-                        VStack {
-                            if let selectedBookCover = selectedBook {
-                                BookCoverView2(isBookOpen: $isBookOpen, book: selectedBookCover)
-                                    .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
-                                    .onTapGesture {
-                                        guard !isAnimating else { return }
-                                        isAnimating = true
-                                        withAnimation{
-                                            isBookDetailViewOpen = false
-                                            selectedBook = nil
-                                        } completion: {
-                                            isAnimating = false
+                        ScrollView(showsIndicators: false) {
+                            VStack {
+                                if let selectedBookCover = selectedBook {
+                                    BookCoverView2(isBookOpen: $isBookOpen, book: selectedBookCover)
+                                        .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
+                                        .onTapGesture {
+                                            guard !isAnimating else { return }
+                                            isAnimating = true
+                                            withAnimation{
+                                                isBookDetailViewOpen = false
+                                                selectedBook = nil
+                                            } completion: {
+                                                isAnimating = false
+                                            }
                                         }
-                                    }
-                                    .offset(x: isBookOpen ? 60 : 0)
-                            }
-                            Button(action: {
-                                withAnimation {
-                                    isBookOpen.toggle()
+                                        .offset(x: isBookOpen ? 60 : 0)
+                                        .padding()
                                 }
-                            }, label: {
-                                Text("Start reading")
-                            })
-                            Spacer()
+                                Button(action: {
+                                    withAnimation {
+                                        isBookOpen.toggle()
+                                    }
+                                }, label: {
+                                    Text("Start reading")
+                                })
+                                
+                            }
                         }
                     }
                 }

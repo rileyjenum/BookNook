@@ -23,11 +23,6 @@ struct BookCoverView2: View {
         Color(red: 0.95, green: 0.92, blue: 0.85)
     ]
     
-    let coverColors = [
-        Color(red: 0.15, green: 0.22, blue: 0.35),
-        Color(red: 0.15, green: 0.12, blue: 0.45)
-    ]
-    
     var body: some View {
         VStack {
             ZStack {

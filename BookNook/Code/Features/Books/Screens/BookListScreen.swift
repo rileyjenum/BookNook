@@ -16,21 +16,9 @@ struct BookListScreen: View {
     @Binding var willReadCachedBooks: [Book]
     
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView(showsIndicators: false) {
-                LazyVStack {
-                    ForEach(categories, id: \.self) { category in
-                        BookshelfView(category: category, cachedBooks: bindingForCategory(category))
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                            .scrollTransition(.animated.threshold(.visible(0.9))) { content, phase in
-                                content
-                                    .scaleEffect(phase.isIdentity ? 1.0 : 0.75)
-                            }
-                    }
-                }
-                .scrollTargetLayout()
-            }
-            .scrollTargetBehavior(.paging)
+        GeometryReader { geo in
+            BookshelfView(category: .currentlyReading, cachedBooks: bindingForCategory(.currentlyReading))
+                .frame(width: geo.size.width, height: geo.size.height)
         }
     }
     

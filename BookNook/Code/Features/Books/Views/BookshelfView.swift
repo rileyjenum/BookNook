@@ -25,6 +25,8 @@ struct BookshelfView: View {
     
     @State private var isBookOpen: Bool = false
     
+    @State private var isLibraryCardVisible: Bool = false
+    
     @Namespace private var bookAnimation
     
     var body: some View {
@@ -104,6 +106,7 @@ struct BookshelfView: View {
                                         .onTapGesture {
                                             guard !isAnimating else { return }
                                             isAnimating = true
+                                            isLibraryCardVisible = false
                                             withAnimation{
                                                 isBookDetailViewOpen = false
                                                 selectedBook = nil
@@ -121,7 +124,14 @@ struct BookshelfView: View {
                                 }, label: {
                                     Text("Start reading")
                                 })
-                                
+                                LibraryCardView(geometry: geo)
+                                    .offset(y: isLibraryCardVisible ? 0 : UIScreen.main.bounds.height)
+                                    .animation(.spring(), value: isLibraryCardVisible)
+                            }
+                        }
+                        .onAppear {
+                            withAnimation(.spring().delay(0.2)) {
+                                isLibraryCardVisible = true
                             }
                         }
                     }

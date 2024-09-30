@@ -124,7 +124,7 @@ struct BookshelfView: View {
                                 }, label: {
                                     Text("Start reading")
                                 })
-                                LibraryCardView(geometry: geo)
+                                LibraryCardView(selectedBook: $selectedBook, geometry: geo)
                                     .offset(y: isLibraryCardVisible ? 0 : UIScreen.main.bounds.height)
                                     .animation(.spring(), value: isLibraryCardVisible)
                             }

@@ -35,6 +35,7 @@
 		518C9C242C36C0A6002E3627 /* BaskervilleBoldBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C182C36C0A6002E3627 /* BaskervilleBoldBT.ttf */; };
 		518C9C252C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 518C9C192C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf */; };
 		5190FA4E2C3B005300ED20D5 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5190FA4D2C3B005300ED20D5 /* SplashScreen.swift */; };
+		519B48AD2CAAA69100099177 /* Clarendon Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 519B48AC2CAAA69100099177 /* Clarendon Regular.otf */; };
 		51A679992CA55CC000C4340B /* LibraryCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A679982CA55CC000C4340B /* LibraryCardView.swift */; };
 		51AD10DD2BEEB13E000D672C /* BookNookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DC2BEEB13E000D672C /* BookNookApp.swift */; };
 		51AD10DF2BEEB13E000D672C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD10DE2BEEB13E000D672C /* ContentView.swift */; };
@@ -112,6 +113,7 @@
 		518C9C192C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BaskervilleBoldItalicBT.ttf; sourceTree = "<group>"; };
 		518C9C262C36C2A1002E3627 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5190FA4D2C3B005300ED20D5 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		519B48AC2CAAA69100099177 /* Clarendon Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Clarendon Regular.otf"; sourceTree = "<group>"; };
 		51A679982CA55CC000C4340B /* LibraryCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCardView.swift; sourceTree = "<group>"; };
 		51AD10D92BEEB13E000D672C /* BookNook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookNook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		51AD10DC2BEEB13E000D672C /* BookNookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookNookApp.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		518C9C0D2C36C089002E3627 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				519B48AC2CAAA69100099177 /* Clarendon Regular.otf */,
 				518C9C172C36C0A6002E3627 /* BASKE1.ttf */,
 				518C9C0F2C36C0A6002E3627 /* BASKE9.ttf */,
 				518C9C142C36C0A6002E3627 /* BASKE10.ttf */,
@@ -660,6 +663,7 @@
 				51D2E4352BF8CF91008798FA /* Sonder(chosic.com).mp3 in Resources */,
 				518C9C252C36C0A6002E3627 /* BaskervilleBoldItalicBT.ttf in Resources */,
 				51E7F9FF2C3426CF0084B94D /* Images.xcassets in Resources */,
+				519B48AD2CAAA69100099177 /* Clarendon Regular.otf in Resources */,
 				518C9C242C36C0A6002E3627 /* BaskervilleBoldBT.ttf in Resources */,
 				518C9C1F2C36C0A6002E3627 /* baskervi.ttf in Resources */,
 				518C9C222C36C0A6002E3627 /* BaskervilleBT.ttf in Resources */,

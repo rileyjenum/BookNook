@@ -14,6 +14,8 @@ struct LibraryCardView: View {
     
     @Binding var selectedBook: Book?
     
+    @Binding var isBookOpen: Bool
+
     let colors = [
         Color(red: 0.75, green: 0.72, blue: 0.65),
         Color(red: 0.95, green: 0.92, blue: 0.85)
@@ -21,9 +23,11 @@ struct LibraryCardView: View {
     
     let geometry: GeometryProxy
     
-    let readingSessions = ["Session 1", "Session 2", "Session 3", "Session 1", "Session 2", "Session 3", "Session 1", "Session 2", "Session 3", "Session 1", "Session 2", "Session 3"]
-    
     @State private var areSessionsExpanded = false
+    
+    var filteredSessions: [ReadingSession] {
+        allSessions.filter { $0.book.id == selectedBook?.id }
+    }
     
     var body: some View {
         ZStack {
@@ -36,27 +40,44 @@ struct LibraryCardView: View {
                 Divider()
                     .frame(height: 2)
                     .overlay(Color.black.opacity(0.5))
-
-                Text("Title")
-                    .font(.custom("Clarendon Regular", size: 20))
-                    .padding()
+                HStack {
+                    Text("Title")
+                        .font(.custom("Clarendon Regular", size: 20))
+                        .padding()
+                    Text(selectedBook?.title ?? "")
+                        .font(.custom("blzee", size: 30))
+                        .padding()
+                    
+                }
                 
                 Divider()
                     .frame(height: 1)
                     .overlay(Color.black.opacity(0.4))
                 
-                Text("Author")
-                    .font(.custom("Clarendon Regular", size: 20))
-                    .padding()
+                HStack {
+                    Text("Author")
+                        .font(.custom("Clarendon Regular", size: 20))
+                        .padding()
+                    Text(selectedBook?.author ?? "")
+                        .font(.custom("blzee", size: 30))
+                        .padding()
+                    
+                }
                 
                 Divider()
                     .frame(height: 1)
                     .overlay(Color.black.opacity(0.7))
                 
                 
-                Text("Description")
-                    .font(.custom("Clarendon Regular", size: 20))
-                    .padding()
+                HStack {
+                    Text("Description")
+                        .font(.custom("Clarendon Regular", size: 20))
+                        .padding()
+                    Text(selectedBook?.bookDescription ?? "")
+                        .font(.custom("blzee", size: 10))
+                        .padding()
+                    
+                }
                 
                 Divider()
                     .frame(height: 1)
@@ -73,7 +94,14 @@ struct LibraryCardView: View {
                         .overlay(Color.black.opacity(0.7))
                         .padding(.bottom, 5)
                     
-                    
+                    Button(action: {
+                        withAnimation {
+                            isBookOpen.toggle()
+                        }
+                    }, label: {
+                        Text("Start reading")
+                            .foregroundStyle(.black)
+                    })
                     Spacer()
                     
                     Button(action: {
@@ -89,14 +117,18 @@ struct LibraryCardView: View {
                 }
                 
                 if areSessionsExpanded {
-                    ForEach(readingSessions, id: \.self) { session in
+                    ForEach(filteredSessions) { session in
                         VStack {
                             Divider()
                                 .frame(height: 1)
                                 .overlay(Color.black.opacity(0.4))
                             
-                            Text(session)
+                            Text("Session: \(session.startTime, formatter: DateFormatter.shortTime)")
                                 .font(.custom("Clarendon Regular", size: 18))
+                                .padding(.horizontal)
+                            
+                            Text("Pages read: \(session.pagesRead)")
+                                .font(.custom("Clarendon Regular", size: 16))
                                 .padding(.horizontal)
                         }
                     }
@@ -113,16 +145,19 @@ struct LibraryCardView: View {
 
 
 #Preview {
-    GeometryReader { geo in
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Book.self, configurations: config)
+     return GeometryReader { geo in
         ZStack(alignment: .center) {
             Color.white.ignoresSafeArea(.all)
             ScrollView(showsIndicators: false) {
                 VStack {
                     Spacer()
                         .frame(height: 160)
-                    LibraryCardView(selectedBook: .constant(Book(title: "", author: "", category: .currentlyReading)), geometry: geo)
+                    LibraryCardView(selectedBook: .constant(Book(title: "Harry Potter", author: "J.K. Rowling",bookDescription: "Book description", category: .currentlyReading)), isBookOpen: .constant(false), geometry: geo)
                 }
             }
         }
     }
+     .modelContainer(container)
 }

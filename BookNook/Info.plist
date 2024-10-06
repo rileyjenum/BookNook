@@ -7,6 +7,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Clarendon Regular.otf</string>
+		<string>blzee.ttf</string>
+		<string>HoneyScript-SemiBold.ttf</string>
 		<string>BASKE1.ttf</string>
 		<string>BASKE9.ttf</string>
 		<string>BASKE10.ttf</string>

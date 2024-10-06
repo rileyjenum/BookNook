@@ -36,7 +36,7 @@ struct BookshelfView: View {
                 .padding(.top, 50)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 35) {
+                LazyHStack(spacing: 15) {
                     ForEach(cachedBooks) { book in
                         VStack {
                             BookCoverView(book: book)
@@ -64,8 +64,7 @@ struct BookshelfView: View {
                         .scrollTransition(.animated.threshold(.visible(0.9))) { content, phase in
                             content
                                 .scaleEffect(phase.isIdentity ? 1.0 : 0.75)
-                                .blur(radius: phase.isIdentity ? 0 : 5)
-                                .rotation3DEffect(Angle(degrees: phase.isIdentity ? 0 : (phase == .bottomTrailing ? 40 : -40)), axis: (x: 0, y: 1.0, z: 0))
+                                .blur(radius: phase.isIdentity ? 0 : 3)
                         }
                         .frame(width: 200, height: 300)
                         
@@ -83,59 +82,7 @@ struct BookshelfView: View {
         }
         .overlay {
             if isBookDetailViewOpen {
-                GeometryReader { geo in
-                    ZStack(alignment: .center) {
-                        Color.white.ignoresSafeArea(.all)
-                        if let book = selectedBook, let urlString = book.coverImageUrl, let url = URL(string: urlString) {
-                            WebImage(url: url) { image in
-                                image.resizable()
-                            } placeholder: {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(.gray)
-                            }
-                            .frame(width: geo.size.width, height:  geo.size.height)
-                            .ignoresSafeArea(.all)
-                            .scaleEffect(1.5)
-                            .blur(radius: 50.0)
-                        }
-                        ScrollView(showsIndicators: false) {
-                            VStack {
-                                if let selectedBookCover = selectedBook {
-                                    BookCoverView2(isBookOpen: $isBookOpen, book: selectedBookCover)
-                                        .matchedGeometryEffect(id: selectedBookCover.id, in: bookAnimation, isSource: isBookDetailViewOpen)
-                                        .onTapGesture {
-                                            guard !isAnimating else { return }
-                                            isAnimating = true
-                                            isLibraryCardVisible = false
-                                            withAnimation{
-                                                isBookDetailViewOpen = false
-                                                selectedBook = nil
-                                            } completion: {
-                                                isAnimating = false
-                                            }
-                                        }
-                                        .offset(x: isBookOpen ? 60 : 0)
-                                        .padding()
-                                }
-                                Button(action: {
-                                    withAnimation {
-                                        isBookOpen.toggle()
-                                    }
-                                }, label: {
-                                    Text("Start reading")
-                                })
-                                LibraryCardView(selectedBook: $selectedBook, geometry: geo)
-                                    .offset(y: isLibraryCardVisible ? 0 : UIScreen.main.bounds.height)
-                                    .animation(.spring(), value: isLibraryCardVisible)
-                            }
-                        }
-                        .onAppear {
-                            withAnimation(.spring().delay(0.2)) {
-                                isLibraryCardVisible = true
-                            }
-                        }
-                    }
-                }
+
             }
         }
     }

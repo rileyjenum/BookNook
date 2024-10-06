@@ -18,6 +18,30 @@ extension Color {
     }
 }
 
+
+extension Color {
+    // Primary Theme Colors
+    static let warmBeige = Color(red: 245 / 255, green: 245 / 255, blue: 220 / 255)  // Warm Beige
+    static let mutedTeal = Color(red: 143 / 255, green: 188 / 255, blue: 187 / 255)  // Muted Teal
+    static let sageGreen = Color(red: 164 / 255, green: 196 / 255, blue: 168 / 255)  // Sage Green
+    static let deepNavy = Color(red: 12 / 255, green: 35 / 255, blue: 64 / 255)      // Deep Navy Blue
+    
+    // Accent Colors
+    static let goldenYellow = Color(red: 255 / 255, green: 204 / 255, blue: 0 / 255) // Golden Yellow
+    static let dustyRose = Color(red: 199 / 255, green: 144 / 255, blue: 135 / 255)  // Dusty Rose
+    static let burntOrange = Color(red: 204 / 255, green: 85 / 255, blue: 0 / 255)   // Burnt Orange
+    
+    // Text & Secondary Colors
+    static let charcoal = Color(red: 54 / 255, green: 69 / 255, blue: 79 / 255)      // Charcoal
+    static let softWhite = Color(red: 250 / 255, green: 250 / 255, blue: 245 / 255)  // Soft White
+    static let lightGray = Color(red: 200 / 255, green: 200 / 255, blue: 200 / 255)  // Light Gray
+    
+    // Interactive Elements
+    static let deepBurgundy = Color(red: 128 / 255, green: 0 / 255, blue: 32 / 255)  // Deep Burgundy
+    static let oliveGreen = Color(red: 128 / 255, green: 128 / 255, blue: 0 / 255)   // Olive Green
+}
+
+
 extension Color {
     static let pinkColor = Color(red: 227 / 255, green: 133 / 255, blue: 180 / 255)
     static let purpleColor = Color(red: 123 / 255, green: 119 / 255, blue: 233 / 255)
@@ -27,7 +51,6 @@ extension Color {
     static let lightShadow = Color(red: 43 / 255, green: 43 / 255, blue: 43 / 255)
     static let darkShadow = Color(red: 80 / 255, green: 80 / 255, blue: 80 / 255)
     static let lightPink = Color(red: 236 / 255, green: 188 / 255, blue: 180 / 255)
-    static let lightGray = Color(red: 224 / 255, green: 229 / 255, blue: 236 / 255)
     static let lightOrange = Color(red: 219 / 255, green: 98 / 255, blue: 68 / 255)
     static let iconGray = Color(red: 112 / 255, green: 112 / 255, blue: 112 / 255)
     static let lighterPink = Color(red: 233 / 255, green: 219 / 255, blue: 210 / 255)
